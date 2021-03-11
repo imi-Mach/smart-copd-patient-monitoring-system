@@ -29,3 +29,6 @@ foobar.singularize('phenomena') # returns 'phenomenon'
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
+
+## Resources
+[Airtable Vue App](https://dev.to/codeply/build-a-simple-crud-app-with-airtable-api-vue-vuetify-5565)
