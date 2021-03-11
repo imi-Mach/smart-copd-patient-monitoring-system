@@ -24,7 +24,7 @@ foobar.singularize('phenomena') # returns 'phenomenon'
 
 * Maximillian Machado : Project Manager
 * Thomas Liu : Frontend
-* Athanasios Kougionis : Backend
+* Athanasios Kougionis(Thanos) : Backend
 * Brian Snyder : Database 
 
 ## License
