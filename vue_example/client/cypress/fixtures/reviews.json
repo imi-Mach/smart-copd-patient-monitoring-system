@@ -1,0 +1,52 @@
+[
+    {
+    "name": "Anonymous",
+    "courseNumber": "CSE017",
+    "professor": "BillPhil",
+    "semester": "Fall",
+    "year": "2021",
+    "review": "Soo where are you storing this...?",
+    "id": 1611333715868,
+    "date": "Jan 14th, 10:41"
+    },
+    {
+    "name": "name",
+    "courseNumber": "CSE017",
+    "professor": "professor",
+    "semester": "Fall",
+    "year": "2021",
+    "review": "review",
+    "id": 1611333846048,
+    "date": "Jan 14th, 10:44"
+    },
+    {
+    "name": "Brian Snyder",
+    "courseNumber": "CSE017",
+    "professor": "Carr",
+    "semester": "Spring",
+    "year": "2019",
+    "review": "Easyyy",
+    "id": 1610375800720,
+    "date": "Jan 17th, 08:36"
+    },
+    {
+    "name": "Nicole ElChaar",
+    "courseNumber": "CSE017",
+    "professor": "Femister",
+    "semester": "Fall",
+    "year": "2019",
+    "review": "Is he gonna know I wrote this?",
+    "id": 1610657215053,
+    "date": "Jan 17th, 14:46"
+    },
+    {
+    "name": "Anonymous",
+    "courseNumber": "CSE017",
+    "professor": "??",
+    "semester": "Summer",
+    "year": "2019",
+    "review": "Wiped my memory after that class",
+    "id": 1610657959575,
+    "date": "Jan 22nd, 14:59"
+    }
+]

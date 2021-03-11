@@ -1,0 +1,30 @@
+{
+  "name": "RateMyCourse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./server.js",
+    "watch": "cross-env NODE_ENV=development nodemon ./server.js --ignore db.json --delay 500ms",
+    "test": "NODE_ENV=test mocha --timeout 10000 --exit"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "connect-history-api-fallback": "^1.6.0",
+    "core-js": "^3.6.4",
+    "cors": "2.8.5",
+    "cross-env": "7.0.2",
+    "dotenv": "8.2.0",
+    "ejs": "~2.5.7",
+    "express": "^4.17.1",
+    "lowdb": "^1.0.0",
+    "moment": "^2.20.1"
+   },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1",
+    "nodemon": "2.0.4"
+  },
+  "private": true,
+  "license": "UNLICENSED"
+}
