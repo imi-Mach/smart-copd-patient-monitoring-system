@@ -23,8 +23,11 @@ foobar.singularize('phenomena') # returns 'phenomenon'
 ## Airtable
 
 Login using the smartCOPD gmail
+
 Airtable is located at: [AirTable](https://airtable.com/tblN8AYVUNG1gzA1l/viww792xDcFNpmvqK?blocks=hide)
+
 Airtable Base ID: appr5KeZfUEbAXRCY
+
 Airtable API Key: keyTtJ1q0C5hWsmeh
 
 Below is an example for how I have pulled data from airtable using python:
