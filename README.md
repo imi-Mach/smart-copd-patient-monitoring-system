@@ -31,14 +31,14 @@ Airtable Base ID: appr5KeZfUEbAXRCY
 Airtable API Key: keyTtJ1q0C5hWsmeh
 
 Below is an example for how I have pulled data from airtable using python:
-```
+```python
 # Imports data from airtable
 airtab = Airtable('baseID', 'Table Name', 'API key')
 airtabName = airtab.get_all()
 ```
 
 You can also access data from a specific table by doing the following:
-```
+```python
 base_id = "app●●●●●●●●●●●●●●"
 table_name = "Table Name"
 url = "https://api.airtable.com/v0/" + base_id + "/" + table_name
