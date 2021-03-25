@@ -22,16 +22,4 @@ public class SimpleRequest {
     public int mLikes;
 
     public int mDislikes;
-
-    public String mLink;
-
-    public String mFileLink;
-
-    public String mFileName;
-
-    public String mFileContent;
-
-    public String mFile;
-    
-    public String mLocation;
 }
