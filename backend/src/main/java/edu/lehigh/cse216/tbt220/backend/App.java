@@ -22,7 +22,7 @@ public class App {
     public static void main(String[] args) {
 
         Airtable airtable = new Airtable().configure();
-        Base base = airtable.base('keyTtJ1q0C5hWsmeh');
+        Base base = airtable.base("keyTtJ1q0C5hWsmeh");
         
         // gson provides us with a way to turn JSON into objects, and objects
         // into JSON.
