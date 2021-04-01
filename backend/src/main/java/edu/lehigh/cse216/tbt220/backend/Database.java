@@ -15,6 +15,46 @@ import java.util.Base64;
 
 
 public class Database {
+    
+    // Airtable Patient Prepared Statements
+    private PreparedStatement pCreateTable;
+    private PreparedStatement pDropTable;
+    private PreparedStatement pGetPatient;
+    private PreparedStatement pInsertNewPatient;
+    private PreparedStatement pDeleteUser;
+    private PreparedStatement pCheckIfPatientExists;
+    
+    // Airtable HealthCare Prepared Statements
+    private PreparedStatement hCreateTable;
+    private PreparedStatement hDropTable;
+    private PreparedStatement pGetPatient;
+    private PreparedStatement pInsertNewHealthCareProvider;
+    private PreparedStatement pDeleteHealthCareProvider;
+    private PreparedStatement pCheckIfPatientExists;
+    
+    // Airtable LogStats Prepared Statements
+    private PreparedStatement lSCreateTable;
+    private PreparedStatement lSDropTable;
+    private PreparedStatement lSGetLog;
+    private PreparedStatement lSInsertNewLog;
+    private PreparedStatement lSDeleteLog;
+    private PreparedStatement lSCheckIfLogExists;
+    
+    // Airtable PatientOf Prepared Statements
+    private PreparedStatement pOCreateTable;
+    private PreparedStatement pODropTable;
+    private PreparedStatement pOGetLog;
+    private PreparedStatement pOInsertNewLog;
+    private PreparedStatement pODeleteLog;
+    private PreparedStatement pOCheckIfLogExists;
+   
+    // Airtable DailyStats Prepared Statements
+    private PreparedStatement dSCreateTable;
+    private PreparedStatement dSDropTable;
+    private PreparedStatement dSGetLog;
+    private PreparedStatement dSInsertNewLog;
+    private PreparedStatement dSDeleteLog;
+    private PreparedStatement dSCheckIfLogExists;
 
     //USER PROFILES
     private PreparedStatement uCreateTable;
