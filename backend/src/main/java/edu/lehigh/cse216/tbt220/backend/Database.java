@@ -55,6 +55,89 @@ public class Database {
     private PreparedStatement dSInsertNewLog;
     private PreparedStatement dSDeleteLog;
     private PreparedStatement dSCheckIfLogExists;
+    
+    
+   
+    // Airtable Classes 
+    public static class Patient {
+        String pPatientID;
+        String pFirstName;
+        String pLastName;
+        String pDOB;
+        String pPhoneNumber;
+        int pRiskLevel;
+        
+        public Patient(String patientID, String firstName, String lastName, String DOB, String phoneNumber, int riskLevel) {
+            pPatientID = patientID;
+            pFirstName = firstName;
+            pLastName = lastName;
+            pDOB = DOB;
+            pPhoneNumber = phoneNumber;
+            pRiskLevel = riskLevel;
+        }
+    }
+    
+    public static class healthCareProvider {
+        String hHealthCareID;
+        String hFirstName;
+        String hLastName;
+        String hWorkLocation;
+        String hPhoneNumber;
+        String hEmail;
+        
+        public healthCareProvider(String healthCareID, String firstName, String lastName, String workLocation, String phoneNumber, String email) {
+            hHealthCareID = healthCareID;
+            hFirstName = firstName;
+            hLastName = lastName;
+            hWorkLocation = workLocation;
+            hPhoneNumber = phoneNumber;
+            hEmail = email;
+        }
+    }
+    
+    public static class dailyStats {
+        String dSdailyStatID;
+        String dSdateRecorded;
+        int dSHeartRate;
+        int dSOxygenLevel;
+        int dSWeight;
+        int dSTemperature;
+        String dSBloodPressure;
+        int DSglucoseLevel;
+        
+        public dailyStats(String dailyStatID, String dateRecorded, int heartRate, int oxygenLevel, int weight, int temperature, String bloodPressure, int glucoseLevel) {
+            dSdailyStatID = dailyStatID;
+            dSdateRecorded = dateRecorded;
+            dSHeartRate = heartRate;
+            dSOxygenLevel = oxygenLevel;
+            dSWeight = weight;
+            dSTemperature = temperature;
+            dSBloodPressure = bloodPressure;
+            dSglucoseLevel = glucoseLevel;
+        }
+    }
+    
+    public static class logStats {
+        String lSPatientID;
+        String dSDailyStatID;
+        
+        public logStats(String patientID, String dailyStatID) {
+            lSPatientID = patientID;
+            dSDailyStatID;
+        }
+    }
+    
+    public static class patientOf {
+        String pOHealthCareID;
+        String pOPatientID;
+        
+        public patientOf(String healthCareID, String patientID) {
+            pOHealthCareID = healthCareID;
+            pOPatientID = patientID;
+        }
+    }
+            
+    
 
     //USER PROFILES
     private PreparedStatement uCreateTable;
