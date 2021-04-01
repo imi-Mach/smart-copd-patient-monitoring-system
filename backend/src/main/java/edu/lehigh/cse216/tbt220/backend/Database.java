@@ -27,10 +27,10 @@ public class Database {
     // Airtable HealthCare Prepared Statements
     private PreparedStatement hCreateTable;
     private PreparedStatement hDropTable;
-    private PreparedStatement pGetPatient;
-    private PreparedStatement pInsertNewHealthCareProvider;
-    private PreparedStatement pDeleteHealthCareProvider;
-    private PreparedStatement pCheckIfPatientExists;
+    private PreparedStatement pGetProvider;
+    private PreparedStatement pInsertProvider;
+    private PreparedStatement pDeleteProvider;
+    private PreparedStatement pCheckIfProviderExists;
     
     // Airtable LogStats Prepared Statements
     private PreparedStatement lSCreateTable;
@@ -43,18 +43,18 @@ public class Database {
     // Airtable PatientOf Prepared Statements
     private PreparedStatement pOCreateTable;
     private PreparedStatement pODropTable;
-    private PreparedStatement pOGetLog;
-    private PreparedStatement pOInsertNewLog;
-    private PreparedStatement pODeleteLog;
-    private PreparedStatement pOCheckIfLogExists;
+    private PreparedStatement pOGetPatientOf;
+    private PreparedStatement pOInsertNewPatientOf;
+    private PreparedStatement pODeletePatientOf;
+    private PreparedStatement pOCheckIfPatientOfExists;
    
     // Airtable DailyStats Prepared Statements
     private PreparedStatement dSCreateTable;
     private PreparedStatement dSDropTable;
-    private PreparedStatement dSGetLog;
-    private PreparedStatement dSInsertNewLog;
-    private PreparedStatement dSDeleteLog;
-    private PreparedStatement dSCheckIfLogExists;
+    private PreparedStatement dSGetStat;
+    private PreparedStatement dSInsertNewStat;
+    private PreparedStatement dSDeleteStat;
+    private PreparedStatement dSCheckIfStatExists;
     
     
    
@@ -77,7 +77,7 @@ public class Database {
         }
     }
     
-    public static class healthCareProvider {
+    public static class HealthCareProvider {
         String hHealthCareID;
         String hFirstName;
         String hLastName;
@@ -85,7 +85,7 @@ public class Database {
         String hPhoneNumber;
         String hEmail;
         
-        public healthCareProvider(String healthCareID, String firstName, String lastName, String workLocation, String phoneNumber, String email) {
+        public HealthCareProvider(String healthCareID, String firstName, String lastName, String workLocation, String phoneNumber, String email) {
             hHealthCareID = healthCareID;
             hFirstName = firstName;
             hLastName = lastName;
@@ -95,7 +95,7 @@ public class Database {
         }
     }
     
-    public static class dailyStats {
+    public static class DailyStats {
         String dSdailyStatID;
         String dSdateRecorded;
         int dSHeartRate;
@@ -105,7 +105,7 @@ public class Database {
         String dSBloodPressure;
         int DSglucoseLevel;
         
-        public dailyStats(String dailyStatID, String dateRecorded, int heartRate, int oxygenLevel, int weight, int temperature, String bloodPressure, int glucoseLevel) {
+        public DailyStats(String dailyStatID, String dateRecorded, int heartRate, int oxygenLevel, int weight, int temperature, String bloodPressure, int glucoseLevel) {
             dSdailyStatID = dailyStatID;
             dSdateRecorded = dateRecorded;
             dSHeartRate = heartRate;
@@ -117,21 +117,21 @@ public class Database {
         }
     }
     
-    public static class logStats {
+    public static class LogStats {
         String lSPatientID;
         String dSDailyStatID;
         
-        public logStats(String patientID, String dailyStatID) {
+        public LogStats(String patientID, String dailyStatID) {
             lSPatientID = patientID;
             dSDailyStatID;
         }
     }
     
-    public static class patientOf {
+    public static class PatientOf {
         String pOHealthCareID;
         String pOPatientID;
         
-        public patientOf(String healthCareID, String patientID) {
+        public PatientOf(String healthCareID, String patientID) {
             pOHealthCareID = healthCareID;
             pOPatientID = patientID;
         }
@@ -428,6 +428,87 @@ public class Database {
             db.sCheckLogin = db.mConnection.prepareStatement("SELECT session_id FROM sessionStore WHERE user_id = ?");
             // db.sGetNewSID = db.mConnection.prepareStatement("SELECT session_id FROM sessionStore where user_id = ?");
 
+            
+            // Airtable Create Patient Table
+            db.pCreateTable = db.mConnection.prepareStatement(
+                "CREATE TABLE IF NOT EXISTS patients (" +
+                "patientID varchar(8) not null primary key," +
+                "firstName varchar(20) not null," +
+                "lastName varchar(20) not null," +
+                "DOB varchar(10) not null," +
+                "phoneNumber varchar(10) not null," +
+                "riskLevel int check(riskLevel > 0)"
+             );
+            
+            db.pDropTable = db.mConnection.prepareStatement("DROP TABLE patients");
+            db.pGetPatient = db.mConnection.prepareStatement("SELECT * FROM patients where patientID = ?");
+            db.pInsertNewPatient = db.mConnection.prepareStatement("INSERT INTO patients VALUES(?,?,?,?,?,?)");
+            db.pDeletePatient = db.mConnection.prepareStatement("DELETE FROM patient WHERE patientID = ?");
+            db.pCheckIfPatientExists = db.mConnection.prepareStatement("SELECT patientID FROM patients WHERE patientID = ?");
+            
+            // Airtable Create HealthCare Providers Table
+            db.hCreateTable = db.mConnection.prepareStatement(
+                "CREATE TABLE IF NOT EXISTS healthCareProvider (" +
+                "healthCareID varchar(8) not null primary key," +
+                "firstName varchar(20) not null," +
+                "lastName varchar(20)"
+            );
+            
+            db.hDropTable = db.mConnection.prepareStatement("DROP TABLE healthCareProvider");
+            db.hGetProvider = db.mConnection.prepareStatement("SELECT * FROM healthCareProvider where healthCareID = ?");
+            db.hInsertProvider = db.mConnection.prepareStatement("INSERT INTO healthCareProvider VALUES(?,?,?)");
+            db.hDeleteProvider = db.mConnection.prepareStatement("DELETE FROM healthCareProvider WHERE healthCareID = ?");
+            db.hCheckIfProviderExists = db.mConnection.prepareStatement("SELECT healthCareID FROM healthCareProvider WHERE healthCareID = ?");
+                
+            // Airtable Create DailyStats Table
+            db.dSCreateTable = db.mConnection.prepareStatement(
+                "CREATE TABLE IF NOT EXISTS dailyStats (" +
+                "dailyStatID varchar(8) not null primary key," +
+                "dateRecorded varchar(8) not null," +
+                "heartRate int check(heartRate > 0)," +
+                "oxygenLevel int check(oxygenLevel > 70)," +
+                "weight int check(weight > 0)," +
+                "temperature int check(temperature > 90)," +
+                "bloodPressure varchar(6)," +
+                "glucoseLevel int check(glucoseLevel > 0)"
+            );
+            
+            db.dSDropTable = db.mConnection.prepareStatement("DROP TABLE dailyStats");
+            db.dSGetStat = db.mConnection.prepareStatement("SELECT * FROM dailyStats where dailyStatID = ?");
+            db.dSInsertNewStat = db.mConnection.prepareStatement("INSERT INTO dailyStats VALUES(?,?,?,?,?,?,?,?)");
+            db.dSDeleteStat = db.mConnection.prepareStatement("DELETE FROM dailyStats WHERE dailyStatID = ?");
+            db.dSCheckIfStatExists = db.mConnection.prepareStatement("SELECT dailyStatID FROM dailyStats WHERE dailyStatID = ?");
+            
+            // Airtable Create LogStats Table
+            db.lSCreateTable = db.mConnection.prepareStatement(
+                "CREATE TABLE IF NOT EXISTS logStats (" +
+                "patientID varchar(8) not null," +
+                "dailyStatID varchar(8) not null," +
+                "foreign key(patientID) references patients(patientID)," +
+                "foreign key(dailyStatID) references dailyStats(dailyStatID)"
+            );
+            
+            db.lSDropTable = db.mConnection.prepareStatement("DROP TABLE logStats");
+            db.lSGetLog = db.mConnection.prepareStatement("SELECT * FROM logStats where patientID = ? AND dailyStatID = ?");
+            db.lSInsertNewLog = db.mConnection.prepareStatement("INSERT INTO logStats VALUES(?,?)");
+            db.lSDeleteLog = db.mConnection.prepareStatement("DELETE FROM dailyStats WHERE patientID = ? AND dailyStatID = ?");
+            db.lSCheckIfLogExists = db.mConnection.prepareStatement("SELECT dailyStatID AND patientID FROM dailyStats WHERE dailyStatID = ? AND patientID = ?");
+            
+            // Airtable Create PatientOf Table
+            db.pOCreateTable = db.mConnection.prepareStatement(
+                "CREATE TABLE IF NOT EXISTS patientOf (" +
+                "healthCareID varchar(8) not null," +
+                "patientID varchar(8) not null," +
+                "foreign key(healthCareID) references healthCareProvider(healthCareID)," +
+                "foreign key(patientID) references patients(patientID)"
+            );
+            
+            db.pODropTable = db.mConnection.prepareStatement("DROP TABLE patientOf");
+            db.pOGetPatientOf = db.mConnection.prepareStatement("SELECT * FROM patientOf where patientID = ? AND healthCareID = ?");
+            db.pOInsertNewPatientOf = db.mConnection.prepareStatement("INSERT INTO patientOf VALUES(?,?)");
+            db.pODeletePatientOf = db.mConnection.prepareStatement("DELETE FROM patientOf WHERE patientID = ? AND healthCareID = ?");
+            db.pOCheckIfPatientOfExists = db.mConnection.prepareStatement("SELECT patientID AND healthCareID FROM patientOf WHERE healthCareID = ? AND patientID = ?");
+            
             //USER PROFILES
             db.uCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS users (" +
