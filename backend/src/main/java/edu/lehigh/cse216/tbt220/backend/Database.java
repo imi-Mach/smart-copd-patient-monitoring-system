@@ -140,13 +140,13 @@ public class Database {
     
 
     //USER PROFILES
-    private PreparedStatement uCreateTable;
-    private PreparedStatement uDropTable;
-    private PreparedStatement uGetUser;
-    private PreparedStatement uInsertNewUser;
-    private PreparedStatement uDeleteUser;
-    private PreparedStatement uUpdateComment;
-    private PreparedStatement uCheckIfUserExists;
+//     private PreparedStatement uCreateTable;
+//     private PreparedStatement uDropTable;
+//     private PreparedStatement uGetUser;
+//     private PreparedStatement uInsertNewUser;
+//     private PreparedStatement uDeleteUser;
+//     private PreparedStatement uUpdateComment;
+//     private PreparedStatement uCheckIfUserExists;
 
     /**
      * The connection to the database.  When there is no connection, it should
@@ -158,49 +158,49 @@ public class Database {
     /**
      * A prepared statement for getting all data in the database
      */
-    private PreparedStatement mSelectAllPosts;
+//     private PreparedStatement mSelectAllPosts;
 
-    /**
-     * A prepared statement for getting one row from the database
-     */
-    private PreparedStatement mSelectOnePost;
+//     /**
+//      * A prepared statement for getting one row from the database
+//      */
+//     private PreparedStatement mSelectOnePost;
 
-    /**
-     * A prepared statement for deleting a row from the database
-     */
-    private PreparedStatement mDeleteOnePost;
+//     /**
+//      * A prepared statement for deleting a row from the database
+//      */
+//     private PreparedStatement mDeleteOnePost;
 
-    /**
-     * A prepared statement for inserting into the database
-     */
-    private PreparedStatement mInsertOnePost;
+//     /**
+//      * A prepared statement for inserting into the database
+//      */
+//     private PreparedStatement mInsertOnePost;
 
-    /**
-     * A prepared statement for updating a single row in the database
-     */
-    private PreparedStatement mUpdateOnePost;
+//     /**
+//      * A prepared statement for updating a single row in the database
+//      */
+//     private PreparedStatement mUpdateOnePost;
 
-    /**
-     * A prepared statement for creating the table in our database
-     */
-    private PreparedStatement mCreateTable;
+//     /**
+//      * A prepared statement for creating the table in our database
+//      */
+//     private PreparedStatement mCreateTable;
 
-    /**
-     * A prepared statement for dropping the table in our database
-     */
-    private PreparedStatement mDropTable;
+//     /**
+//      * A prepared statement for dropping the table in our database
+//      */
+//     private PreparedStatement mDropTable;
 
-    /**
-     * A prepared statement for updating a like in our database
-     */
-    private PreparedStatement mUpdateLikeIncrement;
-    private PreparedStatement mUpdateLikeDecrement;
+//     /**
+//      * A prepared statement for updating a like in our database
+//      */
+//     private PreparedStatement mUpdateLikeIncrement;
+//     private PreparedStatement mUpdateLikeDecrement;
 
-    /**
-     * A prepared statement for updating a dislike in our database
-     */
-    private PreparedStatement mUpdateDislikeIncrement;
-    private PreparedStatement mUpdateDislikeDecrement;
+//     /**
+//      * A prepared statement for updating a dislike in our database
+//      */
+//     private PreparedStatement mUpdateDislikeIncrement;
+//     private PreparedStatement mUpdateDislikeDecrement;
 
 
     //AUTHENTICATION
@@ -240,20 +240,20 @@ public class Database {
     private PreparedStatement sRemoveOldLogin;
 
     //COMMENT SECTION
-    private PreparedStatement cCreateTable;
-    private PreparedStatement cDropTable;
-    private PreparedStatement cInsertOne;
-    private PreparedStatement cSelectOne;
-    private PreparedStatement cDeleteOne;
-    private PreparedStatement cSelectAll;
-    private PreparedStatement cUpdateOne;
+//     private PreparedStatement cCreateTable;
+//     private PreparedStatement cDropTable;
+//     private PreparedStatement cInsertOne;
+//     private PreparedStatement cSelectOne;
+//     private PreparedStatement cDeleteOne;
+//     private PreparedStatement cSelectAll;
+//     private PreparedStatement cUpdateOne;
 
-    //LIKE DISLIKE STORE FIGURE OUT LOGIC
-    private PreparedStatement ldCreateTable;
-    private PreparedStatement ldDropTable;
-    private PreparedStatement ldInsert;
-    private PreparedStatement ldDelete;
-    private PreparedStatement ldGetStatus;
+//     //LIKE DISLIKE STORE FIGURE OUT LOGIC
+//     private PreparedStatement ldCreateTable;
+//     private PreparedStatement ldDropTable;
+//     private PreparedStatement ldInsert;
+//     private PreparedStatement ldDelete;
+//     private PreparedStatement ldGetStatus;
 
     /**
      * RowData is like a struct in C: we use it to hold data, and we allow 
@@ -265,91 +265,91 @@ public class Database {
      * abstract representation of a row of the database.  RowData and the 
      * Database are tightly coupled: if one changes, the other should too.
      */
-    public static class RowData {
-        /**
-         * The ID of this row of the database
-         */
-        int mId;
+//     public static class RowData {
+//         /**
+//          * The ID of this row of the database
+//          */
+//         int mId;
 
-        /**
-         * The ID of user that made the post
-         */
-        String mUserId;
+//         /**
+//          * The ID of user that made the post
+//          */
+//         String mUserId;
 
-        /**
-         * Username
-         */
-        String mUsername;
+//         /**
+//          * Username
+//          */
+//         String mUsername;
 
-        /**
-         * The subject stored in this row
-         */
-        String mSubject;
+//         /**
+//          * The subject stored in this row
+//          */
+//         String mSubject;
 
-        /**
-         * The message stored in this row
-         */
-        String mMessage;
-
-
-        //The number of likes the message has
-        int mLikes;
+//         /**
+//          * The message stored in this row
+//          */
+//         String mMessage;
 
 
-        //the number of dislikes the message has
-        int mDislikes;
+//         //The number of likes the message has
+//         int mLikes;
 
-        //Image url
-        String mImageURL;
 
-        /**
-         * Construct a RowData object by providing values for its fields
-         */
-        public RowData(int post_id, String user_id, String username, String subject, String message, int likes, int dislikes, String imageURL) {
-            mId = post_id;
-            mUserId = user_id;
-            mUsername = username;
-            mSubject = subject;
-            mMessage = message;
-            mLikes = likes;
-            mDislikes = dislikes;
-            mImageURL = imageURL;
-        }
-    }
+//         //the number of dislikes the message has
+//         int mDislikes;
 
-    public static class Comment {
-        int mCommentID;
-        String mUserID;
-        int mPostID;
-        String mComment;
-        String mImageURL;
-        String mUsername;
+//         //Image url
+//         String mImageURL;
 
-        public Comment(int commentID, String userID, String name, int postID, String comment, String imageURL) {
-            mCommentID = commentID;
-            mUserID = userID;
-            mUsername = name;
-            mPostID = postID;
-            mComment = comment;
-            mImageURL = imageURL;
-        }
-    }
+//         /**
+//          * Construct a RowData object by providing values for its fields
+//          */
+//         public RowData(int post_id, String user_id, String username, String subject, String message, int likes, int dislikes, String imageURL) {
+//             mId = post_id;
+//             mUserId = user_id;
+//             mUsername = username;
+//             mSubject = subject;
+//             mMessage = message;
+//             mLikes = likes;
+//             mDislikes = dislikes;
+//             mImageURL = imageURL;
+//         }
+//     }
 
-    public static class UserProfile {
-        String uUserID;
-        String uName;
-        String uEmail;
-        String uImageURL;
-        String uComment;
+//     public static class Comment {
+//         int mCommentID;
+//         String mUserID;
+//         int mPostID;
+//         String mComment;
+//         String mImageURL;
+//         String mUsername;
 
-        public UserProfile(String userID, String name, String email, String imageURL, String comment) {
-            uUserID = userID;
-            uName = name;
-            uEmail = email;
-            uImageURL = imageURL;
-            uComment = comment;
-        }
-    }
+//         public Comment(int commentID, String userID, String name, int postID, String comment, String imageURL) {
+//             mCommentID = commentID;
+//             mUserID = userID;
+//             mUsername = name;
+//             mPostID = postID;
+//             mComment = comment;
+//             mImageURL = imageURL;
+//         }
+//     }
+
+//     public static class UserProfile {
+//         String uUserID;
+//         String uName;
+//         String uEmail;
+//         String uImageURL;
+//         String uComment;
+
+//         public UserProfile(String userID, String name, String email, String imageURL, String comment) {
+//             uUserID = userID;
+//             uName = name;
+//             uEmail = email;
+//             uImageURL = imageURL;
+//             uComment = comment;
+//         }
+//     }
 
     /**
      * The Database constructor is private: we only create Database objects 
@@ -358,8 +358,8 @@ public class Database {
     private Database() {
     }
 
-    public int numLikes = 0;
-    public int numDislikes = 0;
+//     public int numLikes = 0;
+//     public int numDislikes = 0;
     /**
      * Get a fully-configured connection to the database
      * 
@@ -510,82 +510,82 @@ public class Database {
             db.pOCheckIfPatientOfExists = db.mConnection.prepareStatement("SELECT patientID AND healthCareID FROM patientOf WHERE healthCareID = ? AND patientID = ?");
             
             //USER PROFILES
-            db.uCreateTable = db.mConnection.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS users (" +
-                "user_id VARCHAR(50) PRIMARY KEY," +
-                "name VARCHAR(100)," +
-                "email VARCHAR(100)," +
-                "imageURL VARCHAR(500)," +
-                "comment VARCHAR(500))"
-            );
+//             db.uCreateTable = db.mConnection.prepareStatement(
+//                 "CREATE TABLE IF NOT EXISTS users (" +
+//                 "user_id VARCHAR(50) PRIMARY KEY," +
+//                 "name VARCHAR(100)," +
+//                 "email VARCHAR(100)," +
+//                 "imageURL VARCHAR(500)," +
+//                 "comment VARCHAR(500))"
+//             );
 
-            db.uDropTable = db.mConnection.prepareStatement("DROP TABLE users");
-            //'Your comment' = default user comment on profile page
-            db.uGetUser = db.mConnection.prepareStatement("SELECT * FROM users WHERE user_id = ?");
-            db.uInsertNewUser = db.mConnection.prepareStatement("INSERT INTO users VALUES(?,?,?,?,'Your comment')");
-            db.uDeleteUser = db.mConnection.prepareStatement("DELETE FROM users WHERE user_id = ?");
-            db.uUpdateComment = db.mConnection.prepareStatement("UPDATE users SET comment = ? WHERE user_id = ?");
-            db.uCheckIfUserExists = db.mConnection.prepareStatement("SELECT user_id FROM users WHERE user_id = ?");
+//             db.uDropTable = db.mConnection.prepareStatement("DROP TABLE users");
+//             //'Your comment' = default user comment on profile page
+//             db.uGetUser = db.mConnection.prepareStatement("SELECT * FROM users WHERE user_id = ?");
+//             db.uInsertNewUser = db.mConnection.prepareStatement("INSERT INTO users VALUES(?,?,?,?,'Your comment')");
+//             db.uDeleteUser = db.mConnection.prepareStatement("DELETE FROM users WHERE user_id = ?");
+//             db.uUpdateComment = db.mConnection.prepareStatement("UPDATE users SET comment = ? WHERE user_id = ?");
+//             db.uCheckIfUserExists = db.mConnection.prepareStatement("SELECT user_id FROM users WHERE user_id = ?");
 
-            //POSTS
-            db.mCreateTable = db.mConnection.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS posts (" +
-                "post_id SERIAL PRIMARY KEY," + 
-                "user_id VARCHAR(50)," +
-                "subject VARCHAR(50) NOT NULL," +
-                "message VARCHAR(500) NOT NULL," +
-                "likes INT," +
-                "dislikes INT," +
-                "FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE)");
-            db.mDropTable = db.mConnection.prepareStatement("DROP TABLE posts");
+//             //POSTS
+//             db.mCreateTable = db.mConnection.prepareStatement(
+//                 "CREATE TABLE IF NOT EXISTS posts (" +
+//                 "post_id SERIAL PRIMARY KEY," + 
+//                 "user_id VARCHAR(50)," +
+//                 "subject VARCHAR(50) NOT NULL," +
+//                 "message VARCHAR(500) NOT NULL," +
+//                 "likes INT," +
+//                 "dislikes INT," +
+//                 "FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE)");
+//             db.mDropTable = db.mConnection.prepareStatement("DROP TABLE posts");
             
-            // Standard CRUD operations
-            db.mDeleteOnePost = db.mConnection.prepareStatement("DELETE FROM posts WHERE post_id = ?");
-            db.mInsertOnePost = db.mConnection.prepareStatement("INSERT INTO posts VALUES (default,?, ?, ?, 0, 0)");
-            db.mSelectAllPosts = db.mConnection.prepareStatement("SELECT * FROM posts,users WHERE posts.user_id = users.user_id ORDER BY post_id ASC");
-            db.mSelectOnePost = db.mConnection.prepareStatement("SELECT * from posts,users WHERE posts.user_id = users.user_id AND post_id = ?");
-            db.mUpdateOnePost = db.mConnection.prepareStatement("UPDATE posts "+ 
-            "SET subject = ?, message = ? WHERE post_id = ?");
+//             // Standard CRUD operations
+//             db.mDeleteOnePost = db.mConnection.prepareStatement("DELETE FROM posts WHERE post_id = ?");
+//             db.mInsertOnePost = db.mConnection.prepareStatement("INSERT INTO posts VALUES (default,?, ?, ?, 0, 0)");
+//             db.mSelectAllPosts = db.mConnection.prepareStatement("SELECT * FROM posts,users WHERE posts.user_id = users.user_id ORDER BY post_id ASC");
+//             db.mSelectOnePost = db.mConnection.prepareStatement("SELECT * from posts,users WHERE posts.user_id = users.user_id AND post_id = ?");
+//             db.mUpdateOnePost = db.mConnection.prepareStatement("UPDATE posts "+ 
+//             "SET subject = ?, message = ? WHERE post_id = ?");
         
-            //For incrementing likes/dislikes
-            db.mUpdateLikeIncrement = db.mConnection.prepareStatement("UPDATE posts SET likes= likes + 1 WHERE post_id = ?");
-            db.mUpdateDislikeIncrement = db.mConnection.prepareStatement("UPDATE posts SET dislikes = dislikes + 1 WHERE post_id = ?");
+//             //For incrementing likes/dislikes
+//             db.mUpdateLikeIncrement = db.mConnection.prepareStatement("UPDATE posts SET likes= likes + 1 WHERE post_id = ?");
+//             db.mUpdateDislikeIncrement = db.mConnection.prepareStatement("UPDATE posts SET dislikes = dislikes + 1 WHERE post_id = ?");
 
-            //For decrementing likes/dislikes
-            db.mUpdateLikeDecrement = db.mConnection.prepareStatement("UPDATE posts SET likes= likes - 1 WHERE post_id = ?");
-            db.mUpdateDislikeDecrement = db.mConnection.prepareStatement("UPDATE posts SET dislikes = dislikes - 1 WHERE post_id = ?");
+//             //For decrementing likes/dislikes
+//             db.mUpdateLikeDecrement = db.mConnection.prepareStatement("UPDATE posts SET likes= likes - 1 WHERE post_id = ?");
+//             db.mUpdateDislikeDecrement = db.mConnection.prepareStatement("UPDATE posts SET dislikes = dislikes - 1 WHERE post_id = ?");
 
-            //COMMENTS
-            db.cCreateTable = db.mConnection.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS comments (" +
-                "comment_id SERIAL PRIMARY KEY," +
-                "user_id VARCHAR(50)," +
-                "post_id INTEGER," +
-                "comment VARCHAR(500)," +
-                "FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE," +
-                "FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE)"
-            );
+//             //COMMENTS
+//             db.cCreateTable = db.mConnection.prepareStatement(
+//                 "CREATE TABLE IF NOT EXISTS comments (" +
+//                 "comment_id SERIAL PRIMARY KEY," +
+//                 "user_id VARCHAR(50)," +
+//                 "post_id INTEGER," +
+//                 "comment VARCHAR(500)," +
+//                 "FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE," +
+//                 "FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE)"
+//             );
 
-            db.cDropTable = db.mConnection.prepareStatement("DROP TABLE comments");
-            db.cInsertOne = db.mConnection.prepareStatement("INSERT INTO comments VALUES(default,?,?,?)");
-            db.cSelectOne = db.mConnection.prepareStatement("SELECT * FROM comments,users WHERE comments.user_id = users.user_id AND post_id = ? AND comment_id = ?");
-            db.cDeleteOne = db.mConnection.prepareStatement("DELETE FROM comments WHERE post_id = ? AND comment_id = ?");
-            db.cSelectAll = db.mConnection.prepareStatement("SELECT * FROM comments,users WHERE comments.user_id = users.user_id AND post_id = ? ORDER BY comment_id ASC");
-            db.cUpdateOne = db.mConnection.prepareStatement("UPDATE comments SET comment = ? WHERE comment_id = ? and post_id = ?");
+//             db.cDropTable = db.mConnection.prepareStatement("DROP TABLE comments");
+//             db.cInsertOne = db.mConnection.prepareStatement("INSERT INTO comments VALUES(default,?,?,?)");
+//             db.cSelectOne = db.mConnection.prepareStatement("SELECT * FROM comments,users WHERE comments.user_id = users.user_id AND post_id = ? AND comment_id = ?");
+//             db.cDeleteOne = db.mConnection.prepareStatement("DELETE FROM comments WHERE post_id = ? AND comment_id = ?");
+//             db.cSelectAll = db.mConnection.prepareStatement("SELECT * FROM comments,users WHERE comments.user_id = users.user_id AND post_id = ? ORDER BY comment_id ASC");
+//             db.cUpdateOne = db.mConnection.prepareStatement("UPDATE comments SET comment = ? WHERE comment_id = ? and post_id = ?");
 
-            //LIKE DISLIKE STORE
-            db.ldCreateTable = db.mConnection.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS likeDislikeStore (" +
-                "user_id VARCHAR(50)," +
-                "post_id INTEGER," +
-                "status VARCHAR(30)," +
-                "FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE," +
-                "FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE)"
-            );
-            db.ldDropTable = db.mConnection.prepareStatement("DROP TABLE likeDislikeStore");
-            db.ldInsert = db.mConnection.prepareStatement("INSERT INTO likeDislikeStore VALUES(?,?,?)");
-            db.ldDelete = db.mConnection.prepareStatement("DELETE FROM likeDislikeStore WHERE user_id = ? and post_id = ?");
-            db.ldGetStatus = db.mConnection.prepareStatement("SELECT status FROM likeDislikeStore WHERE user_id = ? and post_id = ?");
+//             //LIKE DISLIKE STORE
+//             db.ldCreateTable = db.mConnection.prepareStatement(
+//                 "CREATE TABLE IF NOT EXISTS likeDislikeStore (" +
+//                 "user_id VARCHAR(50)," +
+//                 "post_id INTEGER," +
+//                 "status VARCHAR(30)," +
+//                 "FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE," +
+//                 "FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE)"
+//             );
+//             db.ldDropTable = db.mConnection.prepareStatement("DROP TABLE likeDislikeStore");
+//             db.ldInsert = db.mConnection.prepareStatement("INSERT INTO likeDislikeStore VALUES(?,?,?)");
+//             db.ldDelete = db.mConnection.prepareStatement("DELETE FROM likeDislikeStore WHERE user_id = ? and post_id = ?");
+//             db.ldGetStatus = db.mConnection.prepareStatement("SELECT status FROM likeDislikeStore WHERE user_id = ? and post_id = ?");
 
 
         } catch (SQLException e) {
@@ -691,34 +691,34 @@ public class Database {
         return res;
     }
     
-    int insertNewUser(String userID, String name, String email, String imageURL) {
-        int rowUpdate = 0;
-        try {
-            uInsertNewUser.setString(1, userID);
-            uInsertNewUser.setString(2, name);
-            uInsertNewUser.setString(3, email);
-            uInsertNewUser.setString(4, imageURL);
+//     int insertNewUser(String userID, String name, String email, String imageURL) {
+//         int rowUpdate = 0;
+//         try {
+//             uInsertNewUser.setString(1, userID);
+//             uInsertNewUser.setString(2, name);
+//             uInsertNewUser.setString(3, email);
+//             uInsertNewUser.setString(4, imageURL);
 
-            rowUpdate += uInsertNewUser.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return rowUpdate;
-    }
+//             rowUpdate += uInsertNewUser.executeUpdate();
+//         } catch (SQLException ex) {
+//             ex.printStackTrace();
+//         }
+//         return rowUpdate;
+//     }
 
-    int updateUserComment(String userID, String comment) {
-        int rowUpdate = -1;
-        try {
-            uUpdateComment.setString(1, comment);
-            uUpdateComment.setString(2, userID);
+//     int updateUserComment(String userID, String comment) {
+//         int rowUpdate = -1;
+//         try {
+//             uUpdateComment.setString(1, comment);
+//             uUpdateComment.setString(2, userID);
 
-            rowUpdate += uUpdateComment.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        return rowUpdate;
-    }
+//             rowUpdate += uUpdateComment.executeUpdate();
+//         } catch (SQLException ex) {
+//             ex.printStackTrace();
+//         }
+//
+//         return rowUpdate;
+//     }
 
     //Generates a random string of length 20 to use as session id
     String generateSessionID() {
@@ -739,38 +739,38 @@ public class Database {
      * 
      * @return The number of rows that were inserted
      */
-    int insertPost(String userID, String subject, String message) {
-        int count = 0;
-        try {
-            mInsertOnePost.setString(1, userID);
-            mInsertOnePost.setString(2, subject);
-            mInsertOnePost.setString(3, message);
-            count += mInsertOnePost.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return count;
-    }
+//     int insertPost(String userID, String subject, String message) {
+//         int count = 0;
+//         try {
+//             mInsertOnePost.setString(1, userID);
+//             mInsertOnePost.setString(2, subject);
+//             mInsertOnePost.setString(3, message);
+//             count += mInsertOnePost.executeUpdate();
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//         }
+//         return count;
+//     }
 
     /**
      * Query the database for a list of all subjects and their IDs
      * 
      * @return All rows, as an ArrayList
      */
-    ArrayList<RowData> selectAllPosts() {
-        ArrayList<RowData> res = new ArrayList<RowData>();
-        try {
-            ResultSet rs = mSelectAllPosts.executeQuery();
-            while (rs.next()) {
-                res.add(new RowData(rs.getInt("post_id"), rs.getString("user_id"), rs.getString("name"), rs.getString("subject"),rs.getString("message"), rs.getInt("likes"), rs.getInt("dislikes"), rs.getString("imageURL")));
-            }
-            rs.close();
-            return res;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//     ArrayList<RowData> selectAllPosts() {
+//         ArrayList<RowData> res = new ArrayList<RowData>();
+//         try {
+//             ResultSet rs = mSelectAllPosts.executeQuery();
+//             while (rs.next()) {
+//                 res.add(new RowData(rs.getInt("post_id"), rs.getString("user_id"), rs.getString("name"), rs.getString("subject"),rs.getString("message"), rs.getInt("likes"), rs.getInt("dislikes"), rs.getString("imageURL")));
+//             }
+//             rs.close();
+//             return res;
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             return null;
+//         }
+//     }
 
     /**
      * Get all data for a specific row, by ID
@@ -779,19 +779,19 @@ public class Database {
      * 
      * @return The data for the requested row, or null if the ID was invalid
      */
-    RowData selectPost(int id) {
-        RowData res = null;
-        try {
-            mSelectOnePost.setInt(1, id);
-            ResultSet rs = mSelectOnePost.executeQuery();
-            if (rs.next()) {
-                res = new RowData(rs.getInt("post_id"), rs.getString("user_id"), rs.getString("name"), rs.getString("subject"), rs.getString("message"), rs.getInt("likes"), rs.getInt("dislikes"), rs.getString("imageURL"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return res;
-    }
+//     RowData selectPost(int id) {
+//         RowData res = null;
+//         try {
+//             mSelectOnePost.setInt(1, id);
+//             ResultSet rs = mSelectOnePost.executeQuery();
+//             if (rs.next()) {
+//                 res = new RowData(rs.getInt("post_id"), rs.getString("user_id"), rs.getString("name"), rs.getString("subject"), rs.getString("message"), rs.getInt("likes"), rs.getInt("dislikes"), rs.getString("imageURL"));
+//             }
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//         }
+//         return res;
+//     }
 
     /**
      * Delete a row by ID
@@ -800,16 +800,16 @@ public class Database {
      * 
      * @return The number of rows that were deleted.  -1 indicates an error.
      */
-    int deletePost(int id) {
-        int res = -1;
-        try {
-            mDeleteOnePost.setInt(1, id);
-            res = mDeleteOnePost.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return res;
-    }
+//     int deletePost(int id) {
+//         int res = -1;
+//         try {
+//             mDeleteOnePost.setInt(1, id);
+//             res = mDeleteOnePost.executeUpdate();
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//         }
+//         return res;
+//     }
 
     /**
      * Update the message for a row in the database
@@ -819,21 +819,21 @@ public class Database {
      * 
      * @return The number of rows that were updated.  -1 indicates an error.
      */
-    int updatePost(int postID, String subject, String message) {
-        int res = -1;
-        try {
-            mUpdateOnePost.setString(1, subject);
-            mUpdateOnePost.setString(2, message);
-            // mUpdateOnePost.setInt(3, likes);
-            // mUpdateOnePost.setInt(4, dislikes);
-            mUpdateOnePost.setInt(3, postID);
+//     int updatePost(int postID, String subject, String message) {
+//         int res = -1;
+//         try {
+//             mUpdateOnePost.setString(1, subject);
+//             mUpdateOnePost.setString(2, message);
+//             // mUpdateOnePost.setInt(3, likes);
+//             // mUpdateOnePost.setInt(4, dislikes);
+//             mUpdateOnePost.setInt(3, postID);
           
-            res = mUpdateOnePost.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return res;
-    }
+//             res = mUpdateOnePost.executeUpdate();
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//         }
+//         return res;
+//     }
 
      /**
      * Update the number of likes for a given message specified by id in the database
@@ -842,20 +842,20 @@ public class Database {
      * 
      * @return The number of likes that were counted.
      */
-    int updateLikes(int postID, String action) {
-        try {
-            if (action.equals("up")) {
-                mUpdateLikeIncrement.setInt(1, postID);
-                numLikes = mUpdateLikeIncrement.executeUpdate();
-            } else if (action.equals("down")) {
-                mUpdateLikeDecrement.setInt(1, postID);
-                numLikes = mUpdateLikeDecrement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return numLikes;
-    }
+//     int updateLikes(int postID, String action) {
+//         try {
+//             if (action.equals("up")) {
+//                 mUpdateLikeIncrement.setInt(1, postID);
+//                 numLikes = mUpdateLikeIncrement.executeUpdate();
+//             } else if (action.equals("down")) {
+//                 mUpdateLikeDecrement.setInt(1, postID);
+//                 numLikes = mUpdateLikeDecrement.executeUpdate();
+//             }
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//         }
+//         return numLikes;
+//     }
 
      /**
      * Update the number of dislikes for a given message specified by id in the database
@@ -864,143 +864,143 @@ public class Database {
      * 
      * @return The number of dislikes that were counted.
      */
-    int updateDislikes(int postID, String action) {
-        try {
-            if (action.equals("up")) {
-                mUpdateDislikeIncrement.setInt(1, postID);
-                numDislikes = mUpdateDislikeIncrement.executeUpdate();
-            } else if (action.equals("down")) {
-                mUpdateDislikeDecrement.setInt(1, postID);
-                numDislikes = mUpdateDislikeDecrement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return numDislikes;
-    }
+//     int updateDislikes(int postID, String action) {
+//         try {
+//             if (action.equals("up")) {
+//                 mUpdateDislikeIncrement.setInt(1, postID);
+//                 numDislikes = mUpdateDislikeIncrement.executeUpdate();
+//             } else if (action.equals("down")) {
+//                 mUpdateDislikeDecrement.setInt(1, postID);
+//                 numDislikes = mUpdateDislikeDecrement.executeUpdate();
+//             }
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//         }
+//         return numDislikes;
+//     }
 
     //COMMENTS
-    int insertComment(String userID, int postID, String comment) {
-        int count = -1;
-        try {
-            cInsertOne.setString(1, userID);
-            cInsertOne.setInt(2, postID);
-            cInsertOne.setString(3, comment);
-            count += cInsertOne.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return count;
-    }
+//     int insertComment(String userID, int postID, String comment) {
+//         int count = -1;
+//         try {
+//             cInsertOne.setString(1, userID);
+//             cInsertOne.setInt(2, postID);
+//             cInsertOne.setString(3, comment);
+//             count += cInsertOne.executeUpdate();
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//         }
+//         return count;
+//     }
     
-    ArrayList<Comment> selectAllComments(int postID) {
-        ArrayList<Comment> res = new ArrayList<>();
-        try {
-            cSelectAll.setInt(1, postID);
+//     ArrayList<Comment> selectAllComments(int postID) {
+//         ArrayList<Comment> res = new ArrayList<>();
+//         try {
+//             cSelectAll.setInt(1, postID);
 
-            ResultSet rs = cSelectAll.executeQuery();
-            while (rs.next()) {
-                res.add(new Comment(rs.getInt("comment_id"), rs.getString("user_id"), rs.getString("name"), rs.getInt("post_id"), rs.getString("comment"), rs.getString("imageURL")));
-            }
-            rs.close();
-            return res;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//             ResultSet rs = cSelectAll.executeQuery();
+//             while (rs.next()) {
+//                 res.add(new Comment(rs.getInt("comment_id"), rs.getString("user_id"), rs.getString("name"), rs.getInt("post_id"), rs.getString("comment"), rs.getString("imageURL")));
+//             }
+//             rs.close();
+//             return res;
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//             return null;
+//         }
+//     }
 
-    Comment selectComment(int postID, int commentID) {
-        Comment res = null;
-        try {
-            cSelectOne.setInt(1, postID);
-            cSelectOne.setInt(2, commentID);
+//     Comment selectComment(int postID, int commentID) {
+//         Comment res = null;
+//         try {
+//             cSelectOne.setInt(1, postID);
+//             cSelectOne.setInt(2, commentID);
 
-            ResultSet rs = cSelectOne.executeQuery();
-            if (rs.next()) {
-                res = new Comment(rs.getInt("comment_id"), rs.getString("user_id"), rs.getString("name"), rs.getInt("post_id"), rs.getString("comment"), rs.getString("imageURL"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return res;
-    }
+//             ResultSet rs = cSelectOne.executeQuery();
+//             if (rs.next()) {
+//                 res = new Comment(rs.getInt("comment_id"), rs.getString("user_id"), rs.getString("name"), rs.getInt("post_id"), rs.getString("comment"), rs.getString("imageURL"));
+//             }
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//         }
+//         return res;
+//     }
 
-    int deleteComment(int postID, int commentID) {
-        int res = -1;
-        try {
-            cDeleteOne.setInt(1, postID);
-            cDeleteOne.setInt(2, commentID);
+//     int deleteComment(int postID, int commentID) {
+//         int res = -1;
+//         try {
+//             cDeleteOne.setInt(1, postID);
+//             cDeleteOne.setInt(2, commentID);
 
-            res = cDeleteOne.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return res;
-    }
+//             res = cDeleteOne.executeUpdate();
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//         }
+//         return res;
+//     }
 
-    int updateComment(int postID, int commentID, String comment) {
-        int res = -1;
-        try {
-            cUpdateOne.setString(1, comment);
-            cUpdateOne.setInt(2, commentID);
-            cUpdateOne.setInt(3, postID);
+//     int updateComment(int postID, int commentID, String comment) {
+//         int res = -1;
+//         try {
+//             cUpdateOne.setString(1, comment);
+//             cUpdateOne.setInt(2, commentID);
+//             cUpdateOne.setInt(3, postID);
           
-            res = cUpdateOne.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return res;
-    }
+//             res = cUpdateOne.executeUpdate();
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//         }
+//         return res;
+//     }
 
-    //LIKE AND DISLIKE STORE
+//     //LIKE AND DISLIKE STORE
 
-    //Check whether user liked/disliked or none for a post
-    String checkLikeDislikeStatus(String userID, int postID) {
-        String status = "none";
-        ResultSet rs = null;
-        try {
-            ldGetStatus.setString(1, userID);
-            ldGetStatus.setInt(2, postID);
-            rs = ldGetStatus.executeQuery();
+//     //Check whether user liked/disliked or none for a post
+//     String checkLikeDislikeStatus(String userID, int postID) {
+//         String status = "none";
+//         ResultSet rs = null;
+//         try {
+//             ldGetStatus.setString(1, userID);
+//             ldGetStatus.setInt(2, postID);
+//             rs = ldGetStatus.executeQuery();
 
-            //If status exists then user has liked or disliked the post already
-            if (rs.next()) {
-                status = rs.getString("status");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return status;
-    }
+//             //If status exists then user has liked or disliked the post already
+//             if (rs.next()) {
+//                 status = rs.getString("status");
+//             }
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//         }
+//         return status;
+//     }
     
-    //Insert into like dislike store if user has not liked/disliked a post yet
-    int insertLikeDislikeStore(String userID, int postID, String status) {
-        int res = -1;
-        try {
-            ldInsert.setString(1, userID);
-            ldInsert.setInt(2, postID);
-            ldInsert.setString(3, status);
+//     //Insert into like dislike store if user has not liked/disliked a post yet
+//     int insertLikeDislikeStore(String userID, int postID, String status) {
+//         int res = -1;
+//         try {
+//             ldInsert.setString(1, userID);
+//             ldInsert.setInt(2, postID);
+//             ldInsert.setString(3, status);
           
-            res = ldInsert.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return res;
-    }
+//             res = ldInsert.executeUpdate();
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//         }
+//         return res;
+//     }
 
-    int deleteLikeDislikeStore(String userID, int postID) {
-        int res = -1;
-        try {
-            ldDelete.setString(1, userID);
-            ldDelete.setInt(2, postID);
+//     int deleteLikeDislikeStore(String userID, int postID) {
+//         int res = -1;
+//         try {
+//             ldDelete.setString(1, userID);
+//             ldDelete.setInt(2, postID);
           
-            res = ldDelete.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return res;
-    }
+//             res = ldDelete.executeUpdate();
+//         } catch (SQLException e) {
+//             e.printStackTrace();
+//         }
+//         return res;
+//     }
 
 
 
@@ -1013,15 +1013,15 @@ public class Database {
         try {
             //Need to create tables in this order to satisfy key constraints
             //Create users table
-            uCreateTable.execute();
+           // uCreateTable.execute();
             //Create posts tables
-            mCreateTable.execute();
+            //mCreateTable.execute();
             //Create sessionStore table
             sCreateTable.execute();
             //Create comments table
-            cCreateTable.execute();
+            //cCreateTable.execute();
             //Create likeDislikeStore table
-            ldCreateTable.execute();
+            //ldCreateTable.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -1035,15 +1035,15 @@ public class Database {
         try {
             //Need to drop tables in this order to not break key contraints
             //Drop likeDislikeStore table
-            ldDropTable.execute();
+           // ldDropTable.execute();
             //Drop comments table
-            cDropTable.execute();
+            //cDropTable.execute();
             //Drop sessionStore table
             sDropTable.execute();
             //Drop posts table
-            mDropTable.execute();
+           // mDropTable.execute();
             //Drop users table
-            uDropTable.execute();
+            //uDropTable.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
