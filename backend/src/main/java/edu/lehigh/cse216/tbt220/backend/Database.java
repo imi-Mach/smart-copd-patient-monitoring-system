@@ -304,8 +304,8 @@ public class Database {
             //DailyStats table
             db.dSDropTable = db.mConnection.prepareStatement("DROP TABLE dailyStats");
             db.dSGetStat = db.mConnection.prepareStatement("SELECT * FROM dailyStats where dailyStatID = ?");
-            db.dSInsertNewStat = db.mConnection.prepareStatement("INSERT INTO dailyStats VALUES(?,?,?,?,?,?,?,?)");
-            db.dSDeleteStat = db.mConnection.prepareStatement("DELETE FROM dailyStats WHERE dailyStatID = ?");
+            db.dSInsertNewStat = db.mConnection.prepareStatement("INSERT INTO dailyStats VALUES(?,?,?,?,?,?,?,?); INSERT INTO logStats(?,?)");
+            db.dSDeleteStat = db.mConnection.prepareStatement("DELETE FROM logStats WHERE dailyStatID = ?; DELETE FROM dailyStats WHERE dailyStatID = ?");
             db.dSCheckIfStatExists = db.mConnection.prepareStatement("SELECT dailyStatID FROM dailyStats WHERE dailyStatID = ?");
             
             // Airtable Create LogStats Table
@@ -321,7 +321,7 @@ public class Database {
             db.lSDropTable = db.mConnection.prepareStatement("DROP TABLE logStats");
             db.lSGetLog = db.mConnection.prepareStatement("SELECT * FROM logStats where patientID = ? AND dailyStatID = ?");
             db.lSInsertNewLog = db.mConnection.prepareStatement("INSERT INTO logStats VALUES(?,?)");
-            db.lSDeleteLog = db.mConnection.prepareStatement("DELETE FROM dailyStats WHERE patientID = ? AND dailyStatID = ?");
+            db.lSDeleteLog = db.mConnection.prepareStatement("DELETE FROM logStats WHERE patientID = ? AND dailyStatID = ?; DELETE FROM dailtStats WHERE dailyStatID = ?");
             db.lSCheckIfLogExists = db.mConnection.prepareStatement("SELECT dailyStatID AND patientID FROM dailyStats WHERE dailyStatID = ? AND patientID = ?");
             
             // Airtable Create PatientOf Table
