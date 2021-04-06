@@ -46,6 +46,19 @@ url = "https://api.airtable.com/v0/" + base_id + "/" + table_name
 
 How to connect to AirTable w/ Java: [Link](https://github.com/Sybit-Education/airtable.java)
 
+## PLSQL
+
+1. Go to [PSQL](https://www.postgresql.org/download/) and select the appropriate download for you device
+2. Follow the instructions and select the default options
+3. Set a password (remember it!)
+4. When StackBuilder opens, select the second option to connect to a server (this is the local server)
+5. You then will be prompted to download additional drivers / plugins, select cancel since this is not necessary
+6. From there, you can launch SQL Shell (the shell for running psql commands) or pgAdmin which is the user interface. Both do the same and connect to a database
+7. When entering into the Shell, select all of the deafult options (Just hit enter) and enter the password. Now you're connected!
+8. When entering into pgAdmin, you will be prompted for that password. Once that's entered, you can view the database.
+
+For more documentation, check out the [PSQL Site](https://www.postgresql.org/docs/current/)
+
 ## Contributors
 
 * Maximillian Machado : Project Manager
