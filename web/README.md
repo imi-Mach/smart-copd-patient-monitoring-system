@@ -1,5 +1,14 @@
 # web
 
+
+## todo
+```
+Convert the single html file to vue project format
+Now with google login, we send the token returned from google server to backend via (get?), and 
+store the token in local storage
+In login.vue, client ID is hardcoded as a variable in data, should be store in env later.
+```
+
 ## Project setup
 ```
 npm install
@@ -8,6 +17,17 @@ npm install
 ### Compiles and hot-reloads for development
 ```
 npm run serve
+```
+## Package used
+```
+vue-google-signin-button-directive (used for sign in with google)
+npm install --save vue-google-signin-button-directive
+
+vue-resource (to send http requests)
+npm install vue-resource
+
+bootstrap (styles)
+npm install bootstrap
 ```
 
 ### Compiles and minifies for production
