@@ -5,7 +5,7 @@
 ```
 Convert the single html file to vue project format
 Now with google login, we send the token returned from google server to backend via (get?), and 
-store the token in local storage
+store the token in local storage URL need to be change later
 In login.vue, client ID is hardcoded as a variable in data, should be store in env later.
 ```
 
