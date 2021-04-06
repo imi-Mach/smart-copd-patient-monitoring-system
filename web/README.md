@@ -18,7 +18,7 @@ npm install
 ```
 npm run serve
 ```
-## Package used
+## Packages used
 ```
 vue-google-signin-button-directive (used for sign in with google)
 npm install --save vue-google-signin-button-directive
