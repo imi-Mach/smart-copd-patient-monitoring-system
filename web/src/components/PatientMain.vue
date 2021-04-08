@@ -4,7 +4,7 @@
       <patient-overview></patient-overview>
     </el-tab-pane>
     <el-tab-pane label="Data">
-      <patient-data :biodata='biodata' @updateData='updateBioData'></patient-data>
+      <patient-data :biodata='biodata'></patient-data>
     </el-tab-pane>
     <el-tab-pane label="Record Biodata">
       <patient-bio-data></patient-bio-data>

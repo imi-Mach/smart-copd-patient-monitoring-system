@@ -2,8 +2,7 @@
   <div class="home">
     <div id="nav">
       <router-link to="/">Patient Portal</router-link> |
-      <router-link to="/about">Healthcare Profession</router-link> | 
-      <router-link to="/patients">Try</router-link>
+      <router-link to="/about">Healthcare Profession</router-link> 
     </div>
     <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Smart COPD Patient Monitoring System"/>
