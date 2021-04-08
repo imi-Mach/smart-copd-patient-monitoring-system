@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <p>{{ note }}</p>
+    <p>Patient Portal</p>
     
   </div>
 </template>
@@ -11,11 +11,6 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
-  },
-  data(){
-    return{
-      note: "Logo to be changed later"
-    }
   }
 }
 </script>
