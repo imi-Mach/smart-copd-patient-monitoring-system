@@ -57,6 +57,12 @@ How to connect to AirTable w/ Java: [Link](https://github.com/Sybit-Education/ai
 7. When entering into the Shell, select all of the deafult options (Just hit enter) and enter the password. Now you're connected!
 8. When entering into pgAdmin, you will be prompted for that password. Once that's entered, you can view the database.
 
+# pgAdmin
+1. Download [pgAdmin](https://www.pgadmin.org/)
+2. After installation. Create new server group in the file browser on the left.
+3. Create new server under the server group just created.
+4. Connect with the credentials provided in heroku
+
 For more documentation, check out the [PSQL Site](https://www.postgresql.org/docs/current/)
 
 ## Contributors
