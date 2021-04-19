@@ -1,0 +1,30 @@
+{
+  "name": "RateMyCourse",
+  "version": "1.0.0",
+  "description": "This project is the starting point for your future software development journey in CSE 298: Software Development Methodologies",
+  "engines": {
+    "node": "14.x"
+  },
+  "scripts": {
+    "init": "./install-project.sh",
+    "start": "npm run start --prefix ./server",
+    "heroku-prebuild": "npm run init",
+    "heroku-postbuild": "npm run build --prefix ./client",
+    "watch-client": "npm run build-watch --prefix ./client",
+    "watch-server": "npm run watch --prefix ./server",
+    "watch-project": "concurrently \"npm run watch-client\" \"npm run watch-server\" --timestamp-format \"HH:mm:ss\" --prefix \"{time} [{name}]\" --kill-others --names \"client,server\" "
+  },
+  "devDependencies": {
+    "concurrently": "5.3.0"
+  },
+  "private": true,
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@types/jest": "^26.0.19",
+    "@types/vue-select": "^2.5.1",
+    "vue": "^2.6.12",
+    "vue-cookies": "^1.7.4",
+    "vue-router": "^3.4.9",
+    "vue-select": "^3.11.2"
+  }
+}
