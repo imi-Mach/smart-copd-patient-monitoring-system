@@ -1,4 +1,3 @@
-……...
 # deploy script for the web front-end
 
 # This file is responsible for preprocessing all TypeScript files, making sure
@@ -6,7 +5,7 @@
 # web deploy directory.
 
 # This is the resource folder where maven expects to find our files
-TARGETFOLDER=../backend/src/main/java/edu/lehigh/cse216/tbt220/backend
+TARGETFOLDER=../backend/src/main/java/edu/lehigh/cse216/tbt220/backend/dist
 
 # This is the folder that we used with the Spark.staticFileLocation command
 WEBFOLDERNAME=dist
