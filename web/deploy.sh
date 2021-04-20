@@ -5,10 +5,10 @@
 # web deploy directory.
 
 # This is the resource folder where maven expects to find our files
-TARGETFOLDER=../backend/src/main/java/edu/lehigh/cse216/tbt220/backend/dist
+TARGETFOLDER=../backend/src/main/java/edu/lehigh/cse216/tbt220/backend
 
 # This is the folder that we used with the Spark.staticFileLocation command
-WEBFOLDERNAME=web/dist
+WEBFOLDERNAME=dist
 
 # step 1: make sure we have someplace to put everything.  We will delete the
 #         old folder tree, and then make it from scratch
@@ -20,9 +20,9 @@ mkdir $TARGETFOLDER/$WEBFOLDERNAME
 npm update
 
 # there are many more steps to be done.  For now, we will just copy an HTML file
-cp index.html $TARGETFOLDER/$WEBFOLDERNAME
+cp dist/index.html $TARGETFOLDER/$WEBFOLDERNAME
 
 # step 3: copy jQuery, Handlebars, and Bootstrap files
 cp node_modules/jquery/dist/jquery.min.js $TARGETFOLDER/$WEBFOLDERNAME
 cp node_modules/handlebars/dist/handlebars.min.js $TARGETFOLDER/$WEBFOLDERNAME
-cp node
+#cp node $TARGETFOLDER/$WEBFOLDERNAME
