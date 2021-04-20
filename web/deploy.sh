@@ -8,7 +8,7 @@
 TARGETFOLDER=../backend/src/main/java/edu/lehigh/cse216/tbt220/backend/dist
 
 # This is the folder that we used with the Spark.staticFileLocation command
-WEBFOLDERNAME=dist
+WEBFOLDERNAME=web/dist
 
 # step 1: make sure we have someplace to put everything.  We will delete the
 #         old folder tree, and then make it from scratch
