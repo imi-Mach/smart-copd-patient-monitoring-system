@@ -21,12 +21,18 @@ export default {
     OnGoogleAuthSuccess(idToken) {
       // Receive the idToken and make your magic with the backend
       console.log(idToken);
-      
+
       //to be modified and put in methods
       this.$http.post("/login", idToken).then(
         (response) => {
+           // get status
+      response.status;
+
+      // get status text
+      response.statusText;
           // get body data
           this.someData = response.body;
+          console.log(this.someData)
         },
         (response) => {
           // error callback
