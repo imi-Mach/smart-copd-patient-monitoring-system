@@ -1,8 +1,7 @@
 <template>
-<div>
-  <img v-google-signin-button="clientId" class="google-signin-button" src="@/assets/btn_google_signin_dark_pressed_web@2x.png">
-</div>
-
+  <button v-google-login-button="clientId" class="google-signin-button">
+    Continue with Google
+  </button>
 </template>
 
 <script>
@@ -22,7 +21,7 @@ export default {
       // Receive the idToken and make your magic with the backend
       console.log(idToken);
 
-      //to be modified and put in methods
+      // to be modified and put in methods
       this.$http.post("/login", idToken).then(
         (response) => {
            // get status
