@@ -105,12 +105,9 @@ public class App {
 
                 String sessionID = db.loginUser(userId, newSessionID);
 
-                System.out.println("Success?");
-
                 return gson.toJson(new StructuredResponse("ok", null, newSessionID));
 
             } else {
-                System.out.println("Fail");
                 return gson.toJson(new StructuredResponse("error", "error during login", null));
             }
 
