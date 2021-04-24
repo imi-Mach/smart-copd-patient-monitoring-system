@@ -16,7 +16,7 @@
             <div style="display: none;" id="google-signin-button"></div>
           </div>
           <div id='guest-button'>
-            <router-link class='router' to='/sprint3'>Continue as Geust}</router-link>
+            <router-link class='router' to='/sprint3'>Continue as Geus</router-link>
           </div>
           <span>or</span>
           <div id='guest-button'>
@@ -29,9 +29,12 @@
 
 <script>
 export default {
+  
   mounted() {
     gapi.signin2.render('google-signin-button', {
+      console.log('success');
         onsuccess: this.onSignIn
+        console.log('help');
     });
 
   },
