@@ -1,53 +1,106 @@
 <template>
-  <button v-google-login-button="clientId" class="google-signin-button">
-    Continue with Google
-  </button>
+  <div class="page page--about">
+        <h1>Welcome to RateMyCourse!</h1>
+          <div class='buttons'>
+            <h2>Sign in Using Google:</h2>
+            <div id="google-signin-button"></div>
+            <router-link style="display: none;" class='router' to='/sprint3'>Continue as</router-link>
+          </div>
+          <span>or</span>
+          <div id='guest-button'>
+            <router-link class='router' to='/sprint3'>Continue as Guest</router-link>
+            <button style="display: none;" class='router' v-on:click='signOut'>Sign Out</button>
+          </div>
+          <div class='buttons'>
+            <h2 style="display: none;">Sign in Using Google:</h2>
+            <div style="display: none;" id="google-signin-button"></div>
+          </div>
+          <div id='guest-button'>
+            <router-link class='router' to='/sprint3'>Continue as Geust}</router-link>
+          </div>
+          <span>or</span>
+          <div id='guest-button'>
+            <router-link style="display: none;" class='router' to='/sprint3'>Continue as Guest</router-link>
+            <button class='router' v-on:click='signOut'>Sign Out</button>
+          </div>
+</div>
+
 </template>
 
 <script>
-import GoogleSignInButton from "vue-google-signin-button-directive";
-
-
 export default {
-  directives: {
-    GoogleSignInButton,
+  mounted() {
+    gapi.signin2.render('google-signin-button', {
+        onsuccess: this.onSignIn
+    });
+
   },
-  data: () => ({
-    clientId:
-      "391364610933-efk7s0n53hv067p25v31dovu9d236vp7.apps.googleusercontent.com",
-  }),
   methods: {
-    OnGoogleAuthSuccess(idToken) {
-      // Receive the idToken and make your magic with the backend
-      console.log(idToken);
-
-      // to be modified and put in methods
-      this.$http.post("/login", idToken).then(
-        (response) => {
-           // get status
-      response.status;
-
-      // get status text
-      response.statusText;
-          // get body data
-          this.someData = response.body;
-          console.log(this.someData)
-        },
-        (response) => {
-          // error callback
-        }
-      );
-
-
+    onSignIn (user) {
+            const profile = user.getBasicProfile();
+            console.log('profile', profile);
+            window.location.reload();
     },
-    OnGoogleAuthFail(error) {
-      console.log(error);
-    },
+    signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out.');
+        });
+        auth2.disconnect();
+        window.location.reload();
+    }
   }
-};
-</script>
-<style>
-.google-signin-button{
-  width:150px
+
 }
+</script>
+
+<style scoped>
+
+h1, .mt-3 {
+  font-family: "Roboto Slab", serif;
+  padding: 0;
+}
+h1 {
+  color: #4987e8;
+  font-weight: 700;
+  margin: 8px 0;
+  text-align: center;
+}
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin: 40px;
+}
+.buttons * {
+    margin: 10px;
+}
+h2 {
+  font-family: "Roboto Slab", serif;
+}
+span {
+  text-align: center;
+  display: block;
+  font-size: 24px;
+  font-family: "Roboto Slab", serif;
+}
+#guest-button {
+  display: flex;
+  justify-content: center;
+}
+
+#guest-button .router {
+  margin: 40px auto;
+  background-color: #4987e8;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: "Roboto Slab", serif;
+  font-size: 24px;
+  padding: 4px 20px;
+}
+
+.router:hover {
+  text-decoration: underline;
+}
+
 </style>
