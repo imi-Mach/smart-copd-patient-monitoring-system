@@ -85,8 +85,11 @@ public class App {
 
             GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(htrans, jfac)
                     .setAudience(Collections
-                            .singletonList("649625495044-a7b17r9ktheh82dgbflb5f18a9k34dea.apps.googleusercontent.com"))
+                            .singletonList("391364610933-efk7s0n53hv067p25v31dovu9d236vp7.apps.googleusercontent.com"))
                     .build();
+            
+            System.out.println("The verifier");
+            System.out.println(verifier);
 
             // (Receive idTokenString by HTTPS POST)
             String idTokenString = gson.fromJson(request.body(), String.class);
@@ -138,11 +141,6 @@ public class App {
             String user_id = request.params("userID");
             return gson.toJson(new StructuredResponse("ok", null, db.getPatient(user_id)));
         });
-
-        /*Spark.post("/stat/:user_id", (request, response) -> {
-            
-
-        }*/
 
 
     }
