@@ -32,17 +32,29 @@ export default {
   
   mounted() {
     gapi.signin2.render('google-signin-button', {
-      console.log('success');
         onsuccess: this.onSignIn
-        console.log('help');
     });
 
   },
   methods: {
     onSignIn (user) {
+            this.$http.post("/login", user.getId()).then(
+              (response) => {
+                // get status
+                response.status;
+                // get status test
+                response.statusText;
+                // get body data
+                this.someData = response.body;
+                console.log(this.someData)
+              },
+              (response) => {
+                // error callback
+              }
+            )
             const profile = user.getBasicProfile();
             console.log('profile', profile);
-            window.location.reload();
+            //window.location.reload();
     },
     signOut() {
         var auth2 = gapi.auth2.getAuthInstance();
