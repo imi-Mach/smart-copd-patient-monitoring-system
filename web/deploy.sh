@@ -13,6 +13,7 @@ WEBFOLDERNAME=web
 # step 1: make sure we have someplace to put everything.  We will delete the
 #         old folder tree, and then make it from scratch
 rm -rf $TARGETFOLDER
+rm -rf ./dist
 mkdir $TARGETFOLDER
 mkdir $TARGETFOLDER/$WEBFOLDERNAME
 

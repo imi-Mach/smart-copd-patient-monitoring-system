@@ -61,7 +61,7 @@ public class App {
         String static_location_override = System.getenv("STATIC_LOCATION");
         // System.out.println(static_location_override);
         if (static_location_override == null) {
-            Spark.staticFileLocation("/web");
+            Spark.staticFileLocation("/web/dist");
         } else {
             Spark.staticFiles.externalLocation(static_location_override);
         }
@@ -104,9 +104,13 @@ public class App {
                 String newSessionID = db.generateSessionID();
 
                 String sessionID = db.loginUser(userId, newSessionID);
+
+                System.out.println("Success?");
+
                 return gson.toJson(new StructuredResponse("ok", null, newSessionID));
 
             } else {
+                System.out.println("Fail");
                 return gson.toJson(new StructuredResponse("error", "error during login", null));
             }
 
