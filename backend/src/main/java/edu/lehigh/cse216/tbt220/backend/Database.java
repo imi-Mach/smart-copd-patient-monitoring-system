@@ -399,8 +399,8 @@ public class Database {
             sLoginUser.setString(2, sessionID);
             sLoginUser.executeUpdate();
 
-            sGetNewSID.setString(1, userID);
-            ResultSet rs = sGetNewSID.executeQuery();
+            sCheckLogin.setString(1, userID);
+            ResultSet rs = sCheckLogin.executeQuery();
 
             String newSessionID = rs.getString("sessionID");
             return newSessionID;

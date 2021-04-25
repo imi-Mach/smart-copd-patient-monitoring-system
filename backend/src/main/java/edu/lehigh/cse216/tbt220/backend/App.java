@@ -87,9 +87,6 @@ public class App {
                     .setAudience(Collections
                             .singletonList("391364610933-efk7s0n53hv067p25v31dovu9d236vp7.apps.googleusercontent.com"))
                     .build();
-            
-            System.out.println("The verifier");
-            System.out.println(verifier);
 
             // (Receive idTokenString by HTTPS POST)
             String idTokenString = gson.fromJson(request.body(), String.class);
