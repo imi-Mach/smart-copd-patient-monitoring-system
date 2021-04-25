@@ -1,8 +1,12 @@
 <template>
-<div>
-  <img v-google-signin-button="clientId" class="google-signin-button" src="@/assets/btn_google_signin_dark_pressed_web@2x.png">
-</div>
-
+  <div>
+    <div>
+      <img v-google-signin-button="clientId" class="google-signin-button" src="@/assets/btn_google_signin_dark_pressed_web@2x.png">
+    </div>
+    <div>
+      <router-link to="/signup">Sign Up</router-link> 
+    </div>
+  </div>
 </template>
 
 <script>
@@ -33,6 +37,7 @@ export default {
           // error callback
           console.log(response.mStatus)
           console.log(response.mMessage)
+          this.$router.push('patients');
         }
       );
 

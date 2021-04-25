@@ -21,6 +21,11 @@ export default new Router({
       path: '/patients',
       name: 'Patient',
       component: () => import('../views/Patient.vue')
+    },
+    {
+      path: '/signup',
+      name: 'Signup',
+      component: () => import('../views/Signup.vue')
     }
   ]
 });
