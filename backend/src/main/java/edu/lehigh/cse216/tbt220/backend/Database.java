@@ -402,7 +402,7 @@ public class Database {
             sCheckLogin.setString(1, userID);
             ResultSet rs = sCheckLogin.executeQuery();
 
-            String newSessionID = rs.getString("sessionID");
+            String newSessionID = rs.getString("session_id");
             return newSessionID;
 
         } catch(SQLException e){
