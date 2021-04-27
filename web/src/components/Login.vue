@@ -32,7 +32,7 @@ export default {
         (response) => {
           // get body data
           this.someData = response.body;
-          this.$http.get("/check/:userID", idToken).then(
+          this.$http.get("/check/" + idToken).then(
             (response) => {
               // get body data
               console.log('help');
@@ -40,6 +40,7 @@ export default {
               console.log('Patient is within the database');
               this.$router.push('patients');
               console.log(response.mStatus);
+              console.log(response.mData);
               console.log('help pt 2');
               console.log(response.mMessage);
             },
