@@ -241,7 +241,7 @@ public class Database {
             //AUTHENTICATION
             db.sCreateTable = db.mConnection.prepareStatement(
                     "CREATE TABLE IF NOT EXISTS sessionStore (" +
-                    "user_id VARCHAR(50)," +
+                    "user_id VARCHAR," +
                     "session_id VARCHAR(30))"
             );
             //Session Store
@@ -358,6 +358,7 @@ public class Database {
      */
     boolean checkLogin(String sessionID){
         ResultSet rs = null;
+        System.out.print("<3 Thanos");
         try {
             sCheckLogin.setString(1, sessionID);
 
@@ -401,7 +402,7 @@ public class Database {
 
             sCheckLogin.setString(1, userID);
             ResultSet rs = sCheckLogin.executeQuery();
-
+            rs.next();
             String newSessionID = rs.getString("session_id");
             return newSessionID;
 
@@ -511,12 +512,12 @@ public class Database {
         try {
 
             //creating all the tables
+            sCreateTable.execute();
+            pCreateTable.execute();
+            hCreateTable.execute();
             dSCreateTable.execute();
             pOCreateTable.execute();
             lSCreateTable.execute();
-            sCreateTable.execute();
-            hCreateTable.execute();
-            pCreateTable.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -531,11 +532,11 @@ public class Database {
         try {
 
             //dropping all the tabless
+            lSDropTable.execute();
+            pODropTable.execute();
             pDropTable.execute();
             sDropTable.execute();
             hDropTable.execute();
-            lSDropTable.execute();
-            pODropTable.execute();
             dSDropTable.execute();
 
         } catch (SQLException e) {

@@ -114,6 +114,7 @@ public class App {
         });
 
         Spark.get("/check/:userID", (request, response) -> {
+            System.out.println("Brian is so cute");
             String userId = request.params("userID");
             boolean check = db.checkIfPatientExists(userId);
             if(check){
