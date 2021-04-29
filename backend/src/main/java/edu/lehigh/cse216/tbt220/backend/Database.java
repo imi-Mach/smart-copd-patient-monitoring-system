@@ -242,7 +242,7 @@ public class Database {
             db.sCreateTable = db.mConnection.prepareStatement(
                     "CREATE TABLE IF NOT EXISTS sessionStore (" +
                     "user_id VARCHAR," +
-                    "session_id VARCHAR(30))"
+                    "session_id VARCHAR(30));"
             );
             //Session Store
             db.sDropTable = db.mConnection.prepareStatement("DROP TABLE sessionStore");
@@ -263,7 +263,7 @@ public class Database {
                 "lastName varchar(20) not null," +
                 "DOB varchar(10) not null," +
                 "phoneNumber varchar(10) not null," +
-                "riskLevel int check(riskLevel > 0)"
+                "riskLevel int check(riskLevel > 0));"
             );
             
             //Patient table
@@ -278,7 +278,7 @@ public class Database {
                 "CREATE TABLE IF NOT EXISTS healthCareProvider (" +
                 "healthCareID varchar(8) not null primary key," +
                 "firstName varchar(20) not null," +
-                "lastName varchar(20)"
+                "lastName varchar(20));"
             );
             
             //HealthCare Provider Table
@@ -298,7 +298,7 @@ public class Database {
                 "weight int check(weight > 0)," +
                 "temperature int check(temperature > 90)," +
                 "bloodPressure varchar(6)," +
-                "glucoseLevel int check(glucoseLevel > 0)"
+                "glucoseLevel int check(glucoseLevel > 0));"
             );
             
             //DailyStats table
@@ -314,7 +314,7 @@ public class Database {
                 "patientID varchar(8) not null," +
                 "dailyStatID varchar(8) not null," +
                 "foreign key(patientID) references patients(patientID)," +
-                "foreign key(dailyStatID) references dailyStats(dailyStatID)"
+                "foreign key(dailyStatID) references dailyStats(dailyStatID));"
             );
             
             //LogStats table
@@ -330,7 +330,7 @@ public class Database {
                 "healthCareID varchar(8) not null," +
                 "patientID varchar(8) not null," +
                 "foreign key(healthCareID) references healthCareProvider(healthCareID)," +
-                "foreign key(patientID) references patients(patientID)"
+                "foreign key(patientID) references patients(patientID));"
             );
             
             //PatientOf table

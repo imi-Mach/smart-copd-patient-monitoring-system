@@ -32,6 +32,7 @@ export default {
         (response) => {
           // get body data
           this.someData = response.body;
+          console.log(this.someData);
           this.$http.get("/check/" + idToken).then(
             (response) => {
               // get body data
