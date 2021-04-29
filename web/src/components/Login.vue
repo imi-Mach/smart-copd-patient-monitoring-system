@@ -33,26 +33,7 @@ export default {
           // get body data
           this.someData = response.body;
           console.log(this.someData);
-          this.$http.get("/check/" + idToken).then(
-            (response) => {
-              // get body data
-              console.log('help');
-              this.someData = response.body;
-              console.log('Patient is within the database');
-              this.$router.push('patients');
-              console.log(response.mStatus);
-              console.log(response.mData);
-              console.log('help pt 2');
-              console.log(response.mMessage);
-            },
-            (response) => {
-              console.log(response.mStatus);
-              console.log('some message');
-              console.log(response.mMessage);
-            }
-          );
           
-          console.log('router should have pushed');
         },
         (response) => {
           // error callback
@@ -62,6 +43,19 @@ export default {
         }
       );
 
+    console.log('This is a test:')
+    this.$http.get("/check/" + idToken).then(
+      (response) => {
+        // get body data
+        this.someData = response.body;
+        console.log(this.someData)
+      },
+      (response) => {
+        console.log(response.mStatus);
+        console.log('some message');
+        console.log(response.mMessage);
+      }
+    );
 
     },
     OnGoogleAuthFail(error) {
