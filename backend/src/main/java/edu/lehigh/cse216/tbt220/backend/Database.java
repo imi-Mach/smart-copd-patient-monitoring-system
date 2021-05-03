@@ -52,6 +52,7 @@ public class Database {
     private PreparedStatement dSCreateTable;
     private PreparedStatement dSDropTable;
     private PreparedStatement dSGetStat;
+    private PreparedStatement dSGetAllStat;
     private PreparedStatement dSInsertNewStat;
     private PreparedStatement dSDeleteStat;
     private PreparedStatement dSCheckIfStatExists;
@@ -304,6 +305,7 @@ public class Database {
             //DailyStats table
             db.dSDropTable = db.mConnection.prepareStatement("DROP TABLE dailyStats");
             db.dSGetStat = db.mConnection.prepareStatement("SELECT * FROM dailyStats where dailyStatID = ?");
+            db.dSGetAllStat = db.mConnection.prepareStatement("SELECT * FROM dailyStats DS, patients P, logStats LS where DS.dailyStatID = LS.dailyStatID AND P.patientID = LS.patientID AND P.patientID = ?");
             db.dSInsertNewStat = db.mConnection.prepareStatement("INSERT INTO dailyStats VALUES(?,?,?,?,?,?,?,?); INSERT INTO logStats(?,?)");
             db.dSDeleteStat = db.mConnection.prepareStatement("DELETE FROM logStats WHERE dailyStatID = ?; DELETE FROM dailyStats WHERE dailyStatID = ?");
             db.dSCheckIfStatExists = db.mConnection.prepareStatement("SELECT dailyStatID FROM dailyStats WHERE dailyStatID = ?");
