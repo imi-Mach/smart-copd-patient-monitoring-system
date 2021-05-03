@@ -140,6 +140,27 @@ public class App {
             return gson.toJson(new StructuredResponse("ok", null, db.getPatient(user_id)));
         });
 
+        Spark.post("/insertData/:user_id", (request, response) -> {
+            String userID= request.params("userID");
+            String date =  request.params("date");
+            int heartRate =  Integer.parseInt(request.params("heartRate"));
+            int oxygenLevel = Integer.parseInt(request.params("oxygenLevel"));
+            int weight = Integer.parseInt(request.params("weight"));
+            int temperature = Integer.parseInt(request.params("temperature"));
+            String blood = request.params("bloodPressure");
+            int glucose =  Integer.parseInt(request.params("date"));
+            
+            db.insertNewData(userID, date, heartRate, oxygenLevel, weight, temperature, blood, glucose);
+            return gson.toJson(new StructuredResponse("ok", null, null));
+        });
+
+        Spark.get("/myData/:user_id", (request,response) -> {
+            String userID = request.params("userID");
+            return gson.toJson(new StructuredResponse("ok", null, db.getAllDailyStats(userID)));
+
+        });
+
+
 
     }
 

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.security.SecureRandom;
 import java.util.Base64.Encoder;
 import java.util.Base64;
+import org.apache.commons.lang3.RandomStringUtils;
 
 
 public class Database {
@@ -330,7 +331,7 @@ public class Database {
             db.pOCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS patientOf (" +
                 "healthCareID varchar(8) not null," +
-                "patientID varchar(8) not null," +
+                "patientID VARCHAR not null," +
                 "foreign key(healthCareID) references healthCareProvider(healthCareID)," +
                 "foreign key(patientID) references patients(patientID));"
             );
@@ -466,6 +467,62 @@ public class Database {
             e.printStackTrace();
         }
         return res;
+    }
+
+    /**
+     * Takes in the data and inserts them in the database
+     * @param userID
+     * @param date
+     * @param heartRate
+     * @param oxygenLevel
+     * @param weight
+     * @param temperature
+     * @param blood
+     * @param glucose
+     * @return
+     */
+    void insertNewData(String userID, String date, int heartRate, int oxygenLevel, int weight,int temperature, String blood, int glucose){
+
+        String generatedString = RandomStringUtils.random(8, true, true);
+        try{
+            dSInsertNewStat.setString(1,generatedString);
+            dSInsertNewStat.setString(2,date);
+            dSInsertNewStat.setInt(3,heartRate);
+            dSInsertNewStat.setInt(4,oxygenLevel);
+            dSInsertNewStat.setInt(5,weight);
+            dSInsertNewStat.setInt(6,temperature);
+            dSInsertNewStat.setString(7,blood);
+            dSInsertNewStat.setInt(8,glucose);
+            dSInsertNewStat.setString(9,generatedString);
+            dSInsertNewStat.setString(8,userID);
+
+            ResultSet rs = dSInsertNewStat.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method that returns all the daily data based on the user id
+     * @param userID
+     * @return resultSet
+     */
+    ArrayList<DailyStats> getAllDailyStats(String userID) {
+
+        ArrayList<DailyStats> res = new ArrayList<>();
+        try {
+            dSGetAllStat.setString(1, userID);
+
+            ResultSet rs = dSGetAllStat.executeQuery();
+            while (rs.next()) {
+                res.add(new DailyStats(rs.getString("dailyStatID"), rs.getString("dateRecorded"), rs.getInt("heartRate"), rs.getInt("oxygenLevel"), rs.getInt("weight"), rs.getInt("temperature"), rs.getString("bloodPressure"), rs.getInt("glucoseLevel")));
+            }
+            rs.close();
+            return res;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
