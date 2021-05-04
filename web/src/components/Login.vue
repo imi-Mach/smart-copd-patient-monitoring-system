@@ -33,7 +33,6 @@ export default {
           // get body data
           this.someData = response.body;
           console.log(this.someData);
-          
         },
         (response) => {
           // error callback
@@ -48,7 +47,15 @@ export default {
       (response) => {
         // get body data
         this.someData = response.body;
-        console.log(this.someData)
+        console.log(this.someData);
+        if (response.mData) {
+          console.log('goig to patients');
+          this.$router.push('patients');
+        } else {
+          console.log('going to signup');
+          this.$router.push('signup');
+        }
+        console.log('didnt work');
       },
       (response) => {
         console.log(response.mStatus);

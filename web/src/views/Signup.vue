@@ -30,6 +30,33 @@
                         </p>
                     </div>
 
+                    <div class="field">
+                        <label class="label">Age</label>
+                        <input 
+                            type="text"
+                            class="input" 
+                            name="age"
+                            v-model="age">
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Height</label>
+                        <input 
+                            type="text"
+                            class="input" 
+                            name="height"
+                            v-model="height">
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Weight</label>
+                        <input 
+                            type="text"
+                            class="input" 
+                            name="weight"
+                            v-model="weight">
+                    </div>
+
                     <!-- submit button -->
                     <div class="field has-text-right">
                         <button v-on:click="processForm">
@@ -48,6 +75,9 @@
         data: () => ({
             name: '',
             email: '',
+            age: '',
+            weight: '',
+            height: '',
             errors: {
                 name: false,
                 email: false,
@@ -55,8 +85,8 @@
         }),
         methods: {
             processForm: function() {
-                console.log({ name: this.name, email: this.email });
-                 this.$router.push('home');
+                console.log({ name: this.name, email: this.email, age: this.age, weight: this.weight, height: this.height});
+                 this.$router.push('patients');
             },
         }
     };
