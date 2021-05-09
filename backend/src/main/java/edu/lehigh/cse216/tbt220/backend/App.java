@@ -133,7 +133,7 @@ public class App {
             String phoneNumber = request.params("phoneNumber");
             int result = db.insertNewPatient(userId, firstName ,lastName, DOB,phoneNumber);
 
-            if(!result) {
+            if(result == 0) {
                 return gson.toJson(new StructuredResponse("error", "insert failed", null));
             }
             return gson.toJson(new StructuredResponse("ok", null, null));
