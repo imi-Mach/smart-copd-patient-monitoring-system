@@ -4,7 +4,7 @@
       <img v-google-signin-button="clientId" class="google-signin-button" src="@/assets/btn_google_signin_dark_pressed_web@2x.png">
     </div>
     <div>
-      <router-link to="/signup">Sign Up</router-link> 
+      <router-link to="/register">Sign Up</router-link> 
     </div>
   </div>
 </template>
@@ -53,7 +53,7 @@ export default {
           this.$router.push('patients');
         } else {
           console.log('going to signup');
-          this.$router.push('signup');
+          this.$router.push('register');
         }
         console.log('didnt work');
       },
