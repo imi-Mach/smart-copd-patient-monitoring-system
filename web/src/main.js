@@ -9,7 +9,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
-
+Vue.prototype.$patientID = '';
 Vue.use(vueresource)
 
 Vue.config.productionTip = false

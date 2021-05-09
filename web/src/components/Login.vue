@@ -26,6 +26,7 @@ export default {
       // Receive the idToken and make your magic with the backend
       console.log('This is a test:')
       console.log(idToken);
+      this.$patientID = idToken;
       
       //to be modified and put in methods
       this.$http.post("/login", idToken).then(

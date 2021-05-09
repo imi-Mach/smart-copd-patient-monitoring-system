@@ -85,8 +85,23 @@
         }),
         methods: {
             processForm: function() {
+                console.log(this.$patientID);
                 console.log({ name: this.name, email: this.email, age: this.age, weight: this.weight, height: this.height});
-                 this.$router.push('patients');
+                
+                this.$http.post("/sign_in, this.$patientID").then(
+                    (response) => {
+                        this.someData = response.body;
+                        console.log(this.someData);
+                        if (response.mData) {
+                            console.log('it worked');
+                            this.$router.push('pateints')
+                        }
+                    },
+                    (response) => {
+                        console.log(reponse.mStatus);
+                        console.log('it did not work');
+                    }
+                )
             },
         }
     };
