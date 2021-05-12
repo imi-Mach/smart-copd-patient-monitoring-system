@@ -28,7 +28,7 @@ export default {
       console.log(idToken);
       test = idToken;
       console.log('lets see if this works');
-      console.log(patientID);
+      console.log(test);
       
       //to be modified and put in methods
       this.$http.post("/login", idToken).then(

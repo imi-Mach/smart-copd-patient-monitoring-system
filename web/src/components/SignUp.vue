@@ -86,7 +86,7 @@ import {patientID} from '@/components/Login.vue'
         methods: {
             processForm: function() {
                 console.log("This is a test statement, plz work");
-                console.log(this.$patientID);
+                console.log(patientID);
                 console.log({ name: this.name, email: this.email, age: this.age, weight: this.weight, height: this.height});
                 setTimeout(() => {  console.log("World!"); }, 2000);
                 
