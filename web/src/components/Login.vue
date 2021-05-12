@@ -11,7 +11,7 @@
 
 <script>
 import GoogleSignInButton from "vue-google-signin-button-directive";
-
+var test = '';
 
 export default {
   directives: {
@@ -26,7 +26,9 @@ export default {
       // Receive the idToken and make your magic with the backend
       console.log('This is a test:')
       console.log(idToken);
-      this.$patientID = idToken;
+      test = idToken;
+      console.log('lets see if this works');
+      console.log(patientID);
       
       //to be modified and put in methods
       this.$http.post("/login", idToken).then(
@@ -71,6 +73,7 @@ export default {
     },
   }
 };
+export const patientID = test;
 </script>
 <style>
 .google-signin-button{

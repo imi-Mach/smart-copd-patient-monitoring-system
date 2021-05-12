@@ -69,6 +69,8 @@
 </template>
 
 <script>
+import {patientID} from '@/components/Login.vue'
+
     export default {
         data: () => ({
             name: '',
@@ -88,13 +90,13 @@
                 console.log({ name: this.name, email: this.email, age: this.age, weight: this.weight, height: this.height});
                 setTimeout(() => {  console.log("World!"); }, 2000);
                 
-                this.$http.post("/sign_in", this.$patientID).then(
+                this.$http.post("/sign_in", patientID).then(
                     (response) => {
                         this.someData = response.body;
                         console.log(this.someData);
                         if (response.mData) {
                             console.log('it worked');
-                            this.$router.push('pateints')
+                            this.$router.push('patients')
                         }
                     },
                     (response) => {
