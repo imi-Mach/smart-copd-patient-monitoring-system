@@ -125,7 +125,7 @@ public class App {
             }
         });
 
-        Spark.post("/sign_in/:userID:/firstName:/:lastName:/:DOB/:phoneNumber", (request, response) -> {
+        Spark.post("/signin/:userID/:firstName/:lastName/:DOB/:phoneNumber", (request, response) -> {
             String userId = request.params("userID");
             String firstName = request.params("firstName");
             String lastName = request.params("lastName");
