@@ -25,6 +25,9 @@ public class StructuredResponse {
      */
     public Object mData;
 
+    public boolean mExists;
+    public String mSessionID;
+
     /**
      * Construct a StructuredResponse by providing a status, message, and data.
      * If the status is not provided, set it to "invalid".
@@ -34,9 +37,16 @@ public class StructuredResponse {
      * @param object An object with additional data to send to the client
      */
 
-    public StructuredResponse(String status, String message, Object data) {
+    public StructuredResponse(String status, String session, boolean exists, Object data) {
+        mStatus = (status != null) ? status : "invalid";
+        mExists = exists;
+        mData = data;
+        mSessionID = session;
+    }
+
+    public StructuredResponse(String status, String message, Object dat){
         mStatus = (status != null) ? status : "invalid";
         mMessage = message;
-        mData = data;
+        mData = dat;
     }
 }
