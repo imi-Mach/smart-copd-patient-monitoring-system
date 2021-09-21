@@ -431,6 +431,16 @@ public class Database {
 
     /**
      * checking if the patient exists in the database
+     * @param sessionID the session id to check for user id
+     * @return user id, null if user does not exist
+     */
+    String getUserID(String sessionID){
+        // TODO: need to try finding user id in DB or return null otherwise
+        return null;
+    }
+
+    /**
+     * checking if the patient exists in the database
      * @param userID
      * @return true or false
      */

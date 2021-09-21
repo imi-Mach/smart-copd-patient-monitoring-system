@@ -126,7 +126,11 @@ public class App {
             String lastName = request.params("lastName");
             String DOB = request.params("DOB");
             String phoneNumber = request.params("phoneNumber");
-            int result = db.insertNewPatient(, firstName ,lastName, DOB,phoneNumber);
+
+            //get user id
+            String userID = db.getUserID(sessionID);
+
+            int result = db.insertNewPatient(userID, firstName ,lastName, DOB,phoneNumber);
 
             if(result == 0) {
                 return gson.toJson(new StructuredResponse("error", "insert failed", null));
