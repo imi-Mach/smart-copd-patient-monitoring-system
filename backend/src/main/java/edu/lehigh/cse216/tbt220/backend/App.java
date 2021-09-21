@@ -119,13 +119,14 @@ public class App {
 
         });
 
-        Spark.post("/signin", (request, response) -> {
-            String userId = request.params("userID");
+        Spark.post("/register", (request, response) -> {
+            //String userId = request.params("userID");
+            String sessionID = request.params("sessionID");
             String firstName = request.params("firstName");
             String lastName = request.params("lastName");
             String DOB = request.params("DOB");
             String phoneNumber = request.params("phoneNumber");
-            int result = db.insertNewPatient(userId, firstName ,lastName, DOB,phoneNumber);
+            int result = db.insertNewPatient(, firstName ,lastName, DOB,phoneNumber);
 
             if(result == 0) {
                 return gson.toJson(new StructuredResponse("error", "insert failed", null));
