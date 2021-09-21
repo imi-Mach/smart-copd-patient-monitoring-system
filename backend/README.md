@@ -5,15 +5,15 @@
 
 * "/login":
 
-request : json file same as before
+request : { googleIdToken :}
 response : { mData: null
              mStatus: "ok"
              mSessionID: 
              mExists: true (if user is already part of database)}
 
-* "/signin" :
+* "/register" :
 
-request : { userID : 
+request : { sessionID : 
             firstName: 
             lastName: 
             DOB: 
