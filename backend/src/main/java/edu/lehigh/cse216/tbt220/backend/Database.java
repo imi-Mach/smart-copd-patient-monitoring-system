@@ -165,6 +165,11 @@ public class Database {
     private PreparedStatement sLogoutUser;
 
     /**
+     * Get user ID
+     */
+    private PreparedStatement sCheckUserId;
+
+    /**
      * Check login
      */
     private PreparedStatement sCheckLogin;

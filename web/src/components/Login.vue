@@ -24,11 +24,9 @@ export default {
   methods: {
     OnGoogleAuthSuccess(idToken) {
       // Receive the idToken and make your magic with the backend
-      console.log('This is a test:')
+      console.log('This is a test:');
       console.log(idToken);
       test = idToken;
-      console.log('lets see if this works');
-      console.log(test);
       
       //to be modified and put in methods
       this.$http.post("/login", idToken).then(
@@ -45,7 +43,7 @@ export default {
         }
       );
 
-      console.log('This is a test:')
+      console.log('This is a test:');
       this.$http.get("/check/" + idToken).then(
         (response) => {
           // get body data
