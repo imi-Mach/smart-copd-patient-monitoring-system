@@ -45,27 +45,27 @@ export default {
         }
       );
 
-    console.log('This is a test:')
-    this.$http.get("/check/" + idToken).then(
-      (response) => {
-        // get body data
-        this.someData = response.body;
-        console.log(this.someData);
-        if (response.mData) {
-          console.log('goig to patients');
-          this.$router.push('patients');
-        } else {
-          console.log('going to signup');
-          this.$router.push('register');
+      console.log('This is a test:')
+      this.$http.get("/check/" + idToken).then(
+        (response) => {
+          // get body data
+          this.someData = response.body;
+          console.log(this.someData);
+          if (response.mData) {
+            console.log('goig to patients');
+            this.$router.push('patients');
+          } else {
+            console.log('going to signup');
+            this.$router.push('register');
+          }
+          console.log('didnt work');
+        },
+        (response) => {
+          console.log(response.mStatus);
+          console.log('some message');
+          console.log(response.mMessage);
         }
-        console.log('didnt work');
-      },
-      (response) => {
-        console.log(response.mStatus);
-        console.log('some message');
-        console.log(response.mMessage);
-      }
-    );
+      );
 
     },
     OnGoogleAuthFail(error) {
