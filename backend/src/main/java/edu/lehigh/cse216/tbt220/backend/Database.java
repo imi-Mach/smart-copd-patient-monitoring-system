@@ -251,6 +251,7 @@ public class Database {
             db.sRemoveOldLogin = db.mConnection.prepareStatement("DELETE FROM sessionStore WHERE user_id = ?");
             db.sLoginUser = db.mConnection.prepareStatement("INSERT INTO sessionStore VALUES(?,?)");
             db.sLogoutUser = db.mConnection.prepareStatement("DELETE FROM sessionStore WHERE session_id = ?");
+            db.sCheckUserId = db.mConnection.prepareStatement("SELECT user_id FROM sessionStore WHERE session_id = ?");
             
             //https://stackoverflow.com/questions/46061989/jdbc-check-if-entry-exists
             db.sCheckLogin = db.mConnection.prepareStatement("SELECT session_id FROM sessionStore WHERE user_id = ?");
@@ -435,7 +436,22 @@ public class Database {
      * @return user id, null if user does not exist
      */
     String getUserID(String sessionID){
-        // TODO: need to try finding user id in DB or return null otherwise
+
+        ResultSet rs = null;
+        try {
+            sCheckUserId.setString(1, sessionID);
+
+            rs = sCheckLogin.executeQuery();
+            
+            if (rs.next()) {
+               return rs.getString("user_id");
+               
+            }
+            
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+
         return null;
     }
 

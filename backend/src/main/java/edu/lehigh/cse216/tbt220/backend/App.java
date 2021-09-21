@@ -120,7 +120,6 @@ public class App {
         });
 
         Spark.post("/register", (request, response) -> {
-            //String userId = request.params("userID");
             String sessionID = request.params("sessionID");
             String firstName = request.params("firstName");
             String lastName = request.params("lastName");
