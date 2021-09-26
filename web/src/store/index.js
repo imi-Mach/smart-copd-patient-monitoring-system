@@ -5,11 +5,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+      sessionID: undefined,
   },
   mutations: {
+      setSession(state, newSessionID) {
+          state.sessionID = newSessionID
+      },
   },
-  actions: {
+  getters: {
+      async getSession() {
+          return this.state.sessionID;
+      }
   },
-  modules: {
-  }
 })
