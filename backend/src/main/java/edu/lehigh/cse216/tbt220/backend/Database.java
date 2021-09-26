@@ -279,7 +279,7 @@ public class Database {
             db.pGetPatient = db.mConnection.prepareStatement("SELECT * FROM patients where patientID = ?");
             db.pInsertNewPatient = db.mConnection.prepareStatement("INSERT INTO patients VALUES(?,?,?,?,?,?)");
             db.pDeletePatient = db.mConnection.prepareStatement("DELETE FROM patient WHERE patientID = ?");
-            db.pCheckIfPatientExists = db.mConnection.prepareStatement("SELECT patientID FROM patients WHERE patientID = ?");
+            db.pCheckIfPatientExists = db.mConnection.prepareStatement("SELECT * FROM patients WHERE patientID = ?");
             
             // Airtable Create HealthCare Providers Table
             db.hCreateTable = db.mConnection.prepareStatement(
@@ -573,7 +573,7 @@ public class Database {
             pInsertNewPatient.setString(3, lastName);
             pInsertNewPatient.setString(4, DOB);
             pInsertNewPatient.setString(5, phoneNumber);
-            pInsertNewPatient.setInt(6, 0);
+            pInsertNewPatient.setInt(6, 1);
 
             rowUpdate += pInsertNewPatient.executeUpdate();
         } catch (SQLException ex) {

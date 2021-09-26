@@ -129,7 +129,7 @@ public class App {
             //get user id
             String userID = db.getUserID(sessionID);
 
-            int result = db.insertNewPatient(userID, firstName ,lastName, DOB,phoneNumber);
+            int result = db.insertNewPatient(userID, firstName ,lastName, DOB, phoneNumber);
 
             if(result == 0) {
                 return gson.toJson(new StructuredResponse("error", "insert failed", null));
