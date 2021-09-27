@@ -8,53 +8,40 @@
                 <form id="signup-form">
                     <!-- name -->
                     <div class="field">
-                        <label class="label">Name</label>
+                        <label class="label">First name</label>
                         <input 
                             type="text"
                             class="input" 
-                            name="name"
-                            v-model="name">
+                            name="firstName"
+                            v-model="firstName">
                     </div>
 
                     <!-- email -->
                     <div class="field">
-                        <label class="label">Email</label>
+                        <label class="label">Last name</label>
                         <input 
                             type="email" 
                             class="input" 
-                            name="email" 
-                            v-model="email">
-
-                        <p class="help is-danger" v-if="errors.email">
-                            Please enter a valid email.
-                        </p>
+                            name="lastName" 
+                            v-model="lastName">
                     </div>
 
                     <div class="field">
-                        <label class="label">Age</label>
+                        <label class="label">DOB</label>
                         <input 
                             type="text"
                             class="input" 
-                            name="age"
-                            v-model="age">
+                            name="DOB"
+                            v-model="DOB">
                     </div>
 
                     <div class="field">
-                        <label class="label">Height</label>
+                        <label class="label">Phone Number</label>
                         <input 
                             type="text"
                             class="input" 
-                            name="height"
-                            v-model="height">
-                    </div>
-
-                    <div class="field">
-                        <label class="label">Weight</label>
-                        <input 
-                            type="text"
-                            class="input" 
-                            name="weight"
-                            v-model="weight">
+                            name="phoneNumber"
+                            v-model="phoneNumber">
                     </div>
 
                     <!-- submit button -->
@@ -72,24 +59,27 @@
 
     export default {
         data: () => ({
-            name: '',
-            email: '',
-            age: '',
-            weight: '',
-            height: '',
+            firstName: '',
+            lastName: '',
+            DOB: '',
+            phoneNumber: '',
             errors: {
-                name: false,
-                email: false,
+                firstName: false,
+                lastName: false,
+                DOB: false,
             }
         }),
         methods: {
             processForm: function() {
-                console.log("This is a test statement, plz work");
-                console.log(this.$store.state.sessionID);
-                console.log({ name: this.name, email: this.email, age: this.age, weight: this.weight, height: this.height});
+                console.log("User Session Key before signup route "+this.$store.getters.getSession);
+                //console.log(this.data);
                 setTimeout(() => {  console.log("World!"); }, 2000);
+                //this.data.sessionID = this.$store.getters.getSession;
+
+                var request = this.data;
+                request.sessionID = this.$store.getters.getSession;
                 
-                this.$http.post("/sign_in", this.$store.state.sessionID).then(
+                this.$http.post("/register", this.data).then(
                     (response) => {
                         this.someData = response.body;
                         console.log(this.someData);

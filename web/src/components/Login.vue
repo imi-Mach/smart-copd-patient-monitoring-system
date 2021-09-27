@@ -31,8 +31,9 @@ export default {
           //console.log(this.someData.mSessionID);
 
           //this.$store.setSession(this.someData.mMessage)
-          this.$store.state.sessionID = this.someData.mSessionID;
-          console.log(this.$store.state.sessionID);
+          //this.$store.state.sessionID = this.someData.mSessionID;
+          this.$store.commit('setSession', this.someData.mSessionID);
+          console.log(this.$store.getters.getSession);
 
 
           //console.log(store.getSession())
