@@ -21,12 +21,17 @@ export default {
         (response) => {
 
           // get body data
+          //var test = response.body;
           this.someData = response.body;
-          console.log(this.someData)
+          console.log(this.someData);
+
+          //console.log("Testing");
+          //console.log(test.mSessionID);
+          //console.log(this.someData.mSessionID);
 
           //this.$store.setSession(this.someData.mMessage)
-          this.$store.state.sessionID = this.someData.mMessage;
-          console.log(this.$store.state.sessionID)
+          this.$store.state.sessionID = this.someData.mSessionID;
+          console.log(this.$store.state.sessionID);
 
 
           //console.log(store.getSession())
