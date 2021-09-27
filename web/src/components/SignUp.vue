@@ -85,11 +85,11 @@
         methods: {
             processForm: function() {
                 console.log("This is a test statement, plz work");
-                console.log(this.$session.get('jwt'))
+                console.log(this.$store.state.sessionID);
                 console.log({ name: this.name, email: this.email, age: this.age, weight: this.weight, height: this.height});
                 setTimeout(() => {  console.log("World!"); }, 2000);
                 
-                this.$http.post("/sign_in", patientID).then(
+                this.$http.post("/sign_in", this.$store.state.sessionID).then(
                     (response) => {
                         this.someData = response.body;
                         console.log(this.someData);

@@ -22,14 +22,17 @@ export default {
         (response) => {
 
           // get body data
+          //var test = response.body;
           this.someData = response.body;
-          console.log(this.someData)
+          console.log(this.someData);
+
+          //console.log("Testing");
+          //console.log(test.mSessionID);
+          //console.log(this.someData.mSessionID);
 
           //this.$store.setSession(this.someData.mMessage)
-          this.$session.start();
-          this.$session.set("jwt", this.someData.mSessionID);
-
-          console.log(this.$session.get('jwt'))
+          this.$store.state.sessionID = this.someData.mSessionID;
+          console.log(this.$store.state.sessionID);
 
 
           //console.log(store.getSession())
