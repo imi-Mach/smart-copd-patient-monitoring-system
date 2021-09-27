@@ -15,6 +15,7 @@ export default {
   }),
   methods: {
     OnGoogleAuthSuccess (idToken) {
+      // var self = this
       
       //to be modified and put in methods
       this.$http.post("https://smart-copd-patient.herokuapp.com/login", idToken).then(
@@ -25,8 +26,10 @@ export default {
           console.log(this.someData)
 
           //this.$store.setSession(this.someData.mMessage)
-          this.$store.state.sessionID = this.someData.mMessage;
-          console.log(this.$store.state.sessionID)
+          this.$session.start();
+          this.$session.set("jwt", this.someData.mSessionID);
+
+          console.log(this.$session.get('jwt'))
 
 
           //console.log(store.getSession())

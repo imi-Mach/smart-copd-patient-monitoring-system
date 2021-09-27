@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vueresource from 'vue-resource'
+import VueSession from "vue-session";
+Vue.use(VueSession);
 
 // for element ui, delete in the future if using bootstrap
 import ElementUI from 'element-ui';

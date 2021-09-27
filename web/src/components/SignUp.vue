@@ -69,7 +69,6 @@
 </template>
 
 <script>
-import {patientID} from '@/components/Login.vue'
 
     export default {
         data: () => ({
@@ -86,7 +85,7 @@ import {patientID} from '@/components/Login.vue'
         methods: {
             processForm: function() {
                 console.log("This is a test statement, plz work");
-                console.log(patientID);
+                console.log(this.$session.get('jwt'))
                 console.log({ name: this.name, email: this.email, age: this.age, weight: this.weight, height: this.height});
                 setTimeout(() => {  console.log("World!"); }, 2000);
                 

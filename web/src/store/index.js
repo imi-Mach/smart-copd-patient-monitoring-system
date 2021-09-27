@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-      sessionID: undefined,
+      sessionID: "",
   },
   mutations: {
       setSession(state, newSessionID) {
@@ -13,8 +13,8 @@ export default new Vuex.Store({
       },
   },
   getters: {
-      async getSession() {
-          return this.state.sessionID;
+      getSession: state => {
+        return state.sessionID
       }
   },
 })
