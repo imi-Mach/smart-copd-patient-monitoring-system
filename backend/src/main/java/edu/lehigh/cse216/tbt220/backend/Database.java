@@ -450,7 +450,7 @@ public class Database {
             
             if (rs.next()) {
                return rs.getString("user_id");
-               
+    
             }
             
         } catch(SQLException e){

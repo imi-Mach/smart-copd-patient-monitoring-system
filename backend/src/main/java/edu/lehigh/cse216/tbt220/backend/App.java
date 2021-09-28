@@ -7,7 +7,6 @@ import spark.Spark;
 
 // Import Google's JSON library
 import com.google.gson.*;
-
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -15,6 +14,11 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  * For now, our app creates an HTTP server that can only get and add data.
@@ -99,7 +103,7 @@ public class App {
                 Payload payload = idToken.getPayload();
 
                 // Get userID
-                String userId = payload.getSubject();
+                String userId = payload.getEmail();
 
                 // Generate new session ID
                 String newSessionID = db.generateSessionID();
@@ -120,11 +124,18 @@ public class App {
         });
 
         Spark.post("/register", (request, response) -> {
-            String sessionID = request.params("sessionID");
-            String firstName = request.params("firstName");
-            String lastName = request.params("lastName");
-            String DOB = request.params("DOB");
-            String phoneNumber = request.params("phoneNumber");
+
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+            
+            String sessionID = (String) jsonObject.get("sessionID");
+            String firstName = (String) jsonObject.get("firstName");
+            String lastName = (String) jsonObject.get("lastName");
+            String DOB = (String) jsonObject.get("DOB");
+            String phoneNumber = (String) jsonObject.get("phoneNumber");
+
+            System.out.println("FirstName: "+ firstName);
+            System.out.println("LastName: "+ lastName);
 
             //get user id
             String userID = db.getUserID(sessionID);
