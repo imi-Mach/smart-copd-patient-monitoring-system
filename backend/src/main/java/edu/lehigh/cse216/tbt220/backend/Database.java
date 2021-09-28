@@ -266,7 +266,7 @@ public class Database {
             // Airtable Create Patient Table
             db.pCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS patients (" +
-                "patientID varchar(8) not null primary key," +
+                "patientID VARCHAR not null primary key," +
                 "firstName varchar(20) not null," +
                 "lastName varchar(20) not null," +
                 "DOB varchar(10) not null," +
@@ -284,7 +284,7 @@ public class Database {
             // Airtable Create HealthCare Providers Table
             db.hCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS healthCareProvider (" +
-                "healthCareID varchar(8) not null primary key," +
+                "healthCareID VARCHAR not null primary key," +
                 "firstName varchar(20) not null," +
                 "lastName varchar(20));"
             );
@@ -299,7 +299,7 @@ public class Database {
             // Airtable Create DailyStats Table
             db.dSCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS dailyStats (" +
-                "dailyStatID varchar(8) not null primary key," +
+                "dailyStatID VARCHAR not null primary key," +
                 "dateRecorded varchar(8) not null," +
                 "heartRate int check(heartRate > 0)," +
                 "oxygenLevel int check(oxygenLevel > 70)," +
@@ -320,7 +320,7 @@ public class Database {
             // Airtable Create LogStats Table
             db.lSCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS logStats (" +
-                "patientID varchar(8) not null," +
+                "patientID VARCHAR not null," +
                 "dailyStatID varchar(8) not null," +
                 "foreign key(patientID) references patients(patientID)," +
                 "foreign key(dailyStatID) references dailyStats(dailyStatID));"
@@ -446,7 +446,7 @@ public class Database {
         try {
             sCheckUserId.setString(1, sessionID);
 
-            rs = sCheckLogin.executeQuery();
+            rs = sCheckUserId.executeQuery();
             
             if (rs.next()) {
                return rs.getString("user_id");
