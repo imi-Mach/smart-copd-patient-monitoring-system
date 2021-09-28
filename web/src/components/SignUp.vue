@@ -74,12 +74,19 @@
                 console.log("User Session Key before signup route "+this.$store.getters.getSession);
                 //console.log(this.data);
                 setTimeout(() => {  console.log("World!"); }, 2000);
+                var test = this.$store.getters.getSession;
+                console.log("Testing getSession: "+ test);
                 //this.data.sessionID = this.$store.getters.getSession;
 
-                var request = this.data;
-                request.sessionID = this.$store.getters.getSession;
+                //var request = {};
+                var request = {"sessionID": this.$store.getters.getSession, "firstName": this.firstName, "lastName": this.lastName, "DOB": this.DOB, "phoneNumber": this.phoneNumber};
+                console.log(request);
+                var test2 = this.data;
+                console.log(test2);
+                //request = this.data;
+                //request.sessionID = this.$store.getters.getSession;
                 
-                this.$http.post("/register", this.data).then(
+                this.$http.post("https://smart-copd-patient.herokuapp.com/register", request).then(
                     (response) => {
                         this.someData = response.body;
                         console.log(this.someData);
