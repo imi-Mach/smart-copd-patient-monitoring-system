@@ -165,6 +165,11 @@ public class Database {
     private PreparedStatement sLogoutUser;
 
     /**
+     * Get user ID
+     */
+    private PreparedStatement sCheckUserId;
+
+    /**
      * Check login
      */
     private PreparedStatement sCheckLogin;
@@ -251,6 +256,7 @@ public class Database {
             db.sRemoveOldLogin = db.mConnection.prepareStatement("DELETE FROM sessionStore WHERE user_id = ?");
             db.sLoginUser = db.mConnection.prepareStatement("INSERT INTO sessionStore VALUES(?,?)");
             db.sLogoutUser = db.mConnection.prepareStatement("DELETE FROM sessionStore WHERE session_id = ?");
+            db.sCheckUserId = db.mConnection.prepareStatement("SELECT user_id FROM sessionStore WHERE session_id = ?");
             
             //https://stackoverflow.com/questions/46061989/jdbc-check-if-entry-exists
             db.sCheckLogin = db.mConnection.prepareStatement("SELECT session_id FROM sessionStore WHERE user_id = ?");
@@ -273,7 +279,7 @@ public class Database {
             db.pGetPatient = db.mConnection.prepareStatement("SELECT * FROM patients where patientID = ?");
             db.pInsertNewPatient = db.mConnection.prepareStatement("INSERT INTO patients VALUES(?,?,?,?,?,?)");
             db.pDeletePatient = db.mConnection.prepareStatement("DELETE FROM patient WHERE patientID = ?");
-            db.pCheckIfPatientExists = db.mConnection.prepareStatement("SELECT patientID FROM patients WHERE patientID = ?");
+            db.pCheckIfPatientExists = db.mConnection.prepareStatement("SELECT * FROM patients WHERE patientID = ?");
             
             // Airtable Create HealthCare Providers Table
             db.hCreateTable = db.mConnection.prepareStatement(
@@ -431,6 +437,31 @@ public class Database {
 
     /**
      * checking if the patient exists in the database
+     * @param sessionID the session id to check for user id
+     * @return user id, null if user does not exist
+     */
+    String getUserID(String sessionID){
+
+        ResultSet rs = null;
+        try {
+            sCheckUserId.setString(1, sessionID);
+
+            rs = sCheckLogin.executeQuery();
+            
+            if (rs.next()) {
+               return rs.getString("user_id");
+    
+            }
+            
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * checking if the patient exists in the database
      * @param userID
      * @return true or false
      */
@@ -542,7 +573,7 @@ public class Database {
             pInsertNewPatient.setString(3, lastName);
             pInsertNewPatient.setString(4, DOB);
             pInsertNewPatient.setString(5, phoneNumber);
-            pInsertNewPatient.setInt(6, 0);
+            pInsertNewPatient.setInt(6, 1);
 
             rowUpdate += pInsertNewPatient.executeUpdate();
         } catch (SQLException ex) {

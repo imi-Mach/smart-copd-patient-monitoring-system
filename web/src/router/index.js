@@ -23,9 +23,9 @@ export default new Router({
       component: () => import('../views/Patient.vue')
     },
     {
-      path: '/signup',
-      name: 'Signup',
-      component: () => import('../views/Signup.vue')
+      path: '/register',
+      name: 'Register',
+      component: () => import('../views/Register.vue')
     }
   ]
 });

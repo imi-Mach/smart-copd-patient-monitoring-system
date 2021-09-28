@@ -27,6 +27,6 @@ npm run build
 cp -r dist $TARGETFOLDER/$WEBFOLDERNAME
 
 # step 5: copy jQuery, Handlebars, and Bootstrap files
-cp node_modules/jquery/dist/jquery.min.js $TARGETFOLDER/$WEBFOLDERNAME
-cp node_modules/handlebars/dist/handlebars.min.js $TARGETFOLDER/$WEBFOLDERNAME
+# cp node_modules/jquery/dist/jquery.min.js $TARGETFOLDER/$WEBFOLDERNAME
+# cp node_modules/handlebars/dist/handlebars.min.js $TARGETFOLDER/$WEBFOLDERNAME
 #cp node $TARGETFOLDER/$WEBFOLDERNAME

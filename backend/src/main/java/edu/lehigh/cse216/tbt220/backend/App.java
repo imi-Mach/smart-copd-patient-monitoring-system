@@ -7,7 +7,6 @@ import spark.Spark;
 
 // Import Google's JSON library
 import com.google.gson.*;
-
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -15,6 +14,11 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  * For now, our app creates an HTTP server that can only get and add data.
@@ -94,18 +98,24 @@ public class App {
             System.out.println(request.body());
 
             GoogleIdToken idToken = verifier.verify(idTokenString);
+            response.type("application/json");
             if (idToken != null) {
                 Payload payload = idToken.getPayload();
 
                 // Get userID
-                String userId = payload.getSubject();
+                String userId = payload.getEmail();
 
                 // Generate new session ID
                 String newSessionID = db.generateSessionID();
 
                 String sessionID = db.loginUser(userId, newSessionID);
 
-                return gson.toJson(new StructuredResponse("ok", null, newSessionID));
+                boolean check = db.checkIfPatientExists(userId);
+
+                if(check){
+                    return gson.toJson(new StructuredResponse("ok", sessionID, true, null));
+                }
+                return gson.toJson(new StructuredResponse("ok", sessionID, false, null));
 
             } else {
                 return gson.toJson(new StructuredResponse("error", "error during login", null));
@@ -113,34 +123,37 @@ public class App {
 
         });
 
-        Spark.get("/check/:userID", (request, response) -> {
-            System.out.println("Brian is so cute");
-            String userId = request.params("userID");
-            boolean check = db.checkIfPatientExists(userId);
-            if(check){
-                return gson.toJson(new StructuredResponse("ok", null, true));
-            }
-            else{
-                return gson.toJson(new StructuredResponse("ok", null, false));
-            }
-        });
+        Spark.post("/register", (request, response) -> {
 
-        Spark.post("/sign_in/:userID:/firstName:/:lastName:/:DOB/:phoneNumber", (request, response) -> {
-            String userId = request.params("userID");
-            String firstName = request.params("firstName");
-            String lastName = request.params("lastName");
-            String DOB = request.params("DOB");
-            String phoneNumber = request.params("phoneNumber");
-            db.insertNewPatient(userId, firstName ,lastName, DOB,phoneNumber);
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+            
+            String sessionID = (String) jsonObject.get("sessionID");
+            String firstName = (String) jsonObject.get("firstName");
+            String lastName = (String) jsonObject.get("lastName");
+            String DOB = (String) jsonObject.get("DOB");
+            String phoneNumber = (String) jsonObject.get("phoneNumber");
+
+            System.out.println("FirstName: "+ firstName);
+            System.out.println("LastName: "+ lastName);
+
+            //get user id
+            String userID = db.getUserID(sessionID);
+
+            int result = db.insertNewPatient(userID, firstName ,lastName, DOB, phoneNumber);
+
+            if(result == 0) {
+                return gson.toJson(new StructuredResponse("error", "insert failed", null));
+            }
             return gson.toJson(new StructuredResponse("ok", null, null));
         });
 
-        Spark.get("/patient/:user_id", (request, response) -> {
+        Spark.get("/patient", (request, response) -> {
             String user_id = request.params("userID");
             return gson.toJson(new StructuredResponse("ok", null, db.getPatient(user_id)));
         });
 
-        Spark.post("/insertData/:user_id", (request, response) -> {
+        Spark.post("/insertData", (request, response) -> {
             String userID= request.params("userID");
             String date =  request.params("date");
             int heartRate =  Integer.parseInt(request.params("heartRate"));
@@ -154,7 +167,7 @@ public class App {
             return gson.toJson(new StructuredResponse("ok", null, null));
         });
 
-        Spark.get("/myData/:user_id", (request,response) -> {
+        Spark.get("/myData/", (request,response) -> {
             String userID = request.params("userID");
             return gson.toJson(new StructuredResponse("ok", null, db.getAllDailyStats(userID)));
 
