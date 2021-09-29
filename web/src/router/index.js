@@ -8,7 +8,7 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "home",
+      name: "Home",
       alias: "/home",
       component: () => import('../views/Home.vue')
     },
