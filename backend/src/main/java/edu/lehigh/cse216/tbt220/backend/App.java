@@ -134,9 +134,6 @@ public class App {
             String DOB = (String) jsonObject.get("DOB");
             String phoneNumber = (String) jsonObject.get("phoneNumber");
 
-            System.out.println("FirstName: "+ firstName);
-            System.out.println("LastName: "+ lastName);
-
             //get user id
             String userID = db.getUserID(sessionID);
 
@@ -149,28 +146,43 @@ public class App {
         });
 
         Spark.get("/patient", (request, response) -> {
-            String user_id = request.params("userID");
-            return gson.toJson(new StructuredResponse("ok", null, db.getPatient(user_id)));
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+            
+            String sessionID = (String) jsonObject.get("sessionID");
+            String userID = db.getUserID(sessionID);
+            return gson.toJson(new StructuredResponse("ok", null, db.getPatient(userID)));
         });
 
         Spark.post("/insertData", (request, response) -> {
-            String userID= request.params("userID");
-            String date =  request.params("date");
-            int heartRate =  Integer.parseInt(request.params("heartRate"));
-            int oxygenLevel = Integer.parseInt(request.params("oxygenLevel"));
-            int weight = Integer.parseInt(request.params("weight"));
-            int temperature = Integer.parseInt(request.params("temperature"));
-            String blood = request.params("bloodPressure");
-            int glucose =  Integer.parseInt(request.params("date"));
+
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+            
+            String sessionID = (String) jsonObject.get("sessionID");
+            String date =  (String) jsonObject.get("date");
+            int heartRate =  Integer.parseInt((String) jsonObject.get("heartRate"));
+            int oxygenLevel =  Integer.parseInt((String) jsonObject.get("oxygenLevel"));
+            int weight =  Integer.parseInt((String) jsonObject.get("weight"));
+            int temperature =  Integer.parseInt((String) jsonObject.get("temperature"));
+            String blood= (String) jsonObject.get("bloodPressure");
+            int glucose =  Integer.parseInt((String) jsonObject.get("date"));
+
+            String userID = db.getUserID(sessionID);
             
             db.insertNewData(userID, date, heartRate, oxygenLevel, weight, temperature, blood, glucose);
             return gson.toJson(new StructuredResponse("ok", null, null));
         });
 
-        Spark.get("/myData/", (request,response) -> {
-            String userID = request.params("userID");
-            return gson.toJson(new StructuredResponse("ok", null, db.getAllDailyStats(userID)));
+        Spark.get("/myData", (request,response) -> {
 
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+
+            String sessionID = (String) jsonObject.get("sessionID");
+            String userID = db.getUserID(sessionID);
+
+            return gson.toJson(new StructuredResponse("ok", null, db.getAllDailyStats(userID)));
         });
 
 

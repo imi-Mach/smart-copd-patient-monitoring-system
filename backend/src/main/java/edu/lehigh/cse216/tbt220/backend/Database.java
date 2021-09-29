@@ -267,10 +267,10 @@ public class Database {
             db.pCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS patients (" +
                 "patientID VARCHAR not null primary key," +
-                "firstName varchar(20) not null," +
-                "lastName varchar(20) not null," +
-                "DOB varchar(10) not null," +
-                "phoneNumber varchar(10) not null," +
+                "firstName VARCHAR not null," +
+                "lastName VARCHAR not null," +
+                "DOB VARCHAR not null," +
+                "phoneNumber VARCHAR not null," +
                 "riskLevel int check(riskLevel > 0));"
             );
             
@@ -285,8 +285,8 @@ public class Database {
             db.hCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS healthCareProvider (" +
                 "healthCareID VARCHAR not null primary key," +
-                "firstName varchar(20) not null," +
-                "lastName varchar(20));"
+                "firstName VARCHAR not null," +
+                "lastName VARCHAR);"
             );
             
             //HealthCare Provider Table
@@ -300,12 +300,12 @@ public class Database {
             db.dSCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS dailyStats (" +
                 "dailyStatID VARCHAR not null primary key," +
-                "dateRecorded varchar(8) not null," +
+                "dateRecorded VARCHAR not null," +
                 "heartRate int check(heartRate > 0)," +
                 "oxygenLevel int check(oxygenLevel > 70)," +
                 "weight int check(weight > 0)," +
                 "temperature int check(temperature > 90)," +
-                "bloodPressure varchar(6)," +
+                "bloodPressure VARCHAR," +
                 "glucoseLevel int check(glucoseLevel > 0));"
             );
             
@@ -321,9 +321,9 @@ public class Database {
             db.lSCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS logStats (" +
                 "patientID VARCHAR not null," +
-                "dailyStatID varchar(8) not null," +
-                "foreign key(patientID) references patients(patientID)," +
-                "foreign key(dailyStatID) references dailyStats(dailyStatID));"
+                "dailyStatID VARCHAR not null," +
+                "foreign VARCHAR references patients(patientID)," +
+                "foreign VARCHAR references dailyStats(dailyStatID));"
             );
             
             //LogStats table
@@ -336,7 +336,7 @@ public class Database {
             // Airtable Create PatientOf Table
             db.pOCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS patientOf (" +
-                "healthCareID varchar(8) not null," +
+                "healthCareID VARCHAR not null," +
                 "patientID VARCHAR not null," +
                 "foreign key(healthCareID) references healthCareProvider(healthCareID)," +
                 "foreign key(patientID) references patients(patientID));"
