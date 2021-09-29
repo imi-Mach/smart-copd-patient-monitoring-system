@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     logout: function() {
-      this.$store.commit('setSession', null);
+      this.$store.commit('setSession', "");
       console.log(this.$store.getters.getSession);
       this.$router.push({ name: "Home"});
     }

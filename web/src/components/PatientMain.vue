@@ -126,11 +126,25 @@ export default {
       }],
     };
   },
-//   methods:{
-//       updateBioData(childBioData){
-//           this.biodata.push(childBioData);
-//       }
-//   },
+  methods: {
+    getPatientIno: function() {
+      console.log('Getting patient data');
+      this.$http.post("https://smart-copd-patient.herokuapp.com/patient", this.$store.getters.getUserID).then(
+        (response) => {
+          console.log('it did work');
+          this.someData = response.body;
+          console.log(this.someData.mData);
+        },
+        (response) => {
+          console.log(reponse.mStatus);
+          console.log('it did not work');
+        }
+      )
+    },
+    //updateBioData(childBioData){
+    //  this.biodata.push(childBioData);
+    //},
+  },
   
   components:{
       PatientOverview,

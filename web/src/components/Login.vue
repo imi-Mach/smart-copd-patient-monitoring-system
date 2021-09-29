@@ -18,6 +18,9 @@ export default {
       this.$http.post("https://smart-copd-patient.herokuapp.com/login", idToken).then(
         (response) => {
 
+          this.$store.commit('setUserID', idToken);
+          console.log(this.$store.getters.getUserID);
+
           this.someData = response.body;
           console.log(this.someData);
 
