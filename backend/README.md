@@ -43,6 +43,6 @@ response: {mStatus: ok
 
 * "/myData"
 
-request: {userID:}
+request: {sessionID:}
 
 response: {mData: all daily data}
