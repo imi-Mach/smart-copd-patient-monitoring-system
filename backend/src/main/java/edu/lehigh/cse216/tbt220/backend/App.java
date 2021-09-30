@@ -164,7 +164,7 @@ public class App {
             int weight =  Integer.parseInt((String) jsonObject.get("weight"));
             int temperature =  Integer.parseInt((String) jsonObject.get("temperature"));
             String blood= (String) jsonObject.get("bloodPressure");
-            int glucose =  Integer.parseInt((String) jsonObject.get("date"));
+            int glucose =  Integer.parseInt((String) jsonObject.get("glucose"));
 
             String userID = db.getUserID(sessionID);
             
