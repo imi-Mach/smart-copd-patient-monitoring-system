@@ -18,6 +18,11 @@ export default {
       this.$http.post("https://smart-copd-patient.herokuapp.com/login", idToken).then(
         (response) => {
 
+// Helpful resources:
+// https://vue-view.com/making-a-one-click-google-sign-in-for-vue-js-application/
+// https://developers.google.com/identity/sign-in/web/sign-in
+// https://www.npmjs.com/package/vue-google-signin-button
+
           this.$store.commit('setUserID', idToken);
           console.log(this.$store.getters.getUserID);
 

@@ -126,10 +126,48 @@ export default {
       }],
     };
   },
+  mounted:function(){
+    console.log('on load working');
+    this.getPatientInfo();
+    console.log('attempting to enter getting daily data');
+    this.getDailyData();
+    console.log('attempting to insert data');
+    this.insertData();
+  },
   methods: {
-    getPatientIno: function() {
+    getPatientInfo: function() {
       console.log('Getting patient data');
-      this.$http.post("https://smart-copd-patient.herokuapp.com/patient", this.$store.getters.getUserID).then(
+      this.$http.get("https://smart-copd-patient.herokuapp.com/patient", this.$store.getters.getSession).then(
+        (response) => {
+          console.log('it did work');
+          this.someData = response.body;
+          console.log(this.someData.mData);
+        },
+        (response) => {
+          console.log(reponse.mStatus);
+          console.log('it did not work');
+        }
+      )
+    },
+    getDailyData: function() {
+      console.log('Getting daily data');
+      this.$http.get("https://smart-copd-patient.herokuapp.com/myData", this.$store.getters.getSession).then(
+        (response) => {
+          console.log('it did work');
+          this.someData = response.body;
+          console.log(this.someData.mData);
+        },
+        (response) => {
+          console.log(reponse.mStatus);
+          console.log('it did not work');
+        }
+      )
+    },
+    insertData: function() {
+      console.log('Inserting data');
+      var request = {"sessionID": this.$store.getters.getSession, "date": "01/01/2000", "heartRate": "90", "oxygenLevel": "85", "weight": "135", "temperature": "89", "bloodpressure": "80/120"};
+      console.log(request);
+      this.$http.post("https://smart-copd-patient.herokuapp.com/insertData", request).then(
         (response) => {
           console.log('it did work');
           this.someData = response.body;
