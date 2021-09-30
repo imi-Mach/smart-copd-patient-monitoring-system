@@ -23,13 +23,13 @@ response: {mStatus: ok
             rest you dont care about}}
 
 * "/patient"
-request: {userID: }
+request: {sessionID: }
 
 response: {mData: (all data of patient)}
 
 * "/insertData"
 
-request: {userID:
+request: {sessionID:
           date:
           heartRate:
           oxygenLevel:
@@ -43,6 +43,6 @@ response: {mStatus: ok
 
 * "/myData"
 
-request: {userID:}
+request: {sessionID:}
 
 response: {mData: all daily data}
