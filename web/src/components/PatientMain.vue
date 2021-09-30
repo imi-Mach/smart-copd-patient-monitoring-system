@@ -129,14 +129,11 @@ export default {
   mounted:function(){
     console.log('on load working');
     this.getPatientInfo();
-    console.log('attempting to enter getting daily data');
-    this.getDailyData();
-    console.log('attempting to insert data');
-    this.insertData();
   },
   methods: {
     getPatientInfo: function() {
       console.log('Getting patient data');
+      console.log(this.$store.getters.getSession);
       this.$http.get("https://smart-copd-patient.herokuapp.com/patient", this.$store.getters.getSession).then(
         (response) => {
           console.log('it did work');
