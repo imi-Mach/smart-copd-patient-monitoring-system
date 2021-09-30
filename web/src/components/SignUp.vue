@@ -2,7 +2,7 @@
   <div class="hero is-fullheight is-info is-bold">
     <div class="hero-body">
     <div class="container">
-            <h1 class="title has-text-centered">Vue.js Form Processing</h1>
+            <h1 class="title has-text-centered">Sign Up</h1>
             <div class="box">
                 <!-- our signup form ===================== -->
                 <form id="signup-form">
@@ -72,27 +72,25 @@
         methods: {
             processForm: function() {
                 console.log("User Session Key before signup route "+this.$store.getters.getSession);
-                //console.log(this.data);
-                setTimeout(() => {  console.log("World!"); }, 2000);
-                var test = this.$store.getters.getSession;
-                console.log("Testing getSession: "+ test);
-                //this.data.sessionID = this.$store.getters.getSession;
 
-                //var request = {};
                 var request = {"sessionID": this.$store.getters.getSession, "firstName": this.firstName, "lastName": this.lastName, "DOB": this.DOB, "phoneNumber": this.phoneNumber};
                 console.log(request);
-                var test2 = this.data;
-                console.log(test2);
-                //request = this.data;
-                //request.sessionID = this.$store.getters.getSession;
                 
                 this.$http.post("https://smart-copd-patient.herokuapp.com/register", request).then(
                     (response) => {
                         this.someData = response.body;
                         console.log(this.someData);
-                        if (response.mData) {
+                        console.log(this.someData.mStatus);
+                        console.log(this.someData.mExists);
+                        console.log(!this.someData.mExists);
+                        if (this.someData.mStatus == 'ok') {
                             console.log('it worked');
-                            this.$router.push('patients')
+                            this.$router.push({ name: "Patient"});
+                        } else {
+                            alert('Error with submission, returning to home');
+                            this.$router.push({ name: "Home"});
+                            console.log('This point should not of been reached');
+                            console.log('Brian screwed up, blame him');
                         }
                     },
                     (response) => {

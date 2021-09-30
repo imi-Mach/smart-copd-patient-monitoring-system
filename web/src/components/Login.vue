@@ -15,43 +15,34 @@ export default {
   }),
   methods: {
     OnGoogleAuthSuccess (idToken) {
-      // var self = this
-      
-      //to be modified and put in methods
       this.$http.post("https://smart-copd-patient.herokuapp.com/login", idToken).then(
         (response) => {
 
-          // get body data
-          //var test = response.body;
+// Helpful resources:
+// https://vue-view.com/making-a-one-click-google-sign-in-for-vue-js-application/
+// https://developers.google.com/identity/sign-in/web/sign-in
+// https://www.npmjs.com/package/vue-google-signin-button
+
+          this.$store.commit('setUserID', idToken);
+          console.log(this.$store.getters.getUserID);
+
           this.someData = response.body;
           console.log(this.someData);
 
-          //console.log("Testing");
-          //console.log(test.mSessionID);
-          //console.log(this.someData.mSessionID);
-
-          //this.$store.setSession(this.someData.mMessage)
-          //this.$store.state.sessionID = this.someData.mSessionID;
           this.$store.commit('setSession', this.someData.mSessionID);
           console.log(this.$store.getters.getSession);
 
-
-          //console.log(store.getSession())
-
           if(this.someData.mExists){
             
-            console.log("user exists")
-            //means user exists
-            //you also need to pass the session id to a new page
+            console.log("user exists");
+            this.$router.push({name: "Patient"});
           }
           else{
             console.log("user does not exist")
-            //means user needs to redirect
             this.$router.push({ name: "Register"})
           }
         },
         (response) => {
-          // error callback
           console.log(response.mStatus);
           console.log('message pt2');
           console.log(response.mMessage);
