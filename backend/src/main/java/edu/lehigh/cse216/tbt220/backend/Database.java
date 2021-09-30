@@ -524,8 +524,8 @@ public class Database {
             dSInsertNewStat.setInt(6,temperature);
             dSInsertNewStat.setString(7,blood);
             dSInsertNewStat.setInt(8,glucose);
-            dSInsertNewStat.setString(9,generatedString);
-            dSInsertNewStat.setString(8,userID);
+            dSInsertNewStat.setString(9,userID);
+            dSInsertNewStat.setString(10,generatedString);
 
             ResultSet rs = dSInsertNewStat.executeQuery();
         } catch (SQLException e) {
