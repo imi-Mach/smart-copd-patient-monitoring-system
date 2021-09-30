@@ -146,10 +146,8 @@ public class App {
         });
 
         Spark.get("/patient", (request, response) -> {
-            JSONParser jsonParser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
-            
-            String sessionID = (String) jsonObject.get("sessionID");
+
+            String sessionID = gson.fromJson(request.body(), String.class);
             String userID = db.getUserID(sessionID);
             return gson.toJson(new StructuredResponse("ok", null, db.getPatient(userID)));
         });
