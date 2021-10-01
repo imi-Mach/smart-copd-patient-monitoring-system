@@ -141,7 +141,7 @@ export default {
         (response) => {
           console.log('it did work');
           this.someData = response.body;
-          console.log(this.someData.mData);
+          console.log(response)
         },
         (response) => {
           console.log(reponse.mStatus);
@@ -155,7 +155,7 @@ export default {
         (response) => {
           console.log('it did work');
           this.someData = response.body;
-          console.log(this.someData.mData);
+          console.log(response)
         },
         (response) => {
           console.log(reponse.mStatus);
@@ -165,13 +165,13 @@ export default {
     },
     insertData: function() {
       console.log('Inserting data');
-      var request = {"sessionID": this.$store.getters.getSession, "date": "01/01/2000", "heartRate": "90", "oxygenLevel": "85", "weight": "135", "temperature": "89", "bloodpressure": "80/120"};
+      var request = {"sessionID": this.$store.getters.getSession, "date": "01/01/2000", "heartRate": "90", "oxygenLevel": "85", "weight": "135", "temperature": "92", "bloodPressure": "80/120", "glucose": "12"};
       console.log(request);
       this.$http.post("https://smart-copd-patient.herokuapp.com/insertData", request).then(
         (response) => {
           console.log('it did work');
           this.someData = response.body;
-          console.log(this.someData.mData);
+          console.log(response)
         },
         (response) => {
           console.log(reponse.mStatus);

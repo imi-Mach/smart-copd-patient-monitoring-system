@@ -313,7 +313,7 @@ public class Database {
             db.dSDropTable = db.mConnection.prepareStatement("DROP TABLE dailyStats");
             db.dSGetStat = db.mConnection.prepareStatement("SELECT * FROM dailyStats where dailyStatID = ?");
             db.dSGetAllStat = db.mConnection.prepareStatement("SELECT * FROM dailyStats DS, patients P, logStats LS where DS.dailyStatID = LS.dailyStatID AND P.patientID = LS.patientID AND P.patientID = ?");
-            db.dSInsertNewStat = db.mConnection.prepareStatement("INSERT INTO dailyStats VALUES(?,?,?,?,?,?,?,?); INSERT INTO logStats(?,?)");
+            db.dSInsertNewStat = db.mConnection.prepareStatement("INSERT INTO dailyStats VALUES(?,?,?,?,?,?,?,?); INSERT INTO logStats VALUES(?,?)");
             db.dSDeleteStat = db.mConnection.prepareStatement("DELETE FROM logStats WHERE dailyStatID = ?; DELETE FROM dailyStats WHERE dailyStatID = ?");
             db.dSCheckIfStatExists = db.mConnection.prepareStatement("SELECT dailyStatID FROM dailyStats WHERE dailyStatID = ?");
             
@@ -321,9 +321,7 @@ public class Database {
             db.lSCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS logStats (" +
                 "patientID VARCHAR not null," +
-                "dailyStatID VARCHAR not null," +
-                "foreign VARCHAR references patients(patientID)," +
-                "foreign VARCHAR references dailyStats(dailyStatID));"
+                "dailyStatID VARCHAR not null);" 
             );
             
             //LogStats table
@@ -367,7 +365,7 @@ public class Database {
      */
     boolean checkLogin(String sessionID){
         ResultSet rs = null;
-        System.out.print("<3 Thanos");
+
         try {
             sCheckLogin.setString(1, sessionID);
 
@@ -487,17 +485,17 @@ public class Database {
      * @return patient object
      */
     Patient getPatient(String userID) {
-        Patient res = null;
         try {
             pGetPatient.setString(1, userID);
             ResultSet rs = pGetPatient.executeQuery();
             if (rs.next()) {
-                res = new Patient(rs.getString("patientID"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("DOB"), rs.getString("phoneNumber"),rs.getInt("riskLevel"));
+                Patient res = new Patient("test", rs.getString("firstName"), rs.getString("lastName"), rs.getString("DOB"), rs.getString("phoneNumber"),rs.getInt("riskLevel"));
+                return res;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return res;
+        return null;
     }
 
     /**
@@ -516,6 +514,7 @@ public class Database {
 
         String generatedString = RandomStringUtils.random(8, true, true);
         try{
+
             dSInsertNewStat.setString(1,generatedString);
             dSInsertNewStat.setString(2,date);
             dSInsertNewStat.setInt(3,heartRate);
@@ -527,7 +526,7 @@ public class Database {
             dSInsertNewStat.setString(9,userID);
             dSInsertNewStat.setString(10,generatedString);
 
-            ResultSet rs = dSInsertNewStat.executeQuery();
+            dSInsertNewStat.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
