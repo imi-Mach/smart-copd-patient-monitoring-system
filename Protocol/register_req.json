@@ -2,6 +2,6 @@
     "sessionID": "xxxxxxxxxx",
     "firstName": "xxxxxxxxxx",
     "lastName": "xxxxxxxxxx",
-    "DOB": "xx/xx/xx",
+    "DOB": "MM/DD/YYYY",
     "phoneNumber": "xxxxxxxxxx"
 }
