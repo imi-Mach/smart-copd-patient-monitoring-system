@@ -149,7 +149,7 @@ public class App {
 
             String sessionID = gson.fromJson(request.body(), String.class);
             String userID = db.getUserID(sessionID);
-            return gson.toJson(new StructuredResponse("ok", null, true, db.getPatient(userID)));
+            return gson.toJson(db.getPatient(userID));
         });
 
         Spark.post("/insertData", (request, response) -> {
@@ -177,7 +177,7 @@ public class App {
             String sessionID = gson.fromJson(request.body(), String.class);
             String userID = db.getUserID(sessionID);
 
-            return gson.toJson(new StructuredResponse("ok", null, true, db.getAllDailyStats(userID)));
+            return gson.toJson(db.getAllDailyStats(userID));
         });
 
 
