@@ -21,6 +21,27 @@ export default {
   name: 'HelloWorld',
   props: {
     biodata: Array
+  },
+  mounted:function() {
+    console.log('on loadworking for data');
+    this.getDailyData();
+  },
+  methods: {
+    getDailyData: function() {
+      console.log('Getting daily data');
+      this.$http.get("https://smart-copd-patient.herokuapp.com/myData", this.$store.getters.getSession).then(
+        (response) => {
+          console.log('it did work');
+          this.someData = response.body;
+          console.log(response);
+          console.log(response.body);
+        },
+        (response) => {
+          console.log(reponse.mStatus);
+          console.log('it did not work');
+        }
+      )
+    },
   }
 }
 </script>

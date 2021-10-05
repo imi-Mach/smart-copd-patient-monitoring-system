@@ -5,7 +5,7 @@
         <el-input v-model="form.hr"></el-input>
       </el-form-item>
 
-      <el-form-item label="Oxygen Saturation (SpO2): ">
+      <!-- <el-form-item label="Oxygen Saturation (SpO2): ">
         <el-input v-model="form.spo2"></el-input>
       </el-form-item>
 
@@ -15,7 +15,7 @@
 
       <el-form-item label="Weight: ">
         <el-input v-model="form.w"></el-input>
-      </el-form-item>
+      </el-form-item> -->
 
       <el-form-item label="Temperature: ">
         <el-input v-model="form.t"></el-input>
@@ -38,25 +38,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
-const port = process.env.PORT || '3000'
-
-const apiClient = axios.create({
-  // This can likely just be moved to a non-component page so this only has to be done once
-    baseURL: 'http://localhost:3000',
-    //baseURL = '';
-    //baseURL: 'https://smart-copd-patient.herokuapp.com:' + port,
-    withCredentials: false, // This is the default
-    crossDomain: true,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    timeout: 10000
-})
-
-console.log('PORT:', 'smart-copd-patient.herokuapp.com:' + port) /* eslint-disable-line no-console */
 
 export default {
   name: "PatientBioData",
@@ -74,28 +55,40 @@ export default {
     };
   },
   methods: {
+    insertData: function() {
+      console.log('Inserting data');
+
+      var today = new Date();
+      
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+
+      today = mm + '/' + dd + '/' + yyyy;
+
+      // should we be using oxygen level or respiration level
+      // might need an equation using these two
+      var request = {"sessionID": this.$store.getters.getSession, "date": today, "heartRate": this.form.hr, "oxygenLevel": this.form.spo2, "weight": this.form.w, "temperature": this.form.t, "bloodPressure": this.form.bp, "glucose": this.form.gl};
+      console.log(request);
+      this.$http.post("https://smart-copd-patient.herokuapp.com/insertData", request).then(
+        (response) => {
+          console.log('it did work');
+          this.someData = response.body;
+          console.log(response);
+          console.log(response.body);
+        },
+        (response) => {
+          console.log(reponse.mStatus);
+          console.log('it did not work');
+        }
+      )
+    },
     onSubmit() {
       console.log("submit!");
       console.log(typeof this.form);
       console.log(this.form);
-
-      //to be fixed, should assembly the object first then send it
-      
-			//   this.$http.post(
-      //     "http://localhost:3000/patients/api",
-      //     '{"hr": this.form.hr, "spo2": this.form.spo2, "rr": this.form.rr}'
-      //   );
-
-      this.$http.get
-
-      this.$message({
-          message: 'Data Successfully Recorded',
-          type: 'success'
-        });
-      this.onClear();
-
-      //for presentation
-      //this.$emit('updateData', form);
+      this.insertData();
+      console.log('data inserted');
     },
     onClear() {
       this.form.hr = "";

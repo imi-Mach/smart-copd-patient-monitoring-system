@@ -23,14 +23,21 @@ export default {
 // https://developers.google.com/identity/sign-in/web/sign-in
 // https://www.npmjs.com/package/vue-google-signin-button
 
+
+// https://stackoverflow.com/questions/43027499/vuex-state-on-page-refresh
+// Link for persistant session ID
+
+          console.log('LOGIN ROUTE');
+          console.log(response.body);
+
           this.$store.commit('setUserID', idToken);
-          console.log(this.$store.getters.getUserID);
+          //console.log(this.$store.getters.getUserID);
 
           this.someData = response.body;
-          console.log(this.someData);
+          //console.log(this.someData);
 
           this.$store.commit('setSession', this.someData.mSessionID);
-          console.log(this.$store.getters.getSession);
+          //console.log(this.$store.getters.getSession);
 
           if(this.someData.mExists){
             

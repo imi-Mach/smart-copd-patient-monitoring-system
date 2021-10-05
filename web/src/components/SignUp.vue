@@ -79,6 +79,7 @@
                 this.$http.post("https://smart-copd-patient.herokuapp.com/register", request).then(
                     (response) => {
                         this.someData = response.body;
+                        console.log(response.body);
                         console.log(this.someData);
                         console.log(this.someData.mStatus);
                         console.log(this.someData.mExists);
