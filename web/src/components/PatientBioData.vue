@@ -5,17 +5,17 @@
         <el-input v-model="form.hr"></el-input>
       </el-form-item>
 
-      <!-- <el-form-item label="Oxygen Saturation (SpO2): ">
+      <el-form-item label="Oxygen Saturation (SpO2): ">
         <el-input v-model="form.spo2"></el-input>
       </el-form-item>
 
-      <el-form-item label="Respiration Rate: ">
+      <!-- <el-form-item label="Respiration Rate: ">
         <el-input v-model="form.rr"></el-input>
-      </el-form-item>
+      </el-form-item> LOOKS LIKE WE ARE NOT USING THIS VALUE -->
 
       <el-form-item label="Weight: ">
         <el-input v-model="form.w"></el-input>
-      </el-form-item> -->
+      </el-form-item>
 
       <el-form-item label="Temperature: ">
         <el-input v-model="form.t"></el-input>
@@ -83,12 +83,13 @@ export default {
         }
       )
     },
-    onSubmit() {
+    onSubmit: async function() {
       console.log("submit!");
       console.log(typeof this.form);
       console.log(this.form);
-      //await this.insertData();
+      await this.insertData();
       console.log('data inserted');
+      onClear();
     },
     onClear() {
       this.form.hr = "";

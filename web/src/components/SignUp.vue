@@ -1,58 +1,35 @@
 <template>
-  <div class="hero is-fullheight is-info is-bold">
-    <div class="hero-body">
-    <div class="container">
-            <h1 class="title has-text-centered">Sign Up</h1>
-            <div class="box">
-                <!-- our signup form ===================== -->
-                <form id="signup-form">
-                    <!-- name -->
-                    <div class="field">
-                        <label class="label">First name</label>
-                        <input 
-                            type="text"
-                            class="input" 
-                            name="firstName"
-                            v-model="firstName">
-                    </div>
+    <!-- TODO: Check user input, using another form -->
+  <el-form ref="form" label-width="120px">
+    <el-form-item label="First name: ">
+      <el-input v-model="firstName" class="uinput"></el-input>
+    </el-form-item>
 
-                    <!-- email -->
-                    <div class="field">
-                        <label class="label">Last name</label>
-                        <input 
-                            type="email" 
-                            class="input" 
-                            name="lastName" 
-                            v-model="lastName">
-                    </div>
+    <el-form-item label="Last name: ">
+      <el-input v-model="lastName" class="uinput"></el-input>
+    </el-form-item>
+    
+<!-- NOTE this needs to parse the value before sending it --->
+    <el-form-item label="Date of Birth: ">
+      <el-date-picker
+        v-model="DOB"
+        type="date"
+        placeholder="Please select your DOB"
+        default-value="1990-10-01"
+      >
+      </el-date-picker>
+    </el-form-item>
 
-                    <div class="field">
-                        <label class="label">DOB</label>
-                        <input 
-                            type="text"
-                            class="input" 
-                            name="DOB"
-                            v-model="DOB">
-                    </div>
+    <el-form-item label="Phone Number: ">
+      <el-input v-model="phoneNumber" class="uinput"></el-input>
+    </el-form-item>
 
-                    <div class="field">
-                        <label class="label">Phone Number</label>
-                        <input 
-                            type="text"
-                            class="input" 
-                            name="phoneNumber"
-                            v-model="phoneNumber">
-                    </div>
-
-                    <!-- submit button -->
-                    <div class="field has-text-right">
-                            <button type="submit" @click.stop.prevent="processForm()">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+    <el-form-item>
+      <el-button type="primary" @click="processForm">Submit</el-button>
+      <!-- TODO: Cancel will need to sign out the user -->
+      <el-button>Cancel</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
@@ -74,18 +51,20 @@
                 console.log("User Session Key before signup route "+this.$store.getters.getSession);
 
                 var request = {"sessionID": this.$store.getters.getSession, "firstName": this.firstName, "lastName": this.lastName, "DOB": this.DOB, "phoneNumber": this.phoneNumber};
-                console.log(request);
+                //console.log(request);
                 
                 this.$http.post("https://smart-copd-patient.herokuapp.com/register", request).then(
                     (response) => {
+                        console.log('Register Response');
                         this.someData = response.body;
-                        console.log(response.body);
                         console.log(this.someData);
-                        console.log(this.someData.mStatus);
-                        console.log(this.someData.mExists);
-                        console.log(!this.someData.mExists);
+                        // console.log(response.body);
+                        // console.log(this.someData);
+                        // console.log(this.someData.mStatus);
+                        // console.log(this.someData.mExists);
+                        // console.log(!this.someData.mExists);
                         if (this.someData.mStatus == 'ok') {
-                            console.log('it worked');
+                            console.log('Register worked');
                             this.$router.push({ name: "Patient"});
                         } else {
                             alert('Error with submission, returning to home');
@@ -103,3 +82,9 @@
         }
     };
 </script>
+
+<style>
+.uinput {
+    width: 220px
+}
+</style>

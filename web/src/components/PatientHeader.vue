@@ -5,7 +5,7 @@
 
       <el-submenu index="2">
         <template slot="title">Welcome, {{ name }}</template>
-        <el-menu-item index="2-1">Profile</el-menu-item>
+        <el-menu-item v-on:click="patientProfile" index="2-1">Profile</el-menu-item>
         <el-menu-item v-on:click="logout" index="2-2" text-color="#fff">Log out</el-menu-item>
       </el-submenu>   
 
@@ -27,6 +27,9 @@ export default {
       this.$store.commit('setSession', "");
       console.log(this.$store.getters.getSession);
       this.$router.push({ name: "Home"});
+    },
+    patientProfile: function() {
+      this.$router.push({name: "Profile"});
     }
   }
 }

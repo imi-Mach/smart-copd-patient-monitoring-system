@@ -8,8 +8,8 @@
 <script>
 
 export default {
-  mounted: function() {
-    console.log('getting patient data works');
+  mounted: async function() {
+    console.log('getting patient info');
     await this.getPatientInfo();
   },
   methods: {
@@ -19,10 +19,10 @@ export default {
       console.log(this.$store.getters.getSession);
       this.$http.get("https://smart-copd-patient.herokuapp.com/patient/"+this.$store.getters.getSession).then(
         (response) => {
-          console.log('it did work');
+          console.log('Patient Profile data worked');
           this.someData = response.body;
-          console.log(response);
-          console.log(response.body);
+          // NOTE: Patient ID returns Test, should investigate this and see why
+          console.log(response.body.mData);
         },
         (response) => {
           console.log(reponse.mStatus);

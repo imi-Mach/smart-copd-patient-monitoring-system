@@ -9,28 +9,22 @@
       text-color="#050505"
     >
       <el-menu-item index="1">
-        <a href="https://engineering.lehigh.edu/cse" target="_blank">
-          <img
-            alt="Vue logo"
-            src="@/assets/LehighU_official-logo_Color-300dpi.jpg"
-          />
-        </a>
+        <img alt="Logo" src="@/assets/logo.png" />
       </el-menu-item>
 
-      <el-menu-item index="2">Patient Portal </el-menu-item>
-
-      <el-menu-item index="3" disabled>Healthcare Portal</el-menu-item>
-
-      <el-menu-item index="4">Services</el-menu-item>
-
-      <el-menu-item index="5">About us </el-menu-item>
-
-      <el-submenu index="6">
-        <template slot="title">Services</template>
-        <el-menu-item index="2-1">Patients</el-menu-item>
-        <el-menu-item index="2-2">Doctors</el-menu-item>
-          
+      <el-submenu index="2">
+        <template slot="title">Explore</template>
+        <el-menu-item index="2-1">
+          <span style="font-family:Avenir">Patients</span>
+        </el-menu-item>
+        <el-menu-item index="2-2">
+          <span style="font-family:Avenir">Healthcare</span>
+        </el-menu-item>
       </el-submenu>
+
+      <el-menu-item index="3">Team</el-menu-item>
+
+      <el-menu-item index="4">More about COPD</el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -61,5 +55,8 @@ img {
 }
 .fullscreen {
   width: 100%;
+}
+.drop-down{
+  font-family: Arial, Helvetica, sans-serif;
 }
 </style>

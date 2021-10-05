@@ -1,5 +1,9 @@
 <template>
-  <button v-google-signin-button="clientId" class="google-signin-button"> Continue with Google</button>
+  <div>
+  <!-- <button v-google-signin-button="clientId" class="google-signin-button">{{ option }}</button> -->
+  <el-button type="primary" v-google-signin-button="clientId" class="google-signin-button" plain v-if="patient == 0">{{ option }}</el-button>
+  <el-button type="warning" v-google-signin-button="clientId" class="google-signin-button" plain v-if="patient == 1">{{ option }}</el-button>
+  </div>
 </template>
  
 <script>
@@ -7,6 +11,10 @@ import GoogleSignInButton from 'vue-google-signin-button-directive'
 
 export default {
   name: "Login",
+  props: {
+    option: String,
+    patient: Number,
+  },
   directives: {
     GoogleSignInButton
   },
@@ -65,7 +73,7 @@ export default {
 </script> 
  
 <style>
-.google-signin-button {
+/* .google-signin-button {
   color: white;
   background-color: red;
   height: 50px;
@@ -73,5 +81,5 @@ export default {
   border-radius: 10px;
   padding: 10px 20px 25px 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
+} */
 </style> 
