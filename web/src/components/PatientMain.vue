@@ -128,27 +128,18 @@ export default {
   },
   mounted:async function(){
     console.log('on load working');
-<<<<<<< HEAD
-    this.getPatientInfo();
-=======
     await this.getPatientInfo();
     console.log('attempting to insert data');
     await this.insertData();
     console.log('attempting to enter getting daily data');
     await this.getDailyData();
    
->>>>>>> 77b75d22b27bbe6edf48da5966f39a38fab2c7f7
   },
   methods: {
     getPatientInfo: async function() {
       console.log('Getting patient data');
-<<<<<<< HEAD
-      console.log(this.$store.getters.getSession);
-      this.$http.get("https://smart-copd-patient.herokuapp.com/patient", this.$store.getters.getSession).then(
-=======
       var test = this.$store.getters.getSession
       this.$http.get("https://smart-copd-patient.herokuapp.com/patient/"+this.$store.getters.getSession).then(
->>>>>>> 77b75d22b27bbe6edf48da5966f39a38fab2c7f7
         (response) => {
           console.log('it did work');
           this.someData = response.body;
