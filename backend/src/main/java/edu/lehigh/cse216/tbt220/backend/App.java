@@ -148,8 +148,18 @@ public class App {
         Spark.get("/patient", (request, response) -> {
 
             String sessionID = gson.fromJson(request.body(), String.class);
+            System.out.println("asdjasdasdasd");
+            System.out.println(sessionID);
+            System.out.println("dkahsdjasdjfs");
             String userID = db.getUserID(sessionID);
-            return gson.toJson(db.getPatient(userID));
+            System.out.println("This is the user id in patient route"+userID);
+
+            Object data = db.getPatient(userID);
+            if (data == null) {
+                return gson.toJson(new StructuredResponse("error", userID + " not found", null));
+            } else {
+                return gson.toJson(new StructuredResponse("ok", null, data));
+            }
         });
 
         Spark.post("/insertData", (request, response) -> {
@@ -168,7 +178,11 @@ public class App {
 
             String userID = db.getUserID(sessionID);
             
-            db.insertNewData(userID, date, heartRate, oxygenLevel, weight, temperature, blood, glucose);
+            int result = db.insertNewData(userID, date, heartRate, oxygenLevel, weight, temperature, blood, glucose);
+
+            if(result == 0) {
+                return gson.toJson(new StructuredResponse("error", "insert failed", null));
+            }
             return gson.toJson(new StructuredResponse("ok", null, null));
         });
 
@@ -177,7 +191,13 @@ public class App {
             String sessionID = gson.fromJson(request.body(), String.class);
             String userID = db.getUserID(sessionID);
 
-            return gson.toJson(db.getAllDailyStats(userID));
+            Object data = db.getAllDailyStats(userID);
+
+            if (data == null) {
+                return gson.toJson(new StructuredResponse("error", userID + " not found", null));
+            } else {
+                return gson.toJson(new StructuredResponse("ok", null, data));
+            }
         });
 
 

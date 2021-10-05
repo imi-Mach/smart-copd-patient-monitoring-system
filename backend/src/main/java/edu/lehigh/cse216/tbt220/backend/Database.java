@@ -510,8 +510,9 @@ public class Database {
      * @param glucose
      * @return
      */
-    void insertNewData(String userID, String date, int heartRate, int oxygenLevel, int weight,int temperature, String blood, int glucose){
+    int insertNewData(String userID, String date, int heartRate, int oxygenLevel, int weight,int temperature, String blood, int glucose){
 
+        int rowUpdate = 0;
         String generatedString = RandomStringUtils.random(8, true, true);
         try{
 
@@ -526,10 +527,12 @@ public class Database {
             dSInsertNewStat.setString(9,userID);
             dSInsertNewStat.setString(10,generatedString);
 
-            dSInsertNewStat.executeUpdate();
+            rowUpdate += dSInsertNewStat.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return rowUpdate;
     }
 
     /**
