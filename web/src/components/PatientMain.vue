@@ -126,18 +126,19 @@ export default {
       }],
     };
   },
-  mounted:function(){
+  mounted:async function(){
     console.log('on load working');
-    this.getPatientInfo();
+    await this.getPatientInfo();
     console.log('attempting to enter getting daily data');
-    this.getDailyData();
+    await this.getDailyData();
     console.log('attempting to insert data');
-    this.insertData();
+    await this.insertData();
   },
   methods: {
-    getPatientInfo: function() {
+    getPatientInfo: async function() {
       console.log('Getting patient data');
-      this.$http.get("https://smart-copd-patient.herokuapp.com/patient", this.$store.getters.getSession).then(
+      var test = this.$store.getters.getSession
+      this.$http.get("https://smart-copd-patient.herokuapp.com/patient", test).then(
         (response) => {
           console.log('it did work');
           this.someData = response.body;
@@ -149,7 +150,7 @@ export default {
         }
       )
     },
-    getDailyData: function() {
+    getDailyData: async function() {
       console.log('Getting daily data');
       this.$http.get("https://smart-copd-patient.herokuapp.com/myData", this.$store.getters.getSession).then(
         (response) => {
@@ -163,7 +164,7 @@ export default {
         }
       )
     },
-    insertData: function() {
+    insertData: async function() {
       console.log('Inserting data');
       var request = {"sessionID": this.$store.getters.getSession, "date": "01/01/2000", "heartRate": "90", "oxygenLevel": "85", "weight": "135", "temperature": "92", "bloodPressure": "80/120", "glucose": "12"};
       console.log(request);
