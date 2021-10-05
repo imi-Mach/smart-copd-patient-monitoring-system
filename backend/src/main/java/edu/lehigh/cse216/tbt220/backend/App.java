@@ -145,9 +145,9 @@ public class App {
             return gson.toJson(new StructuredResponse("ok", null, null));
         });
 
-        Spark.get("/patient", (request, response) -> {
+        Spark.get("/patient/:session_id", (request, response) -> {
 
-            String sessionID = gson.fromJson(request.body(), String.class);
+            String sessionID = request.params("session_id");
             System.out.println("asdjasdasdasd");
             System.out.println(sessionID);
             System.out.println("dkahsdjasdjfs");
@@ -186,9 +186,9 @@ public class App {
             return gson.toJson(new StructuredResponse("ok", null, null));
         });
 
-        Spark.get("/myData", (request,response) -> {
+        Spark.get("/myData/:session_id", (request,response) -> {
 
-            String sessionID = gson.fromJson(request.body(), String.class);
+            String sessionID = request.params("session_id");
             String userID = db.getUserID(sessionID);
 
             Object data = db.getAllDailyStats(userID);
