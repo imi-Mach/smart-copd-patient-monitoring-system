@@ -55,7 +55,7 @@ export default {
     };
   },
   methods: {
-    insertData: function() {
+    insertData: async function() {
       console.log('Inserting data');
 
       var today = new Date();
@@ -87,7 +87,7 @@ export default {
       console.log("submit!");
       console.log(typeof this.form);
       console.log(this.form);
-      this.insertData();
+      //await this.insertData();
       console.log('data inserted');
     },
     onClear() {

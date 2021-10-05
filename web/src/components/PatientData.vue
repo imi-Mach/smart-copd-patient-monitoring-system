@@ -24,24 +24,23 @@ export default {
   },
   mounted:function() {
     console.log('on loadworking for data');
-    this.getDailyData();
+    await this.getDailyData();
   },
   methods: {
-    getDailyData: function() {
+    getDailyData: async function() {
       console.log('Getting daily data');
-      this.$http.get("https://smart-copd-patient.herokuapp.com/myData", this.$store.getters.getSession).then(
+      this.$http.get("https://smart-copd-patient.herokuapp.com/myData/"+this.$store.getters.getSession).then(
         (response) => {
           console.log('it did work');
           this.someData = response.body;
-          console.log(response);
-          console.log(response.body);
+          console.log(response)
         },
         (response) => {
           console.log(reponse.mStatus);
           console.log('it did not work');
         }
       )
-    },
-  }
+    }
+  },
 }
 </script>

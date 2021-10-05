@@ -126,21 +126,18 @@ export default {
       }],
     };
   },
-  mounted:function(){
-    console.log('on load working');
-    //this.getPatientInfo();
+  mounted:function() {
+    console.log('on loadworking for data');
+    //await this.getDailyData();
   },
   methods: {
-    getPatientInfo: function() {
-      // When should this function be called? It's just getting the patient
-      console.log('Getting patient data');
-      console.log(this.$store.getters.getSession);
-      this.$http.get("https://smart-copd-patient.herokuapp.com/patient", this.$store.getters.getSession).then(
+    getDailyData: async function() {
+      console.log('Getting daily data');
+      this.$http.get("https://smart-copd-patient.herokuapp.com/myData/"+this.$store.getters.getSession).then(
         (response) => {
           console.log('it did work');
           this.someData = response.body;
-          console.log(response);
-          console.log(response.body);
+          console.log(response)
         },
         (response) => {
           console.log(reponse.mStatus);
