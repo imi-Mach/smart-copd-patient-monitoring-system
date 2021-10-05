@@ -15,7 +15,7 @@ mExists is true when the user is already in the database, false when the user is
 ##### register_req.json
 "/register"
 This route is called when the login route responses with mExists: false.
-Note the format of DOB and phoneNumber is *TBD*
+Note the format of DOB and phoneNumber is varchar
 
 ##### register_res
 a json with mStatus: ok if request was handled correctly

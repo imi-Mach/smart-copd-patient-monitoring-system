@@ -126,29 +126,18 @@ export default {
       }],
     };
   },
-  mounted:async function(){
+  mounted:function(){
     console.log('on load working');
-<<<<<<< HEAD
     this.getPatientInfo();
-=======
-    await this.getPatientInfo();
-    console.log('attempting to insert data');
-    await this.insertData();
     console.log('attempting to enter getting daily data');
-    await this.getDailyData();
-   
->>>>>>> 77b75d22b27bbe6edf48da5966f39a38fab2c7f7
+    this.getDailyData();
+    console.log('attempting to insert data');
+    this.insertData();
   },
   methods: {
-    getPatientInfo: async function() {
+    getPatientInfo: function() {
       console.log('Getting patient data');
-<<<<<<< HEAD
-      console.log(this.$store.getters.getSession);
       this.$http.get("https://smart-copd-patient.herokuapp.com/patient", this.$store.getters.getSession).then(
-=======
-      var test = this.$store.getters.getSession
-      this.$http.get("https://smart-copd-patient.herokuapp.com/patient/"+this.$store.getters.getSession).then(
->>>>>>> 77b75d22b27bbe6edf48da5966f39a38fab2c7f7
         (response) => {
           console.log('it did work');
           this.someData = response.body;
@@ -160,25 +149,25 @@ export default {
         }
       )
     },
-     insertData: async function() {
+    getDailyData: function() {
+      console.log('Getting daily data');
+      this.$http.get("https://smart-copd-patient.herokuapp.com/myData", this.$store.getters.getSession).then(
+        (response) => {
+          console.log('it did work');
+          this.someData = response.body;
+          console.log(response)
+        },
+        (response) => {
+          console.log(reponse.mStatus);
+          console.log('it did not work');
+        }
+      )
+    },
+    insertData: function() {
       console.log('Inserting data');
       var request = {"sessionID": this.$store.getters.getSession, "date": "01/01/2000", "heartRate": "90", "oxygenLevel": "85", "weight": "135", "temperature": "92", "bloodPressure": "80/120", "glucose": "12"};
       console.log(request);
       this.$http.post("https://smart-copd-patient.herokuapp.com/insertData", request).then(
-        (response) => {
-          console.log('it did work');
-          this.someData = response.body;
-          console.log(response)
-        },
-        (response) => {
-          console.log(reponse.mStatus);
-          console.log('it did not work');
-        }
-      )
-    },
-    getDailyData: async function() {
-      console.log('Getting daily data');
-      this.$http.get("https://smart-copd-patient.herokuapp.com/myData/"+this.$store.getters.getSession).then(
         (response) => {
           console.log('it did work');
           this.someData = response.body;
