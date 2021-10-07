@@ -1,5 +1,5 @@
 <template>
-    <!-- TODO: Check user input, using another form -->
+    <!-- TODO: Validate User input -->
   <el-form ref="form" label-width="120px">
     <el-form-item label="First name: ">
       <el-input v-model="firstName" class="uinput"></el-input>

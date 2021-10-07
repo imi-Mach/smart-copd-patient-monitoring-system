@@ -21,7 +21,7 @@ export default {
 
 <style>
 .box-card {
-  width: 460px;
+  width: 480px;
   margin: 0 auto;
 }
 #logo {

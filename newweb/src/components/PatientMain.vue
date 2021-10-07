@@ -1,5 +1,5 @@
 <template>
-  <el-tabs tab-position="left" style="height: 400px" :stretch="stretch">
+  <el-tabs tab-position="left" style="height: auto" :stretch="stretch">
     <el-tab-pane label="Overview">
       <patient-overview></patient-overview>
     </el-tab-pane>
