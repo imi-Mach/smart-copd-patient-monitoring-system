@@ -1,13 +1,13 @@
 <template>
   <div>
-    <el-menu default-active="1" class="el-menu-demo" mode="horizontal">
+    <el-menu default-active="1" class="el-menu-demo" mode="horizontal" id="fullscreen">
       <el-menu-item index="1">{{ msg }}</el-menu-item>
 
-      <el-submenu index="2">
+      <el-submenu index="2" id="user">
         <template slot="title">Welcome, {{ name }}</template>
         <el-menu-item index="2-1">Profile</el-menu-item>
         <el-menu-item v-on:click="logout" index="2-2" text-color="#fff">Log out</el-menu-item>
-      </el-submenu>   
+      </el-submenu>
 
     </el-menu>
   </div>
@@ -31,3 +31,13 @@ export default {
   }
 }
 </script>
+
+<style>
+#user{
+  position: absolute;
+  right:0;
+}
+#fullscreen{
+  height: 100%;
+}
+</style>

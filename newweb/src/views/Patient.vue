@@ -5,7 +5,7 @@
     </el-header>
     <el-container>
       <el-main>
-        <patient-main></patient-main>
+        <patient-main id="patientmain"></patient-main>
       </el-main>
     </el-container>
   </el-container>

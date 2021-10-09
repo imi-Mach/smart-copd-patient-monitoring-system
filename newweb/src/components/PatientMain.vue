@@ -1,13 +1,13 @@
 <template>
-  <el-tabs tab-position="left" style="height: auto" :stretch="stretch">
+  <el-tabs tab-position="left" style="height: 100%" :stretch="stretch" type="border-card" v-model="tab_opt">
     <el-tab-pane label="Overview">
       <patient-overview></patient-overview>
     </el-tab-pane>
-    <el-tab-pane label="Data">
-      <patient-data :biodata='biodata'></patient-data>
-    </el-tab-pane>
     <el-tab-pane label="Record Biodata">
       <patient-bio-data></patient-bio-data>
+    </el-tab-pane>
+    <el-tab-pane label="Data">
+      <patient-data :biodata='biodata'></patient-data>
     </el-tab-pane>
     <el-tab-pane label="Education Resources">
       <patient-edu-res></patient-edu-res>
@@ -32,6 +32,10 @@ export default {
   data() {
     return {
       stretch: true,
+      tab_opt: "0",
+      
+      // now the biodata will need to be changed to the res from the json
+      // please pass in the whole 16 attributes, as for future use
       biodata: [{
         "date": "04/06/2021",
         "hr": 1,
@@ -133,6 +137,20 @@ export default {
     this.getDailyData();
     console.log('attempting to insert data');
     this.insertData();
+
+    //pop up window
+    this.$confirm("Let's fill out the daily survey", 'Hi', {
+          confirmButtonText: 'Sure',
+          cancelButtonText: 'Later',
+          type: 'info'
+        }).then(() => {
+          this.tab_opt="1";
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'See you later'
+          });          
+        });
   },
   methods: {
     getPatientInfo: function() {
