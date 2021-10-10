@@ -44,13 +44,21 @@ export default {
   data() {
     return {
       form: {
-        hr: "",
+        sessionID: "",
+        q1: "",
+        q2: "",
+        q3: "",
+        q4: "",
+        q5: "",
+        q7: "",
+        q8: "",
+        q9: "",
+        q10: "",
+        q11: "",
+        q12: "",
+        bt: "",
+        fev1: "",
         spo2: "",
-        rr: "",
-        w: "",
-        t: "",
-        bp: "",
-        gl: "",
       },
     };
   },
@@ -68,7 +76,23 @@ export default {
 
       // should we be using oxygen level or respiration level
       // might need an equation using these two
-      var request = {"sessionID": this.$store.getters.getSession, "date": today, "heartRate": this.form.hr, "oxygenLevel": this.form.spo2, "weight": this.form.w, "temperature": this.form.t, "bloodPressure": this.form.bp, "glucose": this.form.gl};
+      var request = {"sessionID": this.$store.getters.getSession, 
+      "date": today,
+      "q1": this.q1,
+      "q2": this.q2,
+      "q3": this.q3,
+      "q4": this.q4,
+      "q5": this.q5,
+      "q6": this.q6,
+      "q7": this.q7,
+      "q8": this.q8,
+      "q9": this.q9,
+      "q10": this.q10,
+      "q11": this.q11,
+      "q12": this.q12,
+      "bt": this.bt,
+      "fev1": this.fev1,
+      "spo2": this.spo2}
       console.log(request);
       this.$http.post("https://smart-copd-patient.herokuapp.com/insertData", request).then(
         (response) => {
