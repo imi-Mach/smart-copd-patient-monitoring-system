@@ -23,6 +23,7 @@ a json with mStatus: ok if request was handled correctly
 ###  patient route
 ##### patient req
 a json of session ID, in the form of sessionID.json
+hppyoyxLiDZjLRn17XL2QFmlozY
 
 ##### patient_res.json
 a json containing all patients information, in the form of patient_res.json
