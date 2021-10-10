@@ -32,6 +32,10 @@ export default {
   data() {
     return {
       stretch: true,
+      tab_opt: "0",
+      
+      // now the biodata will need to be changed to the res from the json
+      // please pass in the whole 16 attributes, as for future use
       biodata: [{
         "date": "04/06/2021",
         "hr": 1,
@@ -125,6 +129,21 @@ export default {
         "rl": 2
       }],
     };
+  },
+  mounted:function(){
+    this.$confirm("Let's fill out the daily survey", 'Hi', {
+          confirmButtonText: 'Sure',
+          cancelButtonText: 'Later',
+          type: 'info'
+        }).then(() => {
+          this.tab_opt="1";
+          // TODO: Needs to route to the form
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'See you later'
+          });          
+        });
   },
   components:{
       PatientOverview,

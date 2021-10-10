@@ -1,4 +1,4 @@
-template>
+<template>
   <el-card>
 	 <el-carousel :interval="2000" type="card" height="250px">
 	    <el-carousel-item v-for="item in imgList" :key="item">
