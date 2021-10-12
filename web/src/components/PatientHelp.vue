@@ -1,28 +1,57 @@
 <template>
-  <div id='help'>
-    <div>
-
-    </div>
-    <div>
-      <h3 style="text-align: center">Contact us for non-emergency</h3>
-      <el-form ref="form" :model="form" label-width="auto">
-        <el-form-item label="Share my: ">
-          <el-checkbox-group v-model="form.type">
-            <el-checkbox label="Name and Contacts" name="type"></el-checkbox>
-            <el-checkbox label="Biodata" name="type"></el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="Message: ">
-          <el-input type="textarea" v-model="form.desc"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" :plain="true" @click="onSubmit">Submit</el-button>
-          
-          <el-button @click="onClear">Clear</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
-  </div>
+  <el-descriptions
+    class="margin-top"
+    title="Your primary healthcare provider"
+    :column="2"
+    border
+  >
+    <el-descriptions-item>
+      <template slot="label">
+        <i class="el-icon-user"></i>
+        Name
+      </template>
+      {{ this.res.name }}
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template slot="label">
+        <i class="el-icon-warning"></i>
+        Emergency
+      </template>
+      911
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template slot="label">
+        <i class="el-icon-phone"></i>
+        Call
+      </template>
+      <a v-bind:href="this.tel + this.res.phoneNumber">{{
+        this.res.phoneNumber
+      }}</a>
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template slot="label">
+        <i class="el-icon-message"></i>
+        Email
+      </template>
+      <a v-bind:href="this.mailto + this.res.email" target="_blank">{{
+        this.res.email
+      }}</a>
+    </el-descriptions-item>
+    <el-descriptions-item>
+      <template slot="label">
+        <i class="el-icon-printer"></i>
+        Fax:
+      </template>
+      {{ this.res.fax }}
+    </el-descriptions-item>
+    <el-descriptions-item>
+        <template slot="label">
+          <i class="el-icon-custom"></i>
+          Title
+        </template>
+        <el-tag type="warning" size="medium">Critical Care Medicine and Pulmonologist</el-tag>
+      </el-descriptions-item>
+  </el-descriptions>
 </template>
 
 <script>
@@ -30,31 +59,18 @@ export default {
   name: "PatientHelp",
   data() {
     return {
-      form: {
-        type: [],
-        desc: "",
+      res: {
+        name: "Yaniv Dotan",
+        phoneNumber: "2673091066",
+        email: "ydotan@temple.edu",
+        fax: "2155707502",
       },
+      tel: "tel:",
+      mailto:"mailto:",
     };
-  },
-  methods: {
-    onSubmit() {
-      console.log("submit!");
-      this.$message({
-          message: 'Message Successfully Sent',
-          type: 'success'
-        });
-      this.onClear();
-    },
-    onClear() {
-      this.form.type = [];
-      this.form.desc = "";
-    },
   },
 };
 </script>
 
 <style>
-#help {
-    text-align: left;
-}
 </style>

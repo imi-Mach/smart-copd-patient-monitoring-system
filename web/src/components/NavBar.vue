@@ -2,35 +2,21 @@
   <div class="root">
     <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
     <el-menu
-      :default-active="activeIndex"
       class="fullscreen"
       mode="horizontal"
       @select="handleSelect"
       text-color="#050505"
     >
       <el-menu-item index="1">
-        <a href="https://engineering.lehigh.edu/cse" target="_blank">
-          <img
-            alt="Vue logo"
-            src="@/assets/LehighU_official-logo_Color-300dpi.jpg"
-          />
-        </a>
+        <img alt="Logo" src="@/assets/logo.jpg" />
+      </el-menu-item>
+        <el-menu-item index="2">
+        Home
       </el-menu-item>
 
-      <el-menu-item index="2">Patient Portal </el-menu-item>
+      <el-menu-item index="3">Team</el-menu-item>
 
-      <el-menu-item index="3" disabled>Healthcare Portal</el-menu-item>
-
-      <el-menu-item index="4">Services</el-menu-item>
-
-      <el-menu-item index="5">About us </el-menu-item>
-
-      <el-submenu index="6">
-        <template slot="title">Services</template>
-        <el-menu-item index="2-1">Patients</el-menu-item>
-        <el-menu-item index="2-2">Doctors</el-menu-item>
-          
-      </el-submenu>
+      <el-menu-item index="4">More about COPD</el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -39,12 +25,10 @@
 export default {
   data() {
     return {
-      activeIndex: "1",
     };
   },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+      handleSelect(key, keyPath) {
     },
   },
 };
@@ -61,5 +45,8 @@ img {
 }
 .fullscreen {
   width: 100%;
+}
+.drop-down{
+  font-family: Arial, Helvetica, sans-serif;
 }
 </style>

@@ -60,6 +60,7 @@ public class Database {
    
     // Airtable Classes 
     public static class Patient {
+
         String pPatientID;
         String pFirstName;
         String pLastName;
@@ -97,23 +98,41 @@ public class Database {
     
     public static class DailyStats {
         String dSdailyStatID;
-        String dSdateRecorded;
-        int dSHeartRate;
-        int dSOxygenLevel;
-        int dSWeight;
-        int dSTemperature;
-        String dSBloodPressure;
-        int dSglucoseLevel;
+        int  q1;
+        int  q2;
+        int  q3;
+        int  q4;
+        int  q5;
+        int  q6;
+        int  q7;
+        int  q8;
+        int  q9;
+        int  q10;
+        int  q11;
+        int  q12;
+        float  bt;
+        float  fev1;
+        float  spo2;
         
-        public DailyStats(String dailyStatID, String dateRecorded, int heartRate, int oxygenLevel, int weight, int temperature, String bloodPressure, int glucoseLevel) {
+        public DailyStats(String dailyStatID, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9, int q10, int q11, int q12, float bt, float fev1, float spo2) {
+
             dSdailyStatID = dailyStatID;
-            dSdateRecorded = dateRecorded;
-            dSHeartRate = heartRate;
-            dSOxygenLevel = oxygenLevel;
-            dSWeight = weight;
-            dSTemperature = temperature;
-            dSBloodPressure = bloodPressure;
-            dSglucoseLevel = glucoseLevel;
+            this.q1=q1;
+            this.q2=q2;
+            this.q3=q3;
+            this.q4=q4;
+            this.q5=q5;
+            this.q6=q6;
+            this.q7=q7;
+            this.q8=q8;
+            this.q9=q9;
+            this.q10=q10;
+            this.q11=q11;
+            this.q12=q12;
+            this.bt=bt;
+            this.fev1=fev1;
+            this.spo2=spo2;
+            
         }
     }
     
@@ -300,20 +319,28 @@ public class Database {
             db.dSCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS dailyStats (" +
                 "dailyStatID VARCHAR not null primary key," +
-                "dateRecorded VARCHAR not null," +
-                "heartRate int check(heartRate > 0)," +
-                "oxygenLevel int check(oxygenLevel > 70)," +
-                "weight int check(weight > 0)," +
-                "temperature int check(temperature > 90)," +
-                "bloodPressure VARCHAR," +
-                "glucoseLevel int check(glucoseLevel > 0));"
+                "q1 int," +
+                "q2 int," +
+                "q3 int," +
+                "q4 int," +
+                "q5 int," +
+                "q6 int," +
+                "q7 int," +
+                "q8 int," +
+                "q9 int," +
+                "q10 int," +
+                "q11 int," +
+                "q12 int," +
+                "bt float," +
+                "fev1 float ," +
+                "spo2 float);"
             );
             
             //DailyStats table
             db.dSDropTable = db.mConnection.prepareStatement("DROP TABLE dailyStats");
             db.dSGetStat = db.mConnection.prepareStatement("SELECT * FROM dailyStats where dailyStatID = ?");
             db.dSGetAllStat = db.mConnection.prepareStatement("SELECT * FROM dailyStats DS, patients P, logStats LS where DS.dailyStatID = LS.dailyStatID AND P.patientID = LS.patientID AND P.patientID = ?");
-            db.dSInsertNewStat = db.mConnection.prepareStatement("INSERT INTO dailyStats VALUES(?,?,?,?,?,?,?,?); INSERT INTO logStats VALUES(?,?)");
+            db.dSInsertNewStat = db.mConnection.prepareStatement("INSERT INTO dailyStats VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); INSERT INTO logStats VALUES(?,?)");
             db.dSDeleteStat = db.mConnection.prepareStatement("DELETE FROM logStats WHERE dailyStatID = ?; DELETE FROM dailyStats WHERE dailyStatID = ?");
             db.dSCheckIfStatExists = db.mConnection.prepareStatement("SELECT dailyStatID FROM dailyStats WHERE dailyStatID = ?");
             
@@ -489,7 +516,7 @@ public class Database {
             pGetPatient.setString(1, userID);
             ResultSet rs = pGetPatient.executeQuery();
             if (rs.next()) {
-                Patient res = new Patient("test", rs.getString("firstName"), rs.getString("lastName"), rs.getString("DOB"), rs.getString("phoneNumber"),rs.getInt("riskLevel"));
+                Patient res = new Patient(userID, rs.getString("firstName"), rs.getString("lastName"), rs.getString("DOB"), rs.getString("phoneNumber"),rs.getInt("riskLevel"));
                 return res;
             }
         } catch (SQLException e) {
@@ -510,22 +537,30 @@ public class Database {
      * @param glucose
      * @return
      */
-    int insertNewData(String userID, String date, int heartRate, int oxygenLevel, int weight,int temperature, String blood, int glucose){
+    int insertNewData(String userID, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9, int q10, int q11, int q12, float bt, float fev1, float spo2){
 
         int rowUpdate = 0;
         String generatedString = RandomStringUtils.random(8, true, true);
         try{
 
             dSInsertNewStat.setString(1,generatedString);
-            dSInsertNewStat.setString(2,date);
-            dSInsertNewStat.setInt(3,heartRate);
-            dSInsertNewStat.setInt(4,oxygenLevel);
-            dSInsertNewStat.setInt(5,weight);
-            dSInsertNewStat.setInt(6,temperature);
-            dSInsertNewStat.setString(7,blood);
-            dSInsertNewStat.setInt(8,glucose);
-            dSInsertNewStat.setString(9,userID);
-            dSInsertNewStat.setString(10,generatedString);
+            dSInsertNewStat.setInt(2,q1);
+            dSInsertNewStat.setInt(3,q2);
+            dSInsertNewStat.setInt(4,q3);
+            dSInsertNewStat.setInt(5,q4);
+            dSInsertNewStat.setInt(6,q5);
+            dSInsertNewStat.setInt(7,q6);
+            dSInsertNewStat.setInt(8,q7);
+            dSInsertNewStat.setInt(9,q8);
+            dSInsertNewStat.setInt(10,q9);
+            dSInsertNewStat.setInt(11,q10);
+            dSInsertNewStat.setInt(12,q11);
+            dSInsertNewStat.setInt(13,q12);
+            dSInsertNewStat.setFloat(14,bt);
+            dSInsertNewStat.setFloat(15,fev1);
+            dSInsertNewStat.setFloat(16,spo2);
+            dSInsertNewStat.setString(17,userID);
+            dSInsertNewStat.setString(18,generatedString);
 
             rowUpdate += dSInsertNewStat.executeUpdate();
         } catch (SQLException e) {
@@ -548,7 +583,8 @@ public class Database {
 
             ResultSet rs = dSGetAllStat.executeQuery();
             while (rs.next()) {
-                res.add(new DailyStats(rs.getString("dailyStatID"), rs.getString("dateRecorded"), rs.getInt("heartRate"), rs.getInt("oxygenLevel"), rs.getInt("weight"), rs.getInt("temperature"), rs.getString("bloodPressure"), rs.getInt("glucoseLevel")));
+                
+                res.add(new DailyStats(rs.getString("dailyStatID"), rs.getInt("q1"), rs.getInt("q2"), rs.getInt("q3"), rs.getInt("q4"), rs.getInt("q5"), rs.getInt("q6"), rs.getInt("q7"), rs.getInt("q8"), rs.getInt("q9"), rs.getInt("q10"), rs.getInt("q11"), rs.getInt("q12"), rs.getFloat("bt"), rs.getFloat("fev1"), rs.getFloat("spo2") ));
             }
             rs.close();
             return res;

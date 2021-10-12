@@ -4,29 +4,29 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit"
+    "build": "vue-cli-service build"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "bootstrap": "^4.6.0",
-    "core-js": "^3.12.1",
-    "element-ui": "^2.15.1",
+    "core-js": "^3.6.5",
+    "element-ui": "^2.15.6",
     "vue": "^2.6.11",
+    "vue-cookies": "^1.7.4",
     "vue-google-signin-button-directive": "^1.0.3",
-    "vue-resource": "^1.5.2",
+    "vue-resource": "^1.5.3",
     "vue-router": "^3.2.0",
     "vue-session": "^1.0.0",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.13",
-    "@vue/cli-plugin-router": "^4.5.13",
-    "@vue/cli-plugin-unit-mocha": "^4.5.13",
-    "@vue/cli-plugin-vuex": "^4.5.13",
-    "@vue/cli-service": "^4.5.13",
-    "@vue/test-utils": "^1.2.0",
-    "chai": "^4.1.2",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }

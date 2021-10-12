@@ -1,33 +1,66 @@
 <template>
   <div>
-    <el-menu default-active="1" class="el-menu-demo" mode="horizontal">
-      <el-menu-item index="1">{{ msg }}</el-menu-item>
+    <el-menu default-active="0" mode="horizontal" id="fullscreen">
+      <el-menu-item index="1" @click="toPatientPortal">{{ msg }}</el-menu-item>
 
-      <el-submenu index="2">
+      <el-submenu index="2" id="user">
         <template slot="title">Welcome, {{ name }}</template>
-        <el-menu-item index="2-1">Profile</el-menu-item>
-        <el-menu-item v-on:click="logout" index="2-2" text-color="#fff">Log out</el-menu-item>
-      </el-submenu>   
-
+        <el-menu-item index="2-1" @click="toProfile">Profile</el-menu-item>
+        <el-menu-item @click="signout" index="2-2" text-color="#fff"
+          >Sign out</el-menu-item
+        >
+      </el-submenu>
     </el-menu>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'PatientHeader',
-  data(){
-      return{
-        msg: 'Smart COPD Patient Monitoring System',
-        name: 'Max'
-      }
+  name: "PatientHeader",
+  props: {
+    option: String,
+  },
+  data() {
+    return {
+      msg: "Patient Portal",
+      name: "",
+    };
   },
   methods: {
-    logout: function() {
-      this.$store.commit('setSession', "");
-      console.log(this.$store.getters.getSession);
-      this.$router.push({ name: "Home"});
+    signout() {
+      this.$store.commit("setSessionID", "");
+      this.$router.push("/");
+    },
+    toProfile(){
+      //in portal
+      if(this.option == 0){this.$router.push("pprofile");}
+        
+    },
+    toPatientPortal(){
+      if(this.option == 1){this.$router.push("patients");}
+      
     }
-  }
-}
+  },
+  mounted: function () {
+    this.$http
+      .get(
+        "https://smart-copd-patient.herokuapp.com/patient/" +
+          this.$store.getters.getSessionID
+      )
+      .then((response) => {
+        this.name = response.data.mData.pFirstName;
+      });
+  },
+};
 </script>
+
+
+<style>
+#user {
+  position: absolute;
+  right: 0;
+}
+#fullscreen {
+  height: 100%;
+}
+</style>

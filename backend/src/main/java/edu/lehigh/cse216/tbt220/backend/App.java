@@ -148,11 +148,8 @@ public class App {
         Spark.get("/patient/:session_id", (request, response) -> {
 
             String sessionID = request.params("session_id");
-            System.out.println("asdjasdasdasd");
-            System.out.println(sessionID);
-            System.out.println("dkahsdjasdjfs");
+
             String userID = db.getUserID(sessionID);
-            System.out.println("This is the user id in patient route"+userID);
 
             Object data = db.getPatient(userID);
             if (data == null) {
@@ -168,17 +165,25 @@ public class App {
             JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
             
             String sessionID = (String) jsonObject.get("sessionID");
-            String date =  (String) jsonObject.get("date");
-            int heartRate =  Integer.parseInt((String) jsonObject.get("heartRate"));
-            int oxygenLevel =  Integer.parseInt((String) jsonObject.get("oxygenLevel"));
-            int weight =  Integer.parseInt((String) jsonObject.get("weight"));
-            int temperature =  Integer.parseInt((String) jsonObject.get("temperature"));
-            String blood= (String) jsonObject.get("bloodPressure");
-            int glucose =  Integer.parseInt((String) jsonObject.get("glucose"));
+            int q1 =  Integer.parseInt((String) jsonObject.get("q1"));
+            int q2 =  Integer.parseInt((String) jsonObject.get("q2"));
+            int q3 =  Integer.parseInt((String) jsonObject.get("q3"));
+            int q4 =  Integer.parseInt((String) jsonObject.get("q4"));
+            int q5 =  Integer.parseInt((String) jsonObject.get("q5"));
+            int q6 =  Integer.parseInt((String) jsonObject.get("q6"));
+            int q7 =  Integer.parseInt((String) jsonObject.get("q7"));
+            int q8 =  Integer.parseInt((String) jsonObject.get("q8"));
+            int q9 =  Integer.parseInt((String) jsonObject.get("q9"));
+            int q10 =  Integer.parseInt((String) jsonObject.get("q10"));
+            int q11 =  Integer.parseInt((String) jsonObject.get("q11"));
+            int q12 =  Integer.parseInt((String) jsonObject.get("q12"));
+            float bt =  Float.parseFloat((String) jsonObject.get("bt"));
+            float fev1 =  Float.parseFloat((String) jsonObject.get("fev1"));
+            float spo2 =  Float.parseFloat((String) jsonObject.get("spo2"));
 
             String userID = db.getUserID(sessionID);
-            
-            int result = db.insertNewData(userID, date, heartRate, oxygenLevel, weight, temperature, blood, glucose);
+
+            int result = db.insertNewData(userID, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, bt, fev1, spo2);
 
             if(result == 0) {
                 return gson.toJson(new StructuredResponse("error", "insert failed", null));
