@@ -177,9 +177,9 @@ public class App {
             int q10 =  Integer.parseInt((String) jsonObject.get("q10"));
             int q11 =  Integer.parseInt((String) jsonObject.get("q11"));
             int q12 =  Integer.parseInt((String) jsonObject.get("q12"));
-            int bt =  Integer.parseInt((String) jsonObject.get("bt"));
-            int fev1 =  Integer.parseInt((String) jsonObject.get("fev1"));
-            int spo2 =  Integer.parseInt((String) jsonObject.get("spo2"));
+            float bt =  Float.parseFloat((String) jsonObject.get("bt"));
+            float fev1 =  Float.parseFloat((String) jsonObject.get("fev1"));
+            float spo2 =  Float.parseFloat((String) jsonObject.get("spo2"));
 
             String userID = db.getUserID(sessionID);
 

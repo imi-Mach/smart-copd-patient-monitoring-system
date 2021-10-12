@@ -3,7 +3,7 @@
 	 <el-carousel :interval="2000" type="card" height="250px">
 	    <el-carousel-item v-for="item in imgList" :key="item">
         <a :href="item.link" target="_blank">
-	        <img :src="item.img" style="height:100%;width:100%;">
+	        <img :src="item.img" style="height:auto;width:100%;">
           </a>
 	    </el-carousel-item>
 	 </el-carousel>
@@ -12,7 +12,7 @@
 
     <script>
 export default {
-  name: "HelloWorld",
+  name: "PatientEduRes",
   data() {
     return {
       imgList: [

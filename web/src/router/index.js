@@ -1,36 +1,36 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
+import Home from '../views/Home.vue'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-export default new Router({
-  mode: "history",
-  routes: [
-    {
-      path: "/",
-      name: "Home",
-      alias: "/home",
-      component: () => import('../views/Home.vue')
-    },
-    {
-      path: '/about',
-      name: 'About',
-      component: () => import('../views/About.vue')
-    },
-    {
-      path: '/patients',
-      name: 'Patient',
-      component: () => import('../views/Patient.vue')
-    },
-    {
-      path: '/register',
-      name: 'Register',
-      component: () => import('../views/Register.vue')
-    },
-    {
-      path: '/profile',
-      name: 'Profile',
-      component: () => import('../views/PatientProfile.vue')
-    }
-  ]
-});
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('../views/Register.vue')
+  },
+  {
+    path: '/patients',
+    name: 'PatientPortal',
+    component: () => import('../views/PatientPortal.vue')
+  },
+  {
+    path: '/pprofile',
+    name: 'PatientProfile',
+    component: () => import('../views/PatientProfile.vue')
+  },
+]
+
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
+})
+
+export default router

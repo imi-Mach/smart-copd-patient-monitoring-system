@@ -110,25 +110,25 @@ public class Database {
         int  q10;
         int  q11;
         int  q12;
-        int  bt;
-        int  fev1;
-        int  spo2;
+        float  bt;
+        float  fev1;
+        float  spo2;
         
-        public DailyStats(String dailyStatID, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9, int q10, int q11, int q12,int bt, int fev1, int spo2) {
+        public DailyStats(String dailyStatID, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9, int q10, int q11, int q12, float bt, float fev1, float spo2) {
 
             dSdailyStatID = dailyStatID;
             this.q1=q1;
-            this.q2=q1;
-            this.q3=q1;
-            this.q4=q1;
-            this.q5=q1;
-            this.q6=q1;
-            this.q7=q1;
-            this.q8=q1;
-            this.q9=q1;
-            this.q10=q1;
-            this.q11=q1;
-            this.q12=q1;
+            this.q2=q2;
+            this.q3=q3;
+            this.q4=q4;
+            this.q5=q5;
+            this.q6=q6;
+            this.q7=q7;
+            this.q8=q8;
+            this.q9=q9;
+            this.q10=q10;
+            this.q11=q11;
+            this.q12=q12;
             this.bt=bt;
             this.fev1=fev1;
             this.spo2=spo2;
@@ -331,9 +331,9 @@ public class Database {
                 "q10 int," +
                 "q11 int," +
                 "q12 int," +
-                "bt  int," +
-                "fev1 int ," +
-                "spo2 int);"
+                "bt float," +
+                "fev1 float ," +
+                "spo2 float);"
             );
             
             //DailyStats table
@@ -537,7 +537,7 @@ public class Database {
      * @param glucose
      * @return
      */
-    int insertNewData(String userID, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9, int q10, int q11, int q12,int bt, int fev1, int spo2){
+    int insertNewData(String userID, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9, int q10, int q11, int q12, float bt, float fev1, float spo2){
 
         int rowUpdate = 0;
         String generatedString = RandomStringUtils.random(8, true, true);
@@ -556,9 +556,9 @@ public class Database {
             dSInsertNewStat.setInt(11,q10);
             dSInsertNewStat.setInt(12,q11);
             dSInsertNewStat.setInt(13,q12);
-            dSInsertNewStat.setInt(14,bt);
-            dSInsertNewStat.setInt(15,fev1);
-            dSInsertNewStat.setInt(16,spo2);
+            dSInsertNewStat.setFloat(14,bt);
+            dSInsertNewStat.setFloat(15,fev1);
+            dSInsertNewStat.setFloat(16,spo2);
             dSInsertNewStat.setString(17,userID);
             dSInsertNewStat.setString(18,generatedString);
 
@@ -584,7 +584,7 @@ public class Database {
             ResultSet rs = dSGetAllStat.executeQuery();
             while (rs.next()) {
                 
-                res.add(new DailyStats(rs.getString("dailyStatID"), rs.getInt("q1"), rs.getInt("q2"), rs.getInt("q3"), rs.getInt("q4"), rs.getInt("q5"), rs.getInt("q6"), rs.getInt("q7"), rs.getInt("q8"), rs.getInt("q9"), rs.getInt("q10"), rs.getInt("q11"), rs.getInt("q12"), rs.getInt("bt"), rs.getInt("fev1"), rs.getInt("spo2") ));
+                res.add(new DailyStats(rs.getString("dailyStatID"), rs.getInt("q1"), rs.getInt("q2"), rs.getInt("q3"), rs.getInt("q4"), rs.getInt("q5"), rs.getInt("q6"), rs.getInt("q7"), rs.getInt("q8"), rs.getInt("q9"), rs.getInt("q10"), rs.getInt("q11"), rs.getInt("q12"), rs.getFloat("bt"), rs.getFloat("fev1"), rs.getFloat("spo2") ));
             }
             rs.close();
             return res;
