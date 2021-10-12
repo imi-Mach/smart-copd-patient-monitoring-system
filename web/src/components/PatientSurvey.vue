@@ -1,0 +1,301 @@
+<template>
+  <el-form ref="form" :model="form" label-width="480px" label-position="left">
+    <el-divider></el-divider>
+    <span style="font-weight: bold"
+      >In comparison to normal, do you today ...</span
+    >
+    <el-divider></el-divider>
+
+    <el-form-item label="..experience more shortness of breath?">
+      <el-radio-group v-model="form.q1">
+        <el-radio label="Yes"></el-radio>
+        <el-radio label="No"></el-radio>
+      </el-radio-group>
+    </el-form-item>
+
+    <el-form-item
+      label="..experience more fear because of your shortness of breath?"
+    >
+      <el-radio-group v-model="form.q2">
+        <el-radio label="Yes"></el-radio>
+        <el-radio label="No"></el-radio>
+      </el-radio-group>
+    </el-form-item>
+
+    <el-form-item label="..experience more fatigue?">
+      <el-radio-group v-model="form.q3">
+        <el-radio label="Yes"></el-radio>
+        <el-radio label="No"></el-radio>
+      </el-radio-group>
+    </el-form-item>
+
+    <el-form-item
+      label="..feel more hindered by your COPD during your daily activities?"
+    >
+      <el-radio-group v-model="form.q4">
+        <el-radio label="Yes"></el-radio>
+        <el-radio label="No"></el-radio>
+      </el-radio-group>
+    </el-form-item>
+
+    <el-form-item label="..experience more sputum in your airway?">
+      <el-radio-group v-model="form.q5">
+        <el-radio label="Yes"></el-radio>
+        <el-radio label="No"></el-radio>
+      </el-radio-group>
+    </el-form-item>
+    <el-form-item
+      label="..notice any difference in your sputum color/composition?"
+    >
+      <el-radio-group v-model="form.q6">
+        <el-radio label="Yes"></el-radio>
+        <el-radio label="No"></el-radio>
+      </el-radio-group>
+    </el-form-item>
+
+    <el-form-item label="..experience more wheezing?">
+      <el-radio-group v-model="form.q7">
+        <el-radio label="Yes"></el-radio>
+        <el-radio label="No"></el-radio>
+      </el-radio-group>
+    </el-form-item>
+
+    <el-form-item label="..experience more coughing?">
+      <el-radio-group v-model="form.q8">
+        <el-radio label="Yes"></el-radio>
+        <el-radio label="No"></el-radio>
+      </el-radio-group>
+    </el-form-item>
+
+    <el-form-item label="..have a sore throat?">
+      <el-radio-group v-model="form.q9">
+        <el-radio label="Yes"></el-radio>
+        <el-radio label="No"></el-radio>
+      </el-radio-group>
+    </el-form-item>
+
+    <el-form-item label="..have a cold or a runny nose?">
+      <el-radio-group v-model="form.q10">
+        <el-radio label="Yes"></el-radio>
+        <el-radio label="No"></el-radio>
+      </el-radio-group>
+    </el-form-item>
+
+    <el-form-item label="..experience more stress or tension?">
+      <el-radio-group v-model="form.q11">
+        <el-radio label="Yes"></el-radio>
+        <el-radio label="No"></el-radio>
+      </el-radio-group>
+    </el-form-item>
+
+    <el-form-item label="..have used more of your bronchodilators?">
+      <el-radio-group v-model="form.q12">
+        <el-radio label="Yes"></el-radio>
+        <el-radio label="No"></el-radio>
+      </el-radio-group>
+    </el-form-item>
+
+    <el-divider></el-divider>
+    <span style="font-weight: bold"
+      >Physiologic measurements (later will be connected to COTS)</span
+    >
+    <el-divider></el-divider>
+
+    <el-form-item label="Body Temperature in Degrees Celsius">
+      <el-input v-model="form.bt"></el-input>
+    </el-form-item>
+    <el-form-item label="FEV1 in Liters">
+      <el-input v-model="form.fev1"></el-input>
+    </el-form-item>
+    <el-form-item label="SpO2 in Percentages">
+      <el-input v-model="form.spo2"></el-input>
+    </el-form-item>
+
+    <div id="submitB">
+      <el-button type="primary" @click="onSubmit">Submit</el-button>
+      <el-button @click="onClear">Clear</el-button>
+    </div>
+  </el-form>
+</template>
+
+<script>
+export default {
+  name: "PatientSurvey",
+  data() {
+    return {
+      form: {
+        q1: "",
+        q2: "",
+        q3: "",
+        q4: "",
+        q5: "",
+        q6: "",
+        q7: "",
+        q8: "",
+        q9: "",
+        q10: "",
+        q11: "",
+        q12: "",
+        bt: "",
+        fev1: "",
+        spo2: "",
+      },
+    };
+  },
+  methods: {
+    onSubmit() {
+      if (
+        this.form.q1 &&
+        this.form.q2 &&
+        this.form.q3 &&
+        this.form.q4 &&
+        this.form.q5 &&
+        this.form.q6 &&
+        this.form.q7 &&
+        this.form.q8 &&
+        this.form.q9 &&
+        this.form.q10 &&
+        this.form.q11 &&
+        this.form.q12 &&
+        this.form.bt &&
+        this.form.fev1 &&
+        this.form.spo2
+      ) {
+        // sending request
+        var request = {
+          sessionID: this.$store.getters.getSessionID,
+          q1: this.form.q1,
+          q2: this.form.q2,
+          q3: this.form.q3,
+          q4: this.form.q4,
+          q5: this.form.q5,
+          q6: this.form.q6,
+          q7: this.form.q7,
+          q8: this.form.q8,
+          q9: this.form.q9,
+          q10: this.form.q10,
+          q11: this.form.q11,
+          q12: this.form.q12,
+          bt: this.form.bt,
+          fev1: this.form.fev1,
+          spo2: this.form.spo2,
+        };
+
+        if (request.q1 == "Yes") {
+          request.q1 = "0";
+        } else {
+          request.q1 = "1";
+        }
+        if (request.q2 == "Yes") {
+          request.q2 = "0";
+        } else {
+          request.q2 = "1";
+        }
+        if (request.q3 == "Yes") {
+          request.q3 = "0";
+        } else {
+          request.q3 = "1";
+        }
+        if (request.q4 == "Yes") {
+          request.q4 = "0";
+        } else {
+          request.q4 = "1";
+        }
+        if (request.q5 == "Yes") {
+          request.q5 = "0";
+        } else {
+          request.q5 = "1";
+        }
+        if (request.q6 == "Yes") {
+          request.q6 = "0";
+        } else {
+          request.q6 = "1";
+        }
+        if (request.q7 == "Yes") {
+          request.q7 = "0";
+        } else {
+          request.q7 = "1";
+        }
+        if (request.q8 == "Yes") {
+          request.q8 = "0";
+        } else {
+          request.q8 = "1";
+        }
+        if (request.q9 == "Yes") {
+          request.q9 = "0";
+        } else {
+          request.q9 = "1";
+        }
+        if (request.q10 == "Yes") {
+          request.q10 = "0";
+        } else {
+          request.q10 = "1";
+        }
+        if (request.q11 == "Yes") {
+          request.q11 = "0";
+        } else {
+          request.q11 = "1";
+        }
+        if (request.q12 == "Yes") {
+          request.q12 = "0";
+        } else {
+          request.q12 = "1";
+        }
+        request.bt = (request.bt).toString();
+        request.fev1 = (request.fev1).toString();
+        request.spo2 = (request.spo2).toString();
+        
+        console.log(JSON.stringify(request))
+        this.$http
+          .post("https://smart-copd-patient.herokuapp.com/insertData", request)
+          .then((response) => {
+            if (response.body.mStatus == "ok") {
+                console.log(response.body)
+              this.$message({
+                message: "Successfully submitted!",
+                type: "success",
+              });
+              this.onClear();
+            }
+            else{
+                this.$message({
+                message: "Error, please try again.",
+                type: "error",
+              });
+              this.$router.push('/')
+            }
+          });
+      } else {
+        this.$message({
+          message: "Please complete all questions",
+          type: "error",
+        });
+      }
+    },
+    onClear() {
+      this.form.q1 = "";
+      this.form.q2 = "";
+      this.form.q3 = "";
+      this.form.q4 = "";
+      this.form.q5 = "";
+      this.form.q6 = "";
+      this.form.q7 = "";
+      this.form.q8 = "";
+      this.form.q9 = "";
+      this.form.q10 = "";
+      this.form.q11 = "";
+      this.form.q12 = "";
+      this.form.bt = "";
+      this.form.fev1 = "";
+      this.form.spo2 = "";
+    },
+  },
+};
+</script>
+
+<style>
+#submitB {
+  margin: auto;
+  width: 30%;
+}
+</style>

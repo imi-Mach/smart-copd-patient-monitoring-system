@@ -2,17 +2,18 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import vueresource from 'vue-resource'
-import VueSession from "vue-session";
-Vue.use(VueSession);
-
-// for element ui, delete in the future if using bootstrap
+import VueResource from 'vue-resource'
+import VueSession from "vue-session"
 import ElementUI from 'element-ui';
 import locale from 'element-ui/lib/locale/lang/en'
+import VueCookies from 'vue-cookies'
 import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI, { locale });
 
-Vue.use(vueresource)
+
+Vue.use(VueSession);
+Vue.use(VueResource);
+Vue.use(ElementUI, { locale });
+Vue.use(VueCookies);
 
 Vue.config.productionTip = false
 

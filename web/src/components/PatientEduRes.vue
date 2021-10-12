@@ -1,136 +1,20 @@
 <template>
-  <div>
-    <h1>COPD Educational Resources</h1>
-  <el-collapse v-model="activeNames" @change="handleChange" accordion>
-    <el-collapse-item title="Find a Doctor">
-        <el-row :gutter="20">  
-          <el-col :span="10">
-            <div class="grid-content">
-              <el-card class="box-card" shadow="always">
-                <div slot="header" class="header">
-                  <span>Lehigh Valley Health Network</span>
-                  <el-button style="float: right; padding: 3px 0" @click="navContent(1)" type="text">Learn More</el-button>
-                </div>
-                <div class="image">
-                  <img src="../assets/1.png" class="image">
-                </div>
-              </el-card>
-            </div>
-          </el-col>
-          <el-col :span="10">
-            <div class="grid-content">
-              <el-card class="box-card" shadow="always">
-                <div slot="header" class="header">
-                  <span>St. Luke's</span>
-                  <el-button style="float: right; padding: 3px 0" @click="navContent(2)" type="text">Learn More</el-button>
-                </div>
-                <div class="image">
-                  <img src="../assets/2.png" class="image">
-                </div>
-              </el-card>
-            </div>
-          </el-col>
-        </el-row>
-    </el-collapse-item>
-    <el-collapse-item title="COPD Info">
-      <el-row>
-        <el-col :span="10">
-          <div class="grid-content">
-            <el-card class="box-card" shadow="always">
-              <div slot="header" class="header">
-                <span>Is COPD Hereditary?</span>
-                <el-button style="float: right; padding: 3px 0" @click="navContent(3)" type="text">Learn More</el-button>
-              </div>
-              <div class="image2">
-                <img src="../assets/5.jpg" class="image2">
-              </div>
-            </el-card>
-          </div>
-        </el-col>
-        <el-col :span="10">
-          <div class="grid-content">
-            <el-card class="box-card" shadow="always">
-              <div slot="header" class="header">
-                <span>Understanding COPD</span>
-                <el-button style="float: right; padding: 3px 0" @click="navContent(4)" type="text">Learn More</el-button>
-              </div>
-              <div class="image2">
-                <img src="../assets/4.jpg" class="image2">
-              </div>
-            </el-card>
-          </div>
-        </el-col>
-      </el-row>
-    </el-collapse-item>
-    <el-collapse-item title="COPD News">
-        <el-row :gutter="20">  
-          <el-col :span="10">
-            <div class="grid-content">
-              <el-card class="box-card" shadow="always">
-                <div slot="header" class="header">
-                  <span>COVID-19</span>
-                  <el-button style="float: right; padding: 3px 0" @click="navContent(6)" type="text">Learn More</el-button>
-                </div>
-                <div class="image2">
-                  <img src="../assets/3.png" class="image2">
-                </div>
-              </el-card>
-            </div>
-          </el-col>
-          <el-col :span="10">
-            <div class="grid-content">
-              <el-card class="box-card" shadow="always">
-                <div slot="header" class="header">
-                  <span>Lung Cancer Awareness Month</span>
-                  <el-button style="float: right; padding: 3px 0" @click="navContent(7)" type="text">Learn More</el-button>
-                </div>
-                <div class="image2">
-                  <img src="../assets/6.jpg" class="image2">
-                </div>
-              </el-card>
-            </div>
-          </el-col>
-        </el-row>
-    </el-collapse-item>
-    <el-collapse-item title="Community">
-        <el-row :gutter="20">  
-          <el-col :span="10">
-            <div class="grid-content">
-              <el-card class="box-card" shadow="always">
-                <div slot="header" class="header">
-                  <span>Facebook Groups</span>
-                  <el-button style="float: right; padding: 3px 0" @click="navContent(6)" type="text">Learn More</el-button>
-                </div>
-                <div class="image2">
-                  <img src="../assets/7.png" class="image">
-                </div>
-              </el-card>
-            </div>
-          </el-col>
-          <el-col :span="10">
-            <div class="grid-content">
-              <el-card class="box-card" shadow="always">
-                <div slot="header" class="header">
-                  <span>Finding a Support Group</span>
-                  <el-button style="float: right; padding: 3px 0" @click="navContent(7)" type="text">Learn More</el-button>
-                </div>
-                <div class="image2">
-                  <img src="../assets/8.jpg" class="image2">
-                </div>
-              </el-card>
-            </div>
-          </el-col>
-        </el-row>
-    </el-collapse-item>
-  </el-collapse>
-  </div>
+  <el-card>
+	 <el-carousel :interval="2000" type="card" height="250px">
+	    <el-carousel-item v-for="item in imgList" :key="item">
+        <a :href="item.link" target="_blank">
+	        <img :src="item.img" style="height:auto;width:100%;">
+          </a>
+	    </el-carousel-item>
+	 </el-carousel>
+ </el-card>
 </template>
 
 <script>
 
 
 export default {
-  name: "HelloWorld",
+  name: "PatientEduRes",
   data() {
     return {
       imgList: [
