@@ -65,7 +65,7 @@
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column label="Date" width="450"> 2021-10-13 </el-table-column>
+      <el-table-column label="Date" width="450"> 2021-10-12 </el-table-column>
       <el-table-column label="Status" width="450">
         <el-tag type="success">Good</el-tag>
       </el-table-column>
