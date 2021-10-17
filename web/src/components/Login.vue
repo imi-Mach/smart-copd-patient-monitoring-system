@@ -27,7 +27,7 @@ export default {
           //sessionId stored
           //console.log(this.$store.getters.getSessionID)
           if(response.data.mExists){
-            this.$cookies.set("sessionID", this.$store.getters.getSessionID);
+            this.$cookies.set("sessionID", this.$store.getters.getSessionID, 1);
             console.log(this.$cookies.get("sessionID"));
             this.$router.push("patients");
           }
