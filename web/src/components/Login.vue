@@ -27,10 +27,12 @@ export default {
           //sessionId stored
           //console.log(this.$store.getters.getSessionID)
           if(response.data.mExists){
-            this.$router.push("patients")
+            this.$cookies.set("sessionID", this.$store.getters.getSessionID);
+            console.log(this.$cookies.get("sessionID"));
+            this.$router.push("patients");
           }
           else{
-            this.$router.push("register")
+            this.$router.push("register");
           }
 
         }
@@ -38,7 +40,7 @@ export default {
     },
     OnGoogleAuthFail (error) {
       console.log(error)
-    }
+    },
   }
 }
 </script> 
