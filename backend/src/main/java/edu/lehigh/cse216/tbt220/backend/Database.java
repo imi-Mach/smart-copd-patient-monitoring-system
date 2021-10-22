@@ -5,7 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.text.SimpleDateFormat;  
+import java.util.Date;  
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -113,8 +114,9 @@ public class Database {
         float  bt;
         float  fev1;
         float  spo2;
+        String date;
         
-        public DailyStats(String dailyStatID, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9, int q10, int q11, int q12, float bt, float fev1, float spo2) {
+        public DailyStats(String dailyStatID, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9, int q10, int q11, int q12, float bt, float fev1, float spo2, String date) {
 
             dSdailyStatID = dailyStatID;
             this.q1=q1;
@@ -132,6 +134,7 @@ public class Database {
             this.bt=bt;
             this.fev1=fev1;
             this.spo2=spo2;
+            this.date=date;
             
         }
     }
@@ -333,14 +336,15 @@ public class Database {
                 "q12 int," +
                 "bt float," +
                 "fev1 float ," +
-                "spo2 float);"
+                "spo2 float"+
+                "DT DATE);"
             );
             
             //DailyStats table
             db.dSDropTable = db.mConnection.prepareStatement("DROP TABLE dailyStats");
             db.dSGetStat = db.mConnection.prepareStatement("SELECT * FROM dailyStats where dailyStatID = ?");
             db.dSGetAllStat = db.mConnection.prepareStatement("SELECT * FROM dailyStats DS, patients P, logStats LS where DS.dailyStatID = LS.dailyStatID AND P.patientID = LS.patientID AND P.patientID = ?");
-            db.dSInsertNewStat = db.mConnection.prepareStatement("INSERT INTO dailyStats VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); INSERT INTO logStats VALUES(?,?)");
+            db.dSInsertNewStat = db.mConnection.prepareStatement("INSERT INTO dailyStats VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); INSERT INTO logStats VALUES(?,?)");
             db.dSDeleteStat = db.mConnection.prepareStatement("DELETE FROM logStats WHERE dailyStatID = ?; DELETE FROM dailyStats WHERE dailyStatID = ?");
             db.dSCheckIfStatExists = db.mConnection.prepareStatement("SELECT dailyStatID FROM dailyStats WHERE dailyStatID = ?");
             
@@ -559,8 +563,9 @@ public class Database {
             dSInsertNewStat.setFloat(14,bt);
             dSInsertNewStat.setFloat(15,fev1);
             dSInsertNewStat.setFloat(16,spo2);
-            dSInsertNewStat.setString(17,userID);
-            dSInsertNewStat.setString(18,generatedString);
+            dSInsertNewStat.setString(17,java.time.LocalDate.now().toString());
+            dSInsertNewStat.setString(18,userID);
+            dSInsertNewStat.setString(19,generatedString);
 
             rowUpdate += dSInsertNewStat.executeUpdate();
         } catch (SQLException e) {
@@ -584,7 +589,7 @@ public class Database {
             ResultSet rs = dSGetAllStat.executeQuery();
             while (rs.next()) {
                 
-                res.add(new DailyStats(rs.getString("dailyStatID"), rs.getInt("q1"), rs.getInt("q2"), rs.getInt("q3"), rs.getInt("q4"), rs.getInt("q5"), rs.getInt("q6"), rs.getInt("q7"), rs.getInt("q8"), rs.getInt("q9"), rs.getInt("q10"), rs.getInt("q11"), rs.getInt("q12"), rs.getFloat("bt"), rs.getFloat("fev1"), rs.getFloat("spo2") ));
+                res.add(new DailyStats(rs.getString("dailyStatID"), rs.getInt("q1"), rs.getInt("q2"), rs.getInt("q3"), rs.getInt("q4"), rs.getInt("q5"), rs.getInt("q6"), rs.getInt("q7"), rs.getInt("q8"), rs.getInt("q9"), rs.getInt("q10"), rs.getInt("q11"), rs.getInt("q12"), rs.getFloat("bt"), rs.getFloat("fev1"), rs.getFloat("spo2"), rs.getString("DT")));
             }
             rs.close();
             return res;
