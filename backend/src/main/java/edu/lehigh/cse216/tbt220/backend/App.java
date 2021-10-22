@@ -159,6 +159,18 @@ public class App {
             }
         });
 
+        Spark.get("/patientCSV/:session_id", (request, response) -> {
+
+            String sessionID = request.params("session_id");
+
+            String userID = db.getUserID(sessionID);
+
+            db.getPatientCSV(userID);
+
+            return gson.toJson(new StructuredResponse("ok", null, null));
+
+        });
+
         Spark.post("/insertData", (request, response) -> {
 
             JSONParser jsonParser = new JSONParser();

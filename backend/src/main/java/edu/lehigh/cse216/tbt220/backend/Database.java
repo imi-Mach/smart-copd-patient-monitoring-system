@@ -10,10 +10,12 @@ import java.util.Date;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import com.opencsv.CSVWriter;
 import java.security.SecureRandom;
 import java.util.Base64.Encoder;
 import java.util.Base64;
 import org.apache.commons.lang3.RandomStringUtils;
+import java.io.FileWriter;
 
 
 public class Database {
@@ -528,6 +530,25 @@ public class Database {
         }
         return null;
     }
+
+    void getPatientCSV(String userID) {
+        try 
+        {
+            dSGetAllStat.setString(1, userID);
+
+            CSVWriter writer = new CSVWriter(new FileWriter(userID+".csv"), '\t');
+
+            ResultSet rs = dSGetAllStat.executeQuery();
+
+            writer.writeAll(rs, true);
+            writer.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     /**
      * Takes in the data and inserts them in the database
