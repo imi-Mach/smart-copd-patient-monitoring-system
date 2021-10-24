@@ -159,11 +159,9 @@ public class App {
             }
         });
 
-        Spark.get("/patientCSV/:session_id", (request, response) -> {
+        Spark.get("/patientCSV/:userID", (request, response) -> {
 
-            String sessionID = request.params("session_id");
-
-            String userID = db.getUserID(sessionID);
+            String userID = request.params("userID");
 
             db.getPatientCSV(userID);
 
