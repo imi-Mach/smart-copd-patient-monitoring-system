@@ -175,6 +175,7 @@ public class App {
             JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
             
             String sessionID = (String) jsonObject.get("sessionID");
+
             int q1 =  Integer.parseInt((String) jsonObject.get("q1"));
             int q2 =  Integer.parseInt((String) jsonObject.get("q2"));
             int q3 =  Integer.parseInt((String) jsonObject.get("q3"));
@@ -196,6 +197,7 @@ public class App {
             int result = db.insertNewData(userID, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, bt, fev1, spo2);
 
             if(result == 0) {
+
                 return gson.toJson(new StructuredResponse("error", "insert failed", null));
             }
             return gson.toJson(new StructuredResponse("ok", null, null));
@@ -204,15 +206,36 @@ public class App {
         Spark.get("/myData/:session_id", (request,response) -> {
 
             String sessionID = request.params("session_id");
+
             String userID = db.getUserID(sessionID);
 
             Object data = db.getAllDailyStats(userID);
 
             if (data == null) {
+
                 return gson.toJson(new StructuredResponse("error", userID + " not found", null));
+
             } else {
+
                 return gson.toJson(new StructuredResponse("ok", null, data));
             }
+        });
+
+        Spark.put("/updateRiskLevel", (request, response) ->{
+
+            JSONParser jsonParser = new JSONParser();
+
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+            
+            String sessionID = (String) jsonObject.get("sessionID");
+            int riskLevel =  Integer.parseInt((String) jsonObject.get("riskLevel"));
+
+            String userID = db.getUserID(sessionID);
+
+            db.updateRiskLevel(userID, riskLevel);
+
+            return gson.toJson(new StructuredResponse("ok", null, null));
+
         });
 
 

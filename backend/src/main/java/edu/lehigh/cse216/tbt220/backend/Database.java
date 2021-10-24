@@ -47,6 +47,7 @@ public class Database {
     // Airtable PatientOf Prepared Statements
     private PreparedStatement pOCreateTable;
     private PreparedStatement pODropTable;
+    private PreparedStatement pUpdateRiskLevel;
     private PreparedStatement pOGetPatientOf;
     private PreparedStatement pOInsertNewPatientOf;
     private PreparedStatement pODeletePatientOf;
@@ -304,6 +305,7 @@ public class Database {
             db.pInsertNewPatient = db.mConnection.prepareStatement("INSERT INTO patients VALUES(?,?,?,?,?,?)");
             db.pDeletePatient = db.mConnection.prepareStatement("DELETE FROM patient WHERE patientID = ?");
             db.pCheckIfPatientExists = db.mConnection.prepareStatement("SELECT * FROM patients WHERE patientID = ?");
+            db.pUpdateRiskLevel = db.mConnection.prepareStatement("UPDATE patients SET riskLevel = ? WHERE patientID = ?");
             
             // Airtable Create HealthCare Providers Table
             db.hCreateTable = db.mConnection.prepareStatement(
@@ -542,6 +544,20 @@ public class Database {
 
             writer.writeAll(rs, true);
             writer.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void updateRiskLevel(String userID, int riskLevel){
+        int rowUpdate = 0;
+        try
+        {
+
+            pUpdateRiskLevel.setInt(1, riskLevel);
+            pUpdateRiskLevel.setString(2, userID);
+            rowUpdate += pUpdateRiskLevel.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
