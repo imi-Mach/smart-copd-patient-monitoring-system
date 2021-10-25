@@ -35,6 +35,7 @@ public class Database {
     private PreparedStatement hInsertProvider;
     private PreparedStatement hDeleteProvider;
     private PreparedStatement hCheckIfProviderExists;
+    private PreparedStatement hGetPatientData;
     
     // Airtable LogStats Prepared Statements
     private PreparedStatement lSCreateTable;
@@ -321,7 +322,8 @@ public class Database {
             db.hInsertProvider = db.mConnection.prepareStatement("INSERT INTO healthCareProvider VALUES(?,?,?)");
             db.hDeleteProvider = db.mConnection.prepareStatement("DELETE FROM healthCareProvider WHERE healthCareID = ?");
             db.hCheckIfProviderExists = db.mConnection.prepareStatement("SELECT healthCareID FROM healthCareProvider WHERE healthCareID = ?");
-                
+            db.hGetPatientData = db.mConnection.prepareStatement("SELECT * FROM patient WHERE healthCareID H, patient P, patientOf PO where H.healthCareID = ? AND H.healthCareID = PO.pOHealthCareID AND PO.pOPatientID = P.patientID AND P.patientID = ?");
+                                                                 
             // Airtable Create DailyStats Table
             db.dSCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS dailyStats (" +
