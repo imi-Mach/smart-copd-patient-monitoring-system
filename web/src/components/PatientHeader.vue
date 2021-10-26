@@ -58,10 +58,10 @@ export default {
     });
     }
   },
-  mounted: function () {
-    this.checkCookies();
-    window.setTimeout(this.getPatientData, 500);
-  },
+  // mounted: function () {
+  //   this.checkCookies();
+  //   window.setTimeout(this.getPatientData, 500);
+  // },
 };
 </script>
 
