@@ -17,6 +17,7 @@
         <p>Healthcare providers, please use the button below to sign in.</p>
         <p>If you are new to our app, you will need a designated Registration Code ready to register.</p>
         <Login patient="1"></Login>
+        <router-link to="/healthcares">temp link</router-link>
       </el-card>
     </el-main>
   </el-container>
