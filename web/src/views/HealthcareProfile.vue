@@ -70,6 +70,9 @@ export default {
         });
       }
   },
+  mounted: {
+    // get healthcare provider data
+  },
   
 };
 </script>
