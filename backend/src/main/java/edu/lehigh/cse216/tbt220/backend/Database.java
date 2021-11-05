@@ -313,15 +313,17 @@ public class Database {
                 "CREATE TABLE IF NOT EXISTS healthCareProvider (" +
                 "healthCareID VARCHAR not null primary key," +
                 "firstName VARCHAR not null," +
-                "lastName VARCHAR);"
+                "lastName VARCHAR,"+
+                "phoneNumber VARCHAR,"+
+                "licenseNumber VARCHAR);"
             );
             
             //HealthCare Provider Table
             db.hDropTable = db.mConnection.prepareStatement("DROP TABLE healthCareProvider");
             db.hGetProvider = db.mConnection.prepareStatement("SELECT * FROM healthCareProvider where healthCareID = ?");
-            db.hInsertProvider = db.mConnection.prepareStatement("INSERT INTO healthCareProvider VALUES(?,?,?)");
+            db.hInsertProvider = db.mConnection.prepareStatement("INSERT INTO healthCareProvider VALUES(?,?,?,?,?)");
             db.hDeleteProvider = db.mConnection.prepareStatement("DELETE FROM healthCareProvider WHERE healthCareID = ?");
-            db.hCheckIfProviderExists = db.mConnection.prepareStatement("SELECT healthCareID FROM healthCareProvider WHERE healthCareID = ?");
+            db.hCheckIfProviderExists = db.mConnection.prepareStatement("SELECT * FROM healthCareProvider WHERE healthCareID = ?");
             db.hGetPatientData = db.mConnection.prepareStatement("SELECT * FROM patient natural join patientOf WHERE healthCareID = ?");
                                                                  
             // Airtable Create DailyStats Table
@@ -372,9 +374,7 @@ public class Database {
             db.pOCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS patientOf (" +
                 "healthCareID VARCHAR not null," +
-                "patientID VARCHAR not null," +
-                "foreign key(healthCareID) references healthCareProvider(healthCareID)," +
-                "foreign key(patientID) references patients(patientID));"
+                "patientID VARCHAR not null);" 
             );
             
             //PatientOf table
@@ -497,6 +497,26 @@ public class Database {
 
     /**
      * checking if the patient exists in the database
+     * @param userID
+     * @return true or false
+     */
+    boolean checkIfProviderExists(String userID) {
+        ResultSet rs = null;
+        try {
+            hCheckIfProviderExists.setString(1, userID);
+            rs = hCheckIfProviderExists.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
+     /**
+     * checking if the heathCare exists in the database
      * @param userID
      * @return true or false
      */
@@ -637,6 +657,26 @@ public class Database {
             return null;
         }
     }
+  
+
+    ArrayList<Patient> getPatients(String healthCareID) {
+
+        ArrayList<Patient> res = new ArrayList<>();
+        try {
+            hGetPatientData.setString(1, healthCareID);
+
+            ResultSet rs = hGetPatientData.executeQuery();
+            while (rs.next()) {
+                
+                res.add(new Patient(rs.getString("patientID"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("DOB"), rs.getString("phoneNumber"),rs.getInt("riskLevel")));
+            }
+            rs.close();
+            return res;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     /**
      * Inserting a new patient into the database
@@ -662,6 +702,39 @@ public class Database {
             ex.printStackTrace();
         }
         return rowUpdate;
+    }
+
+    int insertPatientOf(String userID, String patientID){
+        int rowUpdate = 0;
+        try {
+
+            
+            pOInsertNewPatientOf.setString(1,userID);
+            pOInsertNewPatientOf.setString(2,patientID);
+            rowUpdate += pInsertNewPatient.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return rowUpdate;
+    }
+
+    int inserNewHealthCareProvider(String userID, String firstName, String lastName, String phoneNumber, String licenseNumber){
+
+        int rowUpdate = 0;
+        try {
+
+            hInsertProvider.setString(1, userID);
+            hInsertProvider.setString(2, firstName);
+            hInsertProvider.setString(3, lastName);
+            hInsertProvider.setString(4, phoneNumber);
+            hInsertProvider.setString(5, licenseNumber);
+
+            rowUpdate += pInsertNewPatient.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return rowUpdate;
+
     }
 
 

@@ -123,6 +123,45 @@ public class App {
 
         });
 
+        // Set up a route for login
+        Spark.post("/heathcarelogin", (request, response) -> {
+
+            GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(htrans, jfac)
+                    .setAudience(Collections
+                            .singletonList("391364610933-efk7s0n53hv067p25v31dovu9d236vp7.apps.googleusercontent.com"))
+                    .build();
+
+            // (Receive idTokenString by HTTPS POST)
+            String idTokenString = gson.fromJson(request.body(), String.class);
+            System.out.println(idTokenString);
+            System.out.println(request.body());
+
+            GoogleIdToken idToken = verifier.verify(idTokenString);
+            response.type("application/json");
+            if (idToken != null) {
+                Payload payload = idToken.getPayload();
+
+                // Get userID
+                String userId = payload.getEmail();
+
+                // Generate new session ID
+                String newSessionID = db.generateSessionID();
+
+                String sessionID = db.loginUser(userId, newSessionID);
+
+                boolean check = db.checkIfProviderExists(userId);
+
+                if(check){
+                    return gson.toJson(new StructuredResponse("ok", sessionID, true, null));
+                }
+                return gson.toJson(new StructuredResponse("ok", sessionID, false, null));
+
+            } else {
+                return gson.toJson(new StructuredResponse("error", "error during login", null));
+            }
+
+        });
+
         Spark.post("/register", (request, response) -> {
 
             JSONParser jsonParser = new JSONParser();
@@ -145,6 +184,47 @@ public class App {
             return gson.toJson(new StructuredResponse("ok", null, null));
         });
 
+        Spark.post("/healthcareregister", (request, response) -> {
+
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+            
+            String sessionID = (String) jsonObject.get("sessionID");
+            String firstName = (String) jsonObject.get("firstName");
+            String lastName = (String) jsonObject.get("lastName");
+            String phoneNumber = (String) jsonObject.get("phoneNumber");
+            String licenseNumber = (String) jsonObject.get("licenseNumber");
+
+            //get user id
+            String userID = db.getUserID(sessionID);
+
+            int result = db.inserNewHealthCareProvider(userID, firstName ,lastName, phoneNumber, licenseNumber);
+ 
+            if(result == 0) {
+                return gson.toJson(new StructuredResponse("error", "insert failed", null));
+            }
+            return gson.toJson(new StructuredResponse("ok", null, null));
+        });
+
+        Spark.get("/getAllPatients/:session_id", (request, response) ->{
+
+            String sessionID = request.params("session_id");
+
+            String userID = db.getUserID(sessionID);
+
+            Object data = db.getPatients(userID);
+
+            if (data == null) {
+
+                return gson.toJson(new StructuredResponse("error", userID + " not found", null));
+
+            } else {
+                return gson.toJson(new StructuredResponse("ok", null, data));
+            }
+
+        });
+
+
         Spark.get("/patient/:session_id", (request, response) -> {
 
             String sessionID = request.params("session_id");
@@ -157,7 +237,41 @@ public class App {
             } else {
                 return gson.toJson(new StructuredResponse("ok", null, data));
             }
+
         });
+
+
+        Spark.get("/patientInfo/:userID", (request, response) -> {
+
+            String userID = request.params("userID");
+
+            Object data = db.getPatient(userID);
+            if (data == null) {
+                return gson.toJson(new StructuredResponse("error", userID + " not found", null));
+            } else {
+                return gson.toJson(new StructuredResponse("ok", null, data));
+            }
+        });
+
+        Spark.post("/insertPatientOf", (request, response) -> {
+
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
+            
+            String patientID = (String) jsonObject.get("patientEmail");
+            String sessionID = (String) jsonObject.get("sessionID");
+            String userID = db.getUserID(sessionID);
+
+            int result = db.insertPatientOf(userID, patientID);
+
+            if (result == 0) {
+                return gson.toJson(new StructuredResponse("error", userID + " not found", null));
+            } else {
+                return gson.toJson(new StructuredResponse("ok", null, null));
+            }
+        });
+
+
 
         Spark.get("/patientCSV/:userID", (request, response) -> {
 
