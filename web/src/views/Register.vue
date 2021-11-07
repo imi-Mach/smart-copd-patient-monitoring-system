@@ -86,8 +86,12 @@ export default {
           .post("https://smart-copd-patient.herokuapp.com/register", request)
           .then((response) => {
             if (response.body.mStatus == "ok") {
-              this.$cookies.set("sessionID", this.$store.getters.getSessionID, 1);
-              console.log(this.$cookies.get("sessionID"));
+              this.$cookies.set("sessionID", this.$store.getters.getSessionID);
+              console.log("Setting sessionID");
+              this.$cookies.set("firstName", this.firstName);
+              this.$cookies.set("lastName", this.lastName);
+              this.$cookies.set("DOB", this.DOB);
+              this.$cookies.set("phoneNumber", this.phoneNumber);
               this.$router.push("patients");
             } else {
               this.$notify.error({

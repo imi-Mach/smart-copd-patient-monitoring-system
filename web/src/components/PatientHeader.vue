@@ -29,6 +29,12 @@ export default {
   methods: {
     signout() {
       this.$store.commit("setSessionID", "");
+      this.$cookies.remove("sessionID");
+      this.$cookies.remove("firstName");
+      this.$cookies.remove("lastName");
+      this.$cookies.remove("DOB");
+      this.$cookies.remove("phoneNumber");
+      this.$cookies.remove("email");
       this.$router.push("/");
     },
     toProfile(){
@@ -39,29 +45,29 @@ export default {
       if(this.option == 1){this.$router.push("patients");} 
     },
     checkCookies() {
-      console.log('testing');
-      console.log(this.$cookies.get("sessionID"));
-      console.log('testing 2');
-      console.log(this.$cookies.get("sessionID") != null);
-      if (this.$cookies.get("sessionID") != null) {
-        console.log('Session ID set');
+      if (this.$cookies.isKey("sessionID")) {
         this.$store.commit('setSessionID', this.$cookies.get("sessionID"));
-        console.log(this.$store.getters.getSessionID);
+        // Should update the session key to stay logged in
+        this.$cookies.set("sessionID", this.$store.getters.getSessionID);
       } else {
         console.log('Session ID NOT set');
         this.$router.push(this.$router.push("/"));
       }
     },
     getPatientData() {
-      this.$http.get("https://smart-copd-patient.herokuapp.com/patient/" + this.$store.getters.getSessionID).then((response) => {
-      this.name = response.data.mData.pFirstName;
-    });
+      if (this.$cookies.isKey("firstName")) {
+        this.name = this.$cookies.get("firstName");
+      } else {
+        this.$http.get("https://smart-copd-patient.herokuapp.com/patient/" + this.$store.getters.getSessionID).then((response) => {
+        this.name = response.data.mData.pFirstName;
+        });
+      }
     }
   },
-  // mounted: function () {
-  //   this.checkCookies();
-  //   window.setTimeout(this.getPatientData, 500);
-  // },
+  mounted: function () {
+    this.checkCookies();
+    window.setTimeout(this.getPatientData, 500);
+  },
 };
 </script>
 

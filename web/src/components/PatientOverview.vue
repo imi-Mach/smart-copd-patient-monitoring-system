@@ -24,22 +24,17 @@ export default {
   },
   methods: {
     checkCookies() {
-      // console.log('testing');
-      // console.log(this.$cookies.get("sessionID"));
-      // console.log('testing 2');
-      // console.log(this.$cookies.get("sessionID") != null);
-      if (this.$cookies.get("sessionID") != null) {
-        // console.log('Session ID set');
+      if (this.$cookies.isKey("sessionID")) {
         this.$store.commit('setSessionID', this.$cookies.get("sessionID"));
-        // console.log(this.$store.getters.getSessionID);
+        // Should update the session key to stay logged in
+        this.$cookies.set("sessionID", this.$store.getters.getSessionID);
       } else {
-        // console.log('Session ID NOT set');
+        console.log('Session ID NOT set 2');
         this.$router.push(this.$router.push("/"));
       }
     },
     getPatientData() {
       this.$http.get("https://smart-copd-patient.herokuapp.com/myData/" + this.$store.getters.getSessionID).then((response) => {
-      console.log(response.body.mData.length)
       if(response.body.mData.length > 7){
         this.hasResult = true;
       }

@@ -15,6 +15,8 @@ Vue.use(VueResource);
 Vue.use(ElementUI, { locale });
 Vue.use(VueCookies);
 
+Vue.$cookies.config('1d')
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -21,26 +21,23 @@ export default {
   }),
   methods: {
     OnGoogleAuthSuccess (idToken) {
-      this.$http.post("https://smart-copd-patient.herokuapp.com/login", idToken).then(
+        this.$http.post("https://smart-copd-patient.herokuapp.com/login", idToken).then(
         (response) => {
           this.$store.commit('setSessionID', response.data.mSessionID);
-          //sessionId stored
-          //console.log(this.$store.getters.getSessionID)
-          if(response.data.mExists){
-            this.$cookies.set("sessionID", this.$store.getters.getSessionID, 1);
+          if(response.data.mExists) {
+            this.$cookies.set("sessionID", this.$store.getters.getSessionID);
+            console.log('Patient exists and setting patient ID');
             console.log(this.$cookies.get("sessionID"));
             this.$router.push("patients");
-          }
-          else{
+          } else {
             this.$router.push("register");
           }
-
         }
       );
     },
     OnGoogleAuthFail (error) {
       console.log(error)
     },
-  }
+  },
 }
 </script> 

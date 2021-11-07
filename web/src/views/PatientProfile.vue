@@ -79,7 +79,14 @@ export default {
       }
   },
   mounted() {
-    this.$http
+    if (this.$cookies.isKey("email")) {
+      this.firstName = this.$cookies.get("firstName");
+      this.lastName = this.$cookies.get("lastName");
+      this.DOB = this.$cookies.get("DOB");
+      this.phoneNumber = this.$cookies.get("phoneNumber");
+      this.email = this.$cookies.get("email");
+    } else {
+      this.$http
       .get(
         "https://smart-copd-patient.herokuapp.com/patient/" +
           this.$store.getters.getSessionID
@@ -90,7 +97,13 @@ export default {
         this.DOB = response.data.mData.pDOB.slice(0, 10);
         this.phoneNumber = response.data.mData.pPhoneNumber;
         this.email = response.data.mData.pPatientID;
+        this.$cookies.set("firstName", this.firstName);
+        this.$cookies.set("lastName", this.lastName);
+        this.$cookies.set("DOB", this.DOB);
+        this.$cookies.set("phoneNumber", this.phoneNumber);
+        this.$cookies.set("email", this.email);
       });
+    }
   },
 };
 </script>
