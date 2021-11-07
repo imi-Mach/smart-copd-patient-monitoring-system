@@ -58,7 +58,11 @@ export default {
     PatientHelp,
   },
   mounted(){
-    this.$confirm("Let's fill out the daily survey", "Hi", {
+    console.log(this.$cookies.isKey("dailyCounter"));
+    console.log(this.$cookies.get("dailyCounter"));
+    if (!this.$cookies.isKey("dailyCounter")) {
+      this.$cookies.set("dailyCounter", "test");
+      this.$confirm("Let's fill out the daily survey", "Hi", {
       confirmButtonText: "Sure",
       cancelButtonText: "Later",
       type: "info",
@@ -72,6 +76,7 @@ export default {
           message: "See you later",
         });
       });
+    }
   },
 };
 </script>
