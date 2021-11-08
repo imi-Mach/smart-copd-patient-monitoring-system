@@ -260,7 +260,7 @@ export default {
               var data = {q1: request.q1, q2: request.q2, q3: request.q3, q4: request.q4, q5: request.q5,
                           q6: request.q6, q7: request.q7, q8: request.q8, q9: request.q9, q10: request.q10,
                           q11: request.q11, q12: request.q12, bt: request.bt, fev1: request.fev1, spo2: request.spo2};
-              var data_str = JSON.stringify(data);
+              var data_str = JSON.stringify(data); // to de-string: JSOIN.parse(data_str)
               var index = this.$counter % 7;
               switch(index) {
                 case 0:
