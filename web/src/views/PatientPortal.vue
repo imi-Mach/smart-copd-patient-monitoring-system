@@ -58,8 +58,6 @@ export default {
     PatientHelp,
   },
   mounted(){
-    console.log(this.$cookies.isKey("dailyCounter"));
-    console.log(this.$cookies.get("dailyCounter"));
     if (!this.$cookies.isKey("dailyCounter")) {
       this.$cookies.set("dailyCounter", "test");
       this.$confirm("Let's fill out the daily survey", "Hi", {

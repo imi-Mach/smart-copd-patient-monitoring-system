@@ -141,6 +141,7 @@ export default {
         spo2: "",
       },
     };
+    
   },
   methods: {
     onSubmit() {
@@ -256,6 +257,45 @@ export default {
                 type: "success",
               });
               this.onClear();
+              var data = {q1: request.q1, q2: request.q2, q3: request.q3, q4: request.q4, q5: request.q5,
+                          q6: request.q6, q7: request.q7, q8: request.q8, q9: request.q9, q10: request.q10,
+                          q11: request.q11, q12: request.q12, bt: request.bt, fev1: request.fev1, spo2: request.spo2};
+              var data_str = JSON.stringify(data);
+              var index = this.$counter % 7;
+              switch(index) {
+                case 0:
+                  this.$cookies.set("data0", data_str);
+                  console.log("Set Cookie 0");
+                  break;
+                case 1:
+                  this.$cookies.set("data1", data_str);
+                  console.log("Set Cookie 1");
+                  break;
+                case 2:
+                  this.$cookies.set("data2", data_str);
+                  console.log("Set Cookie 2");
+                  break;
+                case 3:
+                  this.$cookies.set("data3", data_str);
+                  console.log("Set Cookie 3");
+                  break;
+                case 4:
+                  this.$cookies.set("data4", data_str);
+                  console.log("Set Cookie 4");
+                  break;
+                case 5:
+                  this.$cookies.set("data5", data_str);
+                  console.log("Set Cookie 5");
+                  break;
+                case 6:
+                  this.$cookies.set("data6", data_str);
+                  console.log("Set Cookie 6");
+                  break;
+                default:
+                  console.log("THERE WAS AN ERROR");
+                  break;
+              }
+              this.$counter++;
             }
             else{
                 this.$message({

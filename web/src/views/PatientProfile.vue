@@ -83,7 +83,6 @@ export default {
       this.firstName = this.$cookies.get("firstName");
       this.lastName = this.$cookies.get("lastName");
       this.DOB = this.$cookies.get("DOB");
-      console.log(this.$cookies.get("DOB"));
       this.phoneNumber = this.$cookies.get("phoneNumber");
       this.email = this.$cookies.get("email");
     } else {
