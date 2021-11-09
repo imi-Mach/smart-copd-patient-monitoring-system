@@ -111,6 +111,27 @@
       <el-input v-model="form.spo2"></el-input>
     </el-form-item>
 
+    <!-- START COTS New Code -->
+
+    <div id="dataB">
+      <el-button class="btn btn-info" @click="onPickFile">Upload Patient Data</el-button>
+      <input
+        type="file"
+        style="display: none"
+        ref="fileInput"
+        accept=".txt"
+        @change="onFilePicked"/>
+
+        <div id="preview">
+          <img v-if="url" :src="url" />
+        </div>
+
+    </div>
+
+    <el-divider></el-divider>
+
+    <!-- END COTS New Code -->
+
     <div id="submitB">
       <el-button type="primary" @click="onSubmit">Submit</el-button>
       <el-button @click="onClear">Clear</el-button>
@@ -139,6 +160,7 @@ export default {
         bt: "",
         fev1: "",
         spo2: "",
+        txt_data: null
       },
     };
   },
@@ -272,6 +294,18 @@ export default {
         });
       }
     },
+    // START COTS New Code
+    onPickFile () {
+      this.$refs.fileInput.click()
+    },
+    onFilePicked (event) {
+      const file = event.target.files[0];
+      this.txt_data = URL.createObjectURL(file);
+      this.form.bt = "75"
+      this.form.fev1 = "35"
+      this.form.spo2 = "92"
+    },
+    // END COTS New Code
     onClear() {
       this.form.q1 = "";
       this.form.q2 = "";
