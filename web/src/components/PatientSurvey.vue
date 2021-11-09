@@ -302,7 +302,7 @@ export default {
                 message: "Error, please try again.",
                 type: "error",
               });
-              this.$router.push('psurvey');
+              window.location.reload()
             }
           });
       } else {
