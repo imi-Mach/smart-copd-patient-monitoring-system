@@ -318,10 +318,13 @@ public class App {
 
             int result = db.insertNewData(userID, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, bt, fev1, spo2);
 
-            if(result == 0) {
 
-                return gson.toJson(new StructuredResponse("error", "insert failed", null));
-            }
+            //TODO: Uncomment later
+
+            // if(result == 0) {
+
+            //     return gson.toJson(new StructuredResponse("error", "insert failed", null));
+            // }
 
             // TODO: prove of concept now
             String userData = q1 + "," + q2 + "," + q3 + "," + q4 + "," + q5 + "," + q6 + "," + q7 + "," + q8 + "," + q9 + "," + q10 + "," + q11 + "," + q12 + "," + bt + "," + fev1 + "," + spo2;
