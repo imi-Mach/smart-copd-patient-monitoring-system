@@ -343,8 +343,8 @@ public class Database {
                 "q11 int," +
                 "q12 int," +
                 "bt float," +
-                "fev1 float ," +
-                "spo2 float"+
+                "fev1 float," +
+                "spo2 float," +
                 "DT DATE);"
             );
             
