@@ -45,7 +45,7 @@ public class StructuredResponse {
     }
 
     public StructuredResponse(String status, String message, Object dat){
-        mStatus = (status != null) ? status : "invalid";
+        mStatus = status; //(status != null) ? status : "invalid"; // TODO
         mMessage = message;
         mData = dat;
     }

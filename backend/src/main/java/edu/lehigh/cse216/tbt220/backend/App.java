@@ -328,8 +328,10 @@ public class App {
 
             // TODO: prove of concept now
             String userData = q1 + "," + q2 + "," + q3 + "," + q4 + "," + q5 + "," + q6 + "," + q7 + "," + q8 + "," + q9 + "," + q10 + "," + q11 + "," + q12 + "," + bt + "," + fev1 + "," + spo2;
-            String risk = runScript("python3 Classify.py " + userData);
-            return gson.toJson(new StructuredResponse("ok", risk, null));
+            String risk = "Yoo Hello";
+            risk = runScript("python3 Classify.py " + userData);
+            System.out.println("Risk output: "+risk);
+            return gson.toJson(new StructuredResponse(risk, risk, null)); //TODO
             // return gson.toJson(new StructuredResponse("ok", null, null));
         });
 
@@ -428,12 +430,24 @@ public class App {
         Process proc;
         String error = "ERROR";
         try {
+            // running new process with python file
             proc = Runtime.getRuntime().exec(command);
+
+            // take input stream of child process, make a stream reader from it, and buffer read the stream
             BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+
             String line = null;
+
+            // read a line of the input stream representing the python print
             line = in.readLine();
+
+            // close buffered reader
             in.close();
+
+            // wait for python code to execute
             proc.waitFor();
+
+            // return resulting classficiation (as described in Classify.py)
             return line;
         } catch (IOException e) {
             e.printStackTrace();
