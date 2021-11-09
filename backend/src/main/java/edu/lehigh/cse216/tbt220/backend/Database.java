@@ -146,10 +146,12 @@ public class Database {
     public static class LogStats {
         String lSPatientID;
         String dSDailyStatID;
+        int lRiskLevel;
         
-        public LogStats(String patientID, String dailyStatID) {
+        public LogStats(String patientID, String dailyStatID, int riskLevel) {
             lSPatientID = patientID;
             dSDailyStatID = dailyStatID;
+            lRiskLevel = riskLevel;
         }
     }
     
@@ -360,7 +362,8 @@ public class Database {
             db.lSCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS logStats (" +
                 "patientID VARCHAR not null," +
-                "dailyStatID VARCHAR not null);" 
+                "dailyStatID VARCHAR not null," +
+                "riskLevel int check(riskLevel > 0));"
             );
             
             //LogStats table
