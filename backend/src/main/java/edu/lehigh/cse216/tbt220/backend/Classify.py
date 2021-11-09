@@ -1,4 +1,4 @@
-'''import pickle
+import pickle
 import sys
 import numpy as np
 from io import StringIO
@@ -14,5 +14,3 @@ dp = dp.reshape(1, -1)
 
 prediction = model.predict(dp)
 print(int(prediction[0]))
-'''
-print("SupDude")
