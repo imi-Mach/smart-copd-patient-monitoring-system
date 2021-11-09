@@ -50,7 +50,6 @@ export default {
         // Should update the session key to stay logged in
         this.$cookies.set("sessionID", this.$store.getters.getSessionID);
       } else {
-        console.log('Session ID NOT set');
         this.$router.push(this.$router.push("/"));
       }
     },

@@ -10,7 +10,10 @@ export default new Vuex.Store({
   mutations: {
     setSessionID(state, sessionID){
       state.sessionID = sessionID
-    }
+    },
+    addData(state, data) {
+      state.entries.push(data);
+    },
   },
   actions: {
   },
@@ -19,6 +22,6 @@ export default new Vuex.Store({
   getters: {
     getSessionID: state =>{
       return state.sessionID;
-    }
+    },
   }
 })

@@ -26,8 +26,6 @@ export default {
           this.$store.commit('setSessionID', response.data.mSessionID);
           if(response.data.mExists) {
             this.$cookies.set("sessionID", this.$store.getters.getSessionID);
-            console.log('Patient exists and setting patient ID');
-            console.log(this.$cookies.get("sessionID"));
             this.$router.push("patients");
           } else {
             this.$router.push("register");

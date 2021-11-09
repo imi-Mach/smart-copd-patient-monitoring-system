@@ -87,7 +87,6 @@ export default {
           .then((response) => {
             if (response.body.mStatus == "ok") {
               this.$cookies.set("sessionID", this.$store.getters.getSessionID);
-              console.log("Setting sessionID");
               this.$cookies.set("firstName", this.firstName);
               this.$cookies.set("lastName", this.lastName);
               this.$cookies.set("DOB", this.DOB);
