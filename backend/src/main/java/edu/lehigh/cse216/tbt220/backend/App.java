@@ -20,6 +20,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+// For ML
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 /**
  * For now, our app creates an HTTP server that can only get and add data.
  */
@@ -58,6 +63,9 @@ public class App {
             return;
         db.dropTables();
         db.createTables();
+
+        // Machine Learning Component, when the server started, train the model
+        runScript("python3 Training.py");
 
         // Set up the location for serving static files. If the STATIC_LOCATION
         // environment variable is set, we will serve from it. Otherwise, serve
@@ -314,7 +322,12 @@ public class App {
 
                 return gson.toJson(new StructuredResponse("error", "insert failed", null));
             }
-            return gson.toJson(new StructuredResponse("ok", null, null));
+
+            // TODO: prove of concept now
+            String userData = q1 + "," + q2 + "," + q3 + "," + q4 + "," + q5 + "," + q6 + "," + q7 + "," + q8 + "," + q9 + "," + q10 + "," + q11 + "," + q12 + "," + bt + "," + fev1 + "," + spo2;
+            String risk = runScript("python3 Classify.py " + userData);
+            return gson.toJson(new StructuredResponse("ok", risk, null));
+            // return gson.toJson(new StructuredResponse("ok", null, null));
         });
 
         Spark.get("/myData/:session_id", (request,response) -> {
@@ -406,5 +419,24 @@ public class App {
             response.header("Access-Control-Request-Method", methods);
             response.header("Access-Control-Allow-Headers", headers);
         });
+    }
+
+    static String runScript(String command) {
+        Process proc;
+        String error = "ERROR";
+        try {
+            proc = Runtime.getRuntime().exec(command);
+            BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+            String line = null;
+            line = in.readLine();
+            in.close();
+            proc.waitFor();
+            return line;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return error;
     }
 }
