@@ -299,8 +299,17 @@ export default {
       this.$refs.fileInput.click()
     },
     onFilePicked (event) {
+      // extract the "picked" file
       const file = event.target.files[0];
+
+      // generate a preview link for file (optional)
       this.txt_data = URL.createObjectURL(file);
+
+      // Optional TODO: convert file to string
+
+      // TODO: parse file into 3 variables
+      
+      // set 3 variables
       this.form.bt = "75"
       this.form.fev1 = "35"
       this.form.spo2 = "92"
