@@ -64,9 +64,6 @@ public class App {
         db.dropTables();
         db.createTables();
 
-        // Machine Learning Component, when the server started, train the model
-        runScript("python3 Training.py");
-
         // Set up the location for serving static files. If the STATIC_LOCATION
         // environment variable is set, we will serve from it. Otherwise, serve
         // from "/web"
@@ -318,21 +315,12 @@ public class App {
 
             int result = db.insertNewData(userID, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, bt, fev1, spo2);
 
+            if(result == 0) {
 
-            //TODO: Uncomment later
+                return gson.toJson(new StructuredResponse("error", "insert failed", null));
+            }
 
-            // if(result == 0) {
-
-            //     return gson.toJson(new StructuredResponse("error", "insert failed", null));
-            // }
-
-            // TODO: prove of concept now
-            String userData = q1 + "," + q2 + "," + q3 + "," + q4 + "," + q5 + "," + q6 + "," + q7 + "," + q8 + "," + q9 + "," + q10 + "," + q11 + "," + q12 + "," + bt + "," + fev1 + "," + spo2;
-            String risk = "Yoo Hello";
-            risk = runScript("python3 Classify.py " + userData);
-            System.out.println("Risk output: "+risk);
-            return gson.toJson(new StructuredResponse(risk, risk, null)); //TODO
-            // return gson.toJson(new StructuredResponse("ok", null, null));
+            return gson.toJson(new StructuredResponse("ok", null, null));
         });
 
         Spark.get("/myData/:session_id", (request,response) -> {
@@ -370,6 +358,14 @@ public class App {
 
         });
 
+        Spark.delete("/deletePatient/:userID",(request, response) ->{
+
+            String userID = request.params("userID");
+
+            db.deletePatientOf(userID);
+
+            return gson.toJson(new StructuredResponse("ok", null, null));
+        });
 
 
     }
@@ -424,36 +420,5 @@ public class App {
             response.header("Access-Control-Request-Method", methods);
             response.header("Access-Control-Allow-Headers", headers);
         });
-    }
-
-    static String runScript(String command) {
-        Process proc;
-        String error = "ERROR";
-        try {
-            // running new process with python file
-            proc = Runtime.getRuntime().exec(command);
-
-            // take input stream of child process, make a stream reader from it, and buffer read the stream
-            BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-
-            String line = null;
-
-            // read a line of the input stream representing the python print
-            line = in.readLine();
-
-            // close buffered reader
-            in.close();
-
-            // wait for python code to execute
-            proc.waitFor();
-
-            // return resulting classficiation (as described in Classify.py)
-            return line;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return error;
     }
 }

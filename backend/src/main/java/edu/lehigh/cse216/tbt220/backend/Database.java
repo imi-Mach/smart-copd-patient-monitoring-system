@@ -154,16 +154,6 @@ public class Database {
             lRiskLevel = riskLevel;
         }
     }
-    
-    public static class PatientOf {
-        String pOHealthCareID;
-        String pOPatientID;
-        
-        public PatientOf(String healthCareID, String patientID) {
-            pOHealthCareID = healthCareID;
-            pOPatientID = patientID;
-        }
-    }
 
     /**
      * The connection to the database.  When there is no connection, it should
@@ -384,7 +374,7 @@ public class Database {
             db.pODropTable = db.mConnection.prepareStatement("DROP TABLE patientOf");
             db.pOGetPatientOf = db.mConnection.prepareStatement("SELECT * FROM patientOf where patientID = ? AND healthCareID = ?");
             db.pOInsertNewPatientOf = db.mConnection.prepareStatement("INSERT INTO patientOf VALUES(?,?)");
-            db.pODeletePatientOf = db.mConnection.prepareStatement("DELETE FROM patientOf WHERE patientID = ? AND healthCareID = ?");
+            db.pODeletePatientOf = db.mConnection.prepareStatement("DELETE FROM patientOf WHERE patientID = ?");
             db.pOCheckIfPatientOfExists = db.mConnection.prepareStatement("SELECT patientID AND healthCareID FROM patientOf WHERE healthCareID = ? AND patientID = ?");
 
         } catch (SQLException e) {
@@ -472,6 +462,17 @@ public class Database {
             e.printStackTrace();
         }
     }
+    
+    void deletePatientOf(String userID){
+        try{
+            pODeletePatientOf.setString(1, userID);
+            pODeletePatientOf.executeUpdate();
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+     }
 
     /**
      * checking if the patient exists in the database
