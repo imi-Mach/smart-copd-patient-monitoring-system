@@ -17,6 +17,10 @@ import java.util.Base64;
 import org.apache.commons.lang3.RandomStringUtils;
 import java.io.FileWriter;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 
 public class Database {
     
@@ -119,8 +123,9 @@ public class Database {
         float  fev1;
         float  spo2;
         String date;
+        int riskLevel;
         
-        public DailyStats(String dailyStatID, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9, int q10, int q11, int q12, float bt, float fev1, float spo2, String date) {
+        public DailyStats(String dailyStatID, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9, int q10, int q11, int q12, float bt, float fev1, float spo2, String date, int riskLevel) {
 
             dSdailyStatID = dailyStatID;
             this.q1=q1;
@@ -139,6 +144,7 @@ public class Database {
             this.fev1=fev1;
             this.spo2=spo2;
             this.date=date;
+            this.riskLevel= riskLevel;
             
         }
     }
@@ -337,14 +343,15 @@ public class Database {
                 "bt float," +
                 "fev1 float," +
                 "spo2 float," +
-                "DT DATE);"
+                "DT DATE," +
+                "riskLevel int check(riskLevel > 0));"
             );
             
             //DailyStats table
             db.dSDropTable = db.mConnection.prepareStatement("DROP TABLE dailyStats");
             db.dSGetStat = db.mConnection.prepareStatement("SELECT * FROM dailyStats where dailyStatID = ?");
             db.dSGetAllStat = db.mConnection.prepareStatement("SELECT * FROM dailyStats DS, patients P, logStats LS where DS.dailyStatID = LS.dailyStatID AND P.patientID = LS.patientID AND P.patientID = ?");
-            db.dSInsertNewStat = db.mConnection.prepareStatement("INSERT INTO dailyStats VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); INSERT INTO logStats VALUES(?,?)");
+            db.dSInsertNewStat = db.mConnection.prepareStatement("INSERT INTO dailyStats VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); INSERT INTO logStats VALUES(?,?)");
             db.dSDeleteStat = db.mConnection.prepareStatement("DELETE FROM logStats WHERE dailyStatID = ?; DELETE FROM dailyStats WHERE dailyStatID = ?");
             db.dSCheckIfStatExists = db.mConnection.prepareStatement("SELECT dailyStatID FROM dailyStats WHERE dailyStatID = ?");
             
@@ -352,8 +359,7 @@ public class Database {
             db.lSCreateTable = db.mConnection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS logStats (" +
                 "patientID VARCHAR not null," +
-                "dailyStatID VARCHAR not null," +
-                "riskLevel int check(riskLevel > 0));"
+                "dailyStatID VARCHAR not null);"
             );
             
             //LogStats table
@@ -604,7 +610,7 @@ public class Database {
      * @param glucose
      * @return
      */
-    int insertNewData(String userID, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9, int q10, int q11, int q12, float bt, float fev1, float spo2){
+    int insertNewData(String userID, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9, int q10, int q11, int q12, float bt, float fev1, float spo2, int riskLevel){
 
         int rowUpdate = 0;
         String generatedString = RandomStringUtils.random(8, true, true);
@@ -627,8 +633,9 @@ public class Database {
             dSInsertNewStat.setFloat(15,fev1);
             dSInsertNewStat.setFloat(16,spo2);
             dSInsertNewStat.setString(17,java.time.LocalDate.now().toString());
-            dSInsertNewStat.setString(18,userID);
-            dSInsertNewStat.setString(19,generatedString);
+            dSInsertNewStat.setInt(18,riskLevel);
+            dSInsertNewStat.setString(19,userID);
+            dSInsertNewStat.setString(20,generatedString);
 
             rowUpdate += dSInsertNewStat.executeUpdate();
         } catch (SQLException e) {
@@ -652,7 +659,7 @@ public class Database {
             ResultSet rs = dSGetAllStat.executeQuery();
             while (rs.next()) {
                 
-                res.add(new DailyStats(rs.getString("dailyStatID"), rs.getInt("q1"), rs.getInt("q2"), rs.getInt("q3"), rs.getInt("q4"), rs.getInt("q5"), rs.getInt("q6"), rs.getInt("q7"), rs.getInt("q8"), rs.getInt("q9"), rs.getInt("q10"), rs.getInt("q11"), rs.getInt("q12"), rs.getFloat("bt"), rs.getFloat("fev1"), rs.getFloat("spo2"), rs.getString("DT")));
+                res.add(new DailyStats(rs.getString("dailyStatID"), rs.getInt("q1"), rs.getInt("q2"), rs.getInt("q3"), rs.getInt("q4"), rs.getInt("q5"), rs.getInt("q6"), rs.getInt("q7"), rs.getInt("q8"), rs.getInt("q9"), rs.getInt("q10"), rs.getInt("q11"), rs.getInt("q12"), rs.getFloat("bt"), rs.getFloat("fev1"), rs.getFloat("spo2"), rs.getString("DT"), rs.getInt("riskLevel")));
             }
             rs.close();
             return res;
@@ -661,7 +668,37 @@ public class Database {
             return null;
         }
     }
-  
+    
+    public String runScript(String command) {
+        Process proc;
+        String error = "ERROR";
+        try {
+            // running new process with python file
+            proc = Runtime.getRuntime().exec(command);
+
+            // take input stream of child process, make a stream reader from it, and buffer read the stream
+            BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+
+            String line = null;
+
+            // read a line of the input stream representing the python print
+            line = in.readLine();
+
+            // close buffered reader
+            in.close();
+
+            // wait for python code to execute
+            proc.waitFor();
+
+            // return resulting classficiation (as described in Classify.py)
+            return line;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return error;
+    }
 
     ArrayList<Patient> getPatients(String healthCareID) {
 

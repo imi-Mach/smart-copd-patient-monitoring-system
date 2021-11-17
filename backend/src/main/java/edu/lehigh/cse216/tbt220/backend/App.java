@@ -64,6 +64,10 @@ public class App {
         db.dropTables();
         db.createTables();
 
+        // Machine Learning Component, when the server started, train the model
+        String training = db.runScript("python3 Training.py");
+        System.out.println(training);
+
         // Set up the location for serving static files. If the STATIC_LOCATION
         // environment variable is set, we will serve from it. Otherwise, serve
         // from "/web"
@@ -313,7 +317,15 @@ public class App {
 
             String userID = db.getUserID(sessionID);
 
-            int result = db.insertNewData(userID, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, bt, fev1, spo2);
+            String userData = q1 + "," + q2 + "," + q3 + "," + q4 + "," + q5 + "," + q6 + "," + q7 + "," + q8 + "," + q9 + "," + q10 + "," + q11 + "," + q12 + "," + bt + "," + fev1 + "," + spo2;
+
+            String risk = "Yoo Hello";
+            risk = db.runScript("python3 Classify.py " + userData);
+
+            int riskLevel = Integer.parseInt(risk);  
+            int result = db.insertNewData(userID, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, bt, fev1, spo2, riskLevel);
+            
+            System.out.println("Risk output: "+risk);
 
             if(result == 0) {
 
