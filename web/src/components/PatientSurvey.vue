@@ -160,7 +160,7 @@ export default {
         bt: "",
         fev1: "",
         spo2: "",
-        txt_data: null
+        txt_data: null // New code
       },
     };
   },
