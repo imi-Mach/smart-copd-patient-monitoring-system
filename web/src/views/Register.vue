@@ -13,15 +13,23 @@
         </el-form-item>
 
         <!-- NOTE this needs to parse the value before sending it --->
-        <el-form-item label="Date of Birth: ">
-          <el-date-picker
-            v-model="DOB"
-            type="date"
-            placeholder="Please select your DOB"
-            default-value="1990-10-01"
-          >
-          </el-date-picker>
-        </el-form-item>
+        <template v-if="isPatient">
+          <el-form-item label="Date of Birth: ">
+            <el-date-picker
+              v-model="DOB"
+              type="date"
+              placeholder="Please select your DOB"
+              default-value="1990-10-01"
+            >
+            </el-date-picker>
+          </el-form-item>
+        </template>
+
+        <template v-if="isHealthCare">
+          <el-form-item label = "License Number: ">
+            <el-input v-model="licenseNumber" class="uinput"></el-input>
+          </el-form-item>
+        </template>
 
         <el-form-item label="Phone Number: ">
           <el-input v-model="phoneNumber" class="uinput"></el-input>
@@ -45,7 +53,10 @@ export default {
       lastName: "",
       DOB: "",
       phoneNumber: "",
+      licenseNumber: "",
       temp: "",
+      isPatient: (this.$cookies.get("isPatient")) === 'true',
+      isHealthCare: (this.$cookies.get("isHealthCare")) === 'true',
     };
   },
   methods: {
@@ -65,24 +76,32 @@ export default {
           title: "Form Error",
           message: "Please enter a valid phone number",
         });
-      } else {
+      } else if (this.isHealthCare && this.licenseNumber.length == 0) {
+        console.log("Send an error for less length");
+        this.$notify.error({
+          title: "Form Error",
+          message: "Please enter a valid license number",
+        });
+      } else if (this.isPatient) {
         if (this.DOB.getMonth() + 1 < 10) {
           this.temp = this.DOB.getMonth() + 1;
           this.temp = "0" + this.temp;
         } else {
           this.temp = this.DOB.getMonth() + 1;
         }
-
+      }
+        console.log("Sanity check");
         //construct the request
-        var request = {
-          sessionID: this.$store.getters.getSessionID,
-          firstName: this.firstName,
-          lastName: this.lastName,
-          DOB: this.DOB,
-          phoneNumber: this.phoneNumber,
-        };
-
-        this.$http
+        if (this.isPatient) {
+          console.log("entered patients area");
+          var request = {
+            sessionID: this.$store.getters.getSessionID,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            DOB: this.DOB,
+            phoneNumber: this.phoneNumber,
+          };
+          this.$http
           .post("https://smart-copd-patient.herokuapp.com/register", request)
           .then((response) => {
             if (response.body.mStatus == "ok") {
@@ -98,6 +117,35 @@ export default {
                 message: "Please try again",
               });
 							this.$router.push("/")
+            }
+          });
+        } else {
+          console.log("making request to server for hp");
+          var request = {
+            sessionID: this.$store.getters.getSessionID,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            phoneNumber: this.phoneNumber,
+            licenseNumber: this.licenseNumber,
+          };
+          console.log(request);
+          this.$http
+          .post("https://smart-copd-patient.herokuapp.com/healthcareregister", request)
+          .then((response) => {
+            console.log(response.body);
+            if (response.body.mStatus == "ok") {
+              this.$cookies.set("sessionID", this.$store.getters.getSessionID);
+              this.$cookies.set("firstName", this.firstName);
+              this.$cookies.set("lastName", this.lastName);
+              this.$cookies.set("phoneNumber", this.phoneNumber);
+              this.$cookies.set("licenseNumber", this.licenseNumber);
+              this.$router.push("healthcares");
+            } else {
+              this.$notify.error({
+                title: "Error Registering",
+                message: "Please try again",
+              });
+							this.$router.push("/");
             }
           });
       }

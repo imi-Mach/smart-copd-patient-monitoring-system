@@ -1,7 +1,7 @@
 <template>
   <div>
-  <el-button type="primary" v-google-signin-button="clientId" class="google-signin-button" plain v-if="patient == 0">Continue with Google</el-button>
-  <el-button type="warning" v-google-signin-button="clientId" class="google-signin-button" plain v-if="patient == 1">Continue with Google</el-button>
+  <el-button type="primary" v-google-signin-button="clientId" class="google-signin-button" plain v-if="patient == 0" @click="patientClicked">Continue with Google</el-button>
+  <el-button type="warning" v-google-signin-button="clientId" class="google-signin-button" plain v-if="patient == 1" @click="healthCareClicked">Continue with Google</el-button>
   </div>
 </template>
  
@@ -21,8 +21,8 @@ export default {
   }),
   methods: {
     OnGoogleAuthSuccess (idToken) {
-        this.$http.post("https://smart-copd-patient.herokuapp.com/login", idToken).then(
-        (response) => {
+      if (this.$cookies.get("isPatient")) {
+        this.$http.post("https://smart-copd-patient.herokuapp.com/login", idToken).then((response) => {
           this.$store.commit('setSessionID', response.data.mSessionID);
           if(response.data.mExists) {
             this.$cookies.set("sessionID", this.$store.getters.getSessionID);
@@ -32,10 +32,30 @@ export default {
           }
         }
       );
+      } else if (this.$cookies.get("isHealthCare")) {
+        this.$http.post("https://smart-copd-patient.herokuapp.com/heathcarelogin", idToken).then((response) => {
+          this.$store.commit('setSessionID', response.data.mSessionID);
+          if (response.data.mExists) {
+            this.$cookies.set("sessionID", this.$store.getters.getSessionID);
+            this.$router.push("healthcares");
+          } else {
+            this.$router.push("register");
+          }
+        }
+      );
+      }
     },
     OnGoogleAuthFail (error) {
       console.log(error)
     },
+    healthCareClicked() {
+      this.$cookies.set("isHealthCare", true);
+      this.$cookies.set("isPatient", false);
+    },
+    patientClicked() {
+      this.$cookies.set("isHealthCare", false);
+      this.$cookies.set("isPatient", true);
+    }
   },
 }
 </script> 
