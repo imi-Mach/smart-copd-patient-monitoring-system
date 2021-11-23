@@ -35,7 +35,7 @@
           <el-input v-model="phoneNumber" class="uinput"></el-input>
         </el-form-item>
 
-        <el-button type="primary" @click="processForm">Submit</el-button>
+        <el-button type="warning" @click="processForm">Submit</el-button>
         <!-- TODO: Cancel will need to sign out the user -->
         <el-button>Cancel</el-button>
       </el-form>
