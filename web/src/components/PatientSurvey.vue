@@ -96,21 +96,54 @@
     </el-form-item>
 
     <el-divider></el-divider>
-    <span style="font-weight: bold"
-      >Physiologic measurements (later will be connected to COTS)</span
-    >
+    <span style="font-weight: bold">Physiologic measurements</span>
+    <br />
+    <span>Please select your devise for the measurements: </span>
+
+    <el-dropdown @command="handleCommand">
+      <span class="el-dropdown-link">
+        {{ dropdownContent }} <i class="el-icon-arrow-down el-icon--right"></i>
+      </span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item command="a">Manual Input</el-dropdown-item>
+        <el-dropdown-item command="b">Res Pi V1</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+
     <el-divider></el-divider>
 
     <el-form-item label="Body Temperature in Degrees Celsius">
-      <el-input v-model="form.bt"></el-input>
+      <el-input v-model="form.bt" :disabled="disableinput"></el-input>
     </el-form-item>
     <el-form-item label="FEV1 in Liters">
-      <el-input v-model="form.fev1"></el-input>
+      <el-input v-model="form.fev1" :disabled="disableinput"></el-input>
     </el-form-item>
     <el-form-item label="SpO2 in Percentages">
-      <el-input v-model="form.spo2"></el-input>
+      <el-input v-model="form.spo2" :disabled="disableinput"></el-input>
     </el-form-item>
 
+    <el-upload
+      class="upload-demo"
+      drag
+      action="https://jsonplaceholder.typicode.com/posts/"
+      accept="text/plain"
+      :before-upload="onBeforeUpload"
+      :on-remove="handleRemove"
+      :file-list="fileList"
+      multiple
+      :limit="3"
+      :on-exceed="handleExceed"
+      v-if="respiSelected"
+    >
+      <i class="el-icon-upload"></i>
+      <div class="el-upload__text">
+        Drop file here or <em>click to upload</em>
+      </div>
+      <div class="el-upload__tip" slot="tip">
+        Only .txt file can be accepted
+      </div>
+    </el-upload>
+    <br />
     <div id="submitB">
       <el-button type="primary" @click="onSubmit">Submit</el-button>
       <el-button @click="onClear">Clear</el-button>
@@ -123,6 +156,9 @@ export default {
   name: "PatientSurvey",
   data() {
     return {
+      disableinput: true,
+      respiSelected: false,
+      dropdownContent: "Select",
       form: {
         q1: "",
         q2: "",
@@ -136,14 +172,60 @@ export default {
         q10: "",
         q11: "",
         q12: "",
-        bt: "",
-        fev1: "",
-        spo2: "",
+        bt: "36.2",
+        fev1: "89",
+        spo2: "100",
       },
     };
-    
   },
   methods: {
+    onBeforeUpload(file) {
+      const isText = file.type === 'text/plain';
+      if (!isText) {
+        this.$message({
+                message: "Upload file can only be in text format.",
+                type: "error",
+        });
+      } else {
+        var reader = new FileReader();
+        reader.onload = (e) => {
+          var text = e.target.result;
+          var array = text.split('\n');
+          var dataArray = array[1].split(',');
+          this.form.bt = dataArray[0];
+          this.form.spo2 = dataArray[1];
+          this.form.fev1 = dataArray[2];
+        };
+        reader.readAsText(file);
+      }
+    },
+    handleRemove(file, fileList) {
+      let resultArr = this.fileData.filter((item) => {
+        return item.url === file.url
+      });
+      console.log(fileList);
+      this.dataForm.id = resultArr[0].id
+      this.$nextTick(() => {
+        this.deleteHandle(this.dataForm.id)
+      })
+    },
+    handleExceed() {
+      this.$message({
+        message: "Please limit your file uploads to 3 files at a time.",
+        type: "error",
+      });
+    },
+    handleCommand(command) {
+      if (command == "a") {
+        this.dropdownContent = "Manual Input";
+        this.disableinput = false;
+        this.respiSelected = false;
+      } else if (command == "b") {
+        this.dropdownContent = "Res Pi V1";
+        this.disableinput = true;
+        this.respiSelected = true;
+      }
+    },
     onSubmit() {
       if (
         this.form.q1 &&
@@ -242,27 +324,41 @@ export default {
         } else {
           request.q12 = "1";
         }
-        request.bt = (request.bt).toString();
-        request.fev1 = (request.fev1).toString();
-        request.spo2 = (request.spo2).toString();
-        
-        console.log(JSON.stringify(request))
+        request.bt = request.bt.toString();
+        request.fev1 = request.fev1.toString();
+        request.spo2 = request.spo2.toString();
+
+        console.log(JSON.stringify(request));
         this.$http
           .post("https://smart-copd-patient.herokuapp.com/insertData", request)
           .then((response) => {
             if (response.body.mStatus == "ok") {
-                console.log(response.body)
+              console.log(response.body);
               this.$message({
                 message: "Successfully submitted!",
                 type: "success",
               });
               this.onClear();
-              var data = {q1: request.q1, q2: request.q2, q3: request.q3, q4: request.q4, q5: request.q5,
-                          q6: request.q6, q7: request.q7, q8: request.q8, q9: request.q9, q10: request.q10,
-                          q11: request.q11, q12: request.q12, bt: request.bt, fev1: request.fev1, spo2: request.spo2};
+              var data = {
+                q1: request.q1,
+                q2: request.q2,
+                q3: request.q3,
+                q4: request.q4,
+                q5: request.q5,
+                q6: request.q6,
+                q7: request.q7,
+                q8: request.q8,
+                q9: request.q9,
+                q10: request.q10,
+                q11: request.q11,
+                q12: request.q12,
+                bt: request.bt,
+                fev1: request.fev1,
+                spo2: request.spo2,
+              };
               var data_str = JSON.stringify(data); // to de-string: JSOIN.parse(data_str)
               var index = this.$counter % 7;
-              switch(index) {
+              switch (index) {
                 case 0:
                   this.$cookies.set("data0", data_str);
                   console.log("Set Cookie 0");
@@ -296,13 +392,12 @@ export default {
                   break;
               }
               this.$counter++;
-            }
-            else{
-                this.$message({
+            } else {
+              this.$message({
                 message: "Error, please try again.",
                 type: "error",
               });
-              window.location.reload()
+              window.location.reload();
             }
           });
       } else {
@@ -338,4 +433,12 @@ export default {
   margin: auto;
   width: 30%;
 }
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409eff;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
+}
 </style>
+
