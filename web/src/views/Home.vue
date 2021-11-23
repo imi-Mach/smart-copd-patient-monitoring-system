@@ -15,7 +15,7 @@
       <el-card class="box-card">
         <h2>Healthcare Provider Portal</h2>
         <p>Healthcare providers, please use the button below to sign in.</p>
-        <p>If you are new to our app, you will need a designated Registration Code ready to register.</p>
+        <p>If you are new to our app, you will need your license number ready to register.</p>
         <Login patient="1"></Login>
       </el-card>
     </el-main>
