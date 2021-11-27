@@ -25,15 +25,32 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+
+/* Check List
+
+- Add new column to session store to sort between patient and healthcare provider sessions
+- Add int when parsing insertData request for the ML calculated risk level
+- Calculate the new risklevel of the patient (patient condition) when inserting new data
+    - Get max of most recent 7 measurements for risk level (daily stat of particular patient)
+    - Updated the database JDBC call for patient table
+- "IF I am a patient, I want to know who my healthcare provider is."
+    - Input: Session ID
+    - Output: Healthcare provider data (firstname, lastname, phone number, email)
+    - Add route for obtaining the healthcare provider data from a patient user id
+    - Updated Database.java to include JDBC for obtaining healthcare provider info
+        - Use patient of to obtain the healthcare provider of patient
+
+
+
+*/
+
+
+
 /**
  * For now, our app creates an HTTP server that can only get and add data.
  */
 public class App {
     public static void main(String[] args) {
-
-        /*Airtable airtable = new Airtable().configure();
-        Base base = airtable.base("keyTtJ1q0C5hWsmeh");
-        */
 
         // gson provides us with a way to turn JSON into objects, and objects
         // into JSON.
@@ -43,6 +60,8 @@ public class App {
         // NB: Gson is thread-safe. See
         // https://stackoverflow.com/questions/10380835/is-it-ok-to-use-gson-instance-as-a-static-field-in-a-model-bean-reuse
         final Gson gson = new Gson();
+
+        // For Google OAuth
         final HttpTransport htrans = new NetHttpTransport();
         final JsonFactory jfac = new GsonFactory();
 
@@ -58,15 +77,13 @@ public class App {
 
         // Get a fully-configured connection to the database, or exit
         // immediatelymvn
+
+        // TODO
         Database db = Database.getDatabase(db_url);
         if (db == null)
             return;
         db.dropTables();
         db.createTables();
-
-        // Machine Learning Component, when the server started, train the model
-        String training = db.runScript("python3 Training.py");
-        System.out.println(training);
 
         // Set up the location for serving static files. If the STATIC_LOCATION
         // environment variable is set, we will serve from it. Otherwise, serve
@@ -133,7 +150,7 @@ public class App {
         });
 
         // Set up a route for login
-        Spark.post("/heathcarelogin", (request, response) -> {
+        Spark.post("/healthcarelogin", (request, response) -> {
 
             GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(htrans, jfac)
                     .setAudience(Collections
@@ -187,7 +204,7 @@ public class App {
 
             int result = db.insertNewPatient(userID, firstName ,lastName, DOB, phoneNumber);
 
-            if(result == 0) {
+            if(result == 0) { 
                 return gson.toJson(new StructuredResponse("error", "insert failed", null));
             }
             return gson.toJson(new StructuredResponse("ok", null, null));
@@ -233,7 +250,7 @@ public class App {
 
         });
 
-
+        // as a patient, check patient info
         Spark.get("/patient/:session_id", (request, response) -> {
 
             String sessionID = request.params("session_id");
@@ -249,7 +266,7 @@ public class App {
 
         });
 
-
+        // as a healthcare p, check patient info
         Spark.get("/patientInfo/:userID", (request, response) -> {
 
             String userID = request.params("userID");
@@ -262,6 +279,7 @@ public class App {
             }
         });
 
+        // as a hcp, insert patient
         Spark.post("/insertPatientOf", (request, response) -> {
 
             JSONParser jsonParser = new JSONParser();
@@ -337,10 +355,15 @@ public class App {
 
         Spark.get("/myData/:session_id", (request,response) -> {
 
+            // parse session key
             String sessionID = request.params("session_id");
 
+            // validate session key, then get user id pertaining to given session key
             String userID = db.getUserID(sessionID);
 
+            // error check if session key is invalid --> userID == Null
+
+            // retrieve array of daily stats for the given user
             Object data = db.getAllDailyStats(userID);
 
             if (data == null) {
