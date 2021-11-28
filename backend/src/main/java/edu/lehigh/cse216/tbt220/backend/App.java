@@ -29,6 +29,7 @@ import java.io.InputStreamReader;
 /* Check List
 
 - Add new column to session store to sort between patient and healthcare provider sessions
+    - Do this last
 - Add int when parsing insertData request for the ML calculated risk level
 - Calculate the new risklevel of the patient (patient condition) when inserting new data
     - Get max of most recent 7 measurements for risk level (daily stat of particular patient)
@@ -39,6 +40,10 @@ import java.io.InputStreamReader;
     - Add route for obtaining the healthcare provider data from a patient user id
     - Updated Database.java to include JDBC for obtaining healthcare provider info
         - Use patient of to obtain the healthcare provider of patient
+- patientCsv route needs to be changed
+- delete "/patientInfo/:userID" route
+- change "/myData/" to have input patient ID and return all patient daily stats from input patient id
+- add route "/healthcareprovider/" it should get the profile information (hcp table data) for the "Profile" button
 
 
 
@@ -232,6 +237,8 @@ public class App {
             return gson.toJson(new StructuredResponse("ok", null, null));
         });
 
+        // Input: session ID (healthcare provider)
+        // Ouput: List of patient ids under given healthcare provider
         Spark.get("/getAllPatients/:session_id", (request, response) ->{
 
             String sessionID = request.params("session_id");
@@ -266,7 +273,8 @@ public class App {
 
         });
 
-        // as a healthcare p, check patient info
+        // get one patient from input healthcare provider id
+        // schdule for delete
         Spark.get("/patientInfo/:userID", (request, response) -> {
 
             String userID = request.params("userID");
