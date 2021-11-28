@@ -29,7 +29,7 @@ import java.io.InputStreamReader;
 /* Check List
 
 
-1. Add int when parsing insertData request for the ML calculated risk level
+1. (Done - not verified) Add int when parsing insertData request for the ML calculated risk level
 2. Calculate the new risklevel of the patient (patient condition) when inserting new data
     - Get max of most recent 7 measurements for risk level (daily stat of particular patient)
     - Updated the database JDBC call for patient table
@@ -345,18 +345,17 @@ public class App {
             float bt =  Float.parseFloat((String) jsonObject.get("bt"));
             float fev1 =  Float.parseFloat((String) jsonObject.get("fev1"));
             float spo2 =  Float.parseFloat((String) jsonObject.get("spo2"));
+            int risklevel = Integer.parseInt((String) jsonObject.get("risklevel"));
 
+            // retrieve user ID from session key (validates session key)
             String userID = db.getUserID(sessionID);
 
-            String userData = q1 + "," + q2 + "," + q3 + "," + q4 + "," + q5 + "," + q6 + "," + q7 + "," + q8 + "," + q9 + "," + q10 + "," + q11 + "," + q12 + "," + bt + "," + fev1 + "," + spo2;
+            // String userData = q1 + "," + q2 + "," + q3 + "," + q4 + "," + q5 + "," + q6 + "," + q7 + "," + q8 + "," + q9 + "," + q10 + "," + q11 + "," + q12 + "," + bt + "," + fev1 + "," + spo2 + "," + risklevel;
 
-            String risk = "Yoo Hello";
-            risk = db.runScript("python3 Classify.py " + userData);
-
-            int riskLevel = Integer.parseInt(risk);  
-            int result = db.insertNewData(userID, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, bt, fev1, spo2, riskLevel);
+            // TODO: add IF statement to check if userID is null (meaning the session key might not be valid)
             
-            System.out.println("Risk output: "+risk);
+            int result = db.insertNewData(userID, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, bt, fev1, spo2, risklevel);
+            
 
             if(result == 0) {
 
