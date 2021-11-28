@@ -30,22 +30,22 @@ import java.io.InputStreamReader;
 
 
 1. (Done - not verified) Add int when parsing insertData request for the ML calculated risk level
-2. Calculate the new risklevel of the patient (patient condition) when inserting new data
+2. (Done - not verified) Calculate the new risklevel of the patient (patient condition) when inserting new data
     - Get max of most recent 7 measurements for risk level (daily stat of particular patient)
     - Updated the database JDBC call for patient table
-3. "IF I am a patient, I want to know who my healthcare provider is."
+3. (Done - not verified) "IF I am a patient, I want to know who my healthcare provider is."
     - Input: Session ID
     - Output: Healthcare provider data (firstname, lastname, phone number, email)
     - Add route for obtaining the healthcare provider data from a patient user id
     - Updated Database.java to include JDBC for obtaining healthcare provider info
         - Use patient of to obtain the healthcare provider of patient
-4. change "/myData/" to have input patient ID and return all patient daily stats from input patient id
+4. (Done - not verified) change "/myData/" to have input patient ID and return all patient daily stats from input patient id
     - consider renaming route to be more descriptive.
-5. add route "/healthcareprovider/" it should get the profile information (hcp table data) for the "Profile" button
+5. (Done - not verified) add route "/healthcareprovider/" it should get the profile information (hcp table data) for the "Profile" button
     - this route is similar to "\patients\"
-6. delete patientCsv route needs to be changed
+6. (Done) delete patientCsv route needs to be changed
     - remove any legacy code from Database.java
-7. delete "/patientInfo/:userID" route
+7. (Done) delete "/patientInfo/:userID" route
     - remove any legacy code from Database.java
 8. Add new column to session store to sort between patient and healthcare provider sessions
     - Do this last
@@ -278,18 +278,20 @@ public class App {
 
         });
 
-        // get one patient from input healthcare provider id
-        // schdule for delete
-        Spark.get("/patientInfo/:userID", (request, response) -> {
+        // as a patient, check patient info
+        Spark.get("/healthcare/:session_id", (request, response) -> {
 
-            String userID = request.params("userID");
+            String sessionID = request.params("session_id");
 
-            Object data = db.getPatient(userID);
+            String userID = db.getUserID(sessionID);
+
+            Object data = db.getHealthcareProfile(userID);
             if (data == null) {
                 return gson.toJson(new StructuredResponse("error", userID + " not found", null));
             } else {
                 return gson.toJson(new StructuredResponse("ok", null, data));
             }
+
         });
 
         // as a hcp, insert patient
@@ -309,18 +311,6 @@ public class App {
             } else {
                 return gson.toJson(new StructuredResponse("ok", null, null));
             }
-        });
-
-
-
-        Spark.get("/patientCSV/:userID", (request, response) -> {
-
-            String userID = request.params("userID");
-
-            db.getPatientCSV(userID);
-
-            return gson.toJson(new StructuredResponse("ok", null, null));
-
         });
 
         Spark.post("/insertData", (request, response) -> {
@@ -362,9 +352,19 @@ public class App {
                 return gson.toJson(new StructuredResponse("error", "insert failed", null));
             }
 
-            return gson.toJson(new StructuredResponse("ok", null, null));
-        });
+            // if insert was successful attempt update on risk level
+            result = db.checkRiskLevel(userID);
 
+            if(result == 0) {
+                return gson.toJson(new StructuredResponse("ok", "no update occured", null));
+            }
+            else if (result > 0) {
+                return gson.toJson(new StructuredResponse("ok", result + " updates occured", null));
+            }
+
+            return gson.toJson(new StructuredResponse("error", "risklevel failed to update", null));
+        });
+        
         Spark.get("/myData/:session_id", (request,response) -> {
 
             // parse session key
@@ -381,6 +381,32 @@ public class App {
             if (data == null) {
 
                 return gson.toJson(new StructuredResponse("error", userID + " not found", null));
+
+            } else {
+
+                return gson.toJson(new StructuredResponse("ok", null, data));
+            }
+        });
+
+        // TODO: should use session store to check HCP id
+        Spark.get("/myData/:patientID", (request,response) -> {
+
+            // parse session key
+            //String sessionID = request.params("session_id");
+
+            // validate session key, then get user id pertaining to given session key
+            //String userID = db.getUserID(sessionID);
+
+            String patientID = request.params("patientID");
+
+            // error check if session key is invalid --> userID == Null
+
+            // retrieve array of daily stats for the given user
+            Object data = db.getAllDailyStats(patientID);
+
+            if (data == null) {
+
+                return gson.toJson(new StructuredResponse("error", patientID + " not found", null));
 
             } else {
 

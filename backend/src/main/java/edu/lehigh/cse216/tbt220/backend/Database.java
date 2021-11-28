@@ -31,6 +31,7 @@ public class Database {
     private PreparedStatement pInsertNewPatient;
     private PreparedStatement pDeletePatient;
     private PreparedStatement pCheckIfPatientExists;
+    private PreparedStatement pCheckRiskLevel;
     
     // Airtable HealthCare Prepared Statements
     private PreparedStatement hCreateTable;
@@ -40,6 +41,7 @@ public class Database {
     private PreparedStatement hDeleteProvider;
     private PreparedStatement hCheckIfProviderExists;
     private PreparedStatement hGetPatientData;
+    private PreparedStatement hGetPatients;
     
     // Airtable LogStats Prepared Statements
     private PreparedStatement lSCreateTable;
@@ -91,15 +93,13 @@ public class Database {
         String hHealthCareID;
         String hFirstName;
         String hLastName;
-        String hWorkLocation;
         String hPhoneNumber;
         String hEmail;
         
-        public HealthCareProvider(String healthCareID, String firstName, String lastName, String workLocation, String phoneNumber, String email) {
+        public HealthCareProvider(String healthCareID, String firstName, String lastName, String phoneNumber, String email) {
             hHealthCareID = healthCareID;
             hFirstName = firstName;
             hLastName = lastName;
-            hWorkLocation = workLocation;
             hPhoneNumber = phoneNumber;
             hEmail = email;
         }
@@ -305,6 +305,7 @@ public class Database {
             db.pDeletePatient = db.mConnection.prepareStatement("DELETE FROM patient WHERE patientID = ?");
             db.pCheckIfPatientExists = db.mConnection.prepareStatement("SELECT * FROM patients WHERE patientID = ?");
             db.pUpdateRiskLevel = db.mConnection.prepareStatement("UPDATE patients SET riskLevel = ? WHERE patientID = ?");
+            db.pCheckRiskLevel = db.mConnection.prepareStatement("UPDATE patients SET riskLevel = (SELECT MAX(riskLevel) FROM (SELECT * FROM patients WHERE patientID = ?) NATRUAL JOIN logStats NATRUAL JOIN dailyStats ORDER BY DT desc LIMIT 7)");
             
             // Airtable Create HealthCare Providers Table
             db.hCreateTable = db.mConnection.prepareStatement(
@@ -323,6 +324,7 @@ public class Database {
             db.hDeleteProvider = db.mConnection.prepareStatement("DELETE FROM healthCareProvider WHERE healthCareID = ?");
             db.hCheckIfProviderExists = db.mConnection.prepareStatement("SELECT * FROM healthCareProvider WHERE healthCareID = ?");
             db.hGetPatientData = db.mConnection.prepareStatement("SELECT * FROM patient natural join patientOf WHERE healthCareID = ?");
+            db.hGetPatients = db.mConnection.prepareStatement("SELECT * FROM (SELECT * FROM patientOf WHERE healthCareID = ?) NATURAL JOIN patients");
                                                                  
             // Airtable Create DailyStats Table
             db.dSCreateTable = db.mConnection.prepareStatement(
@@ -565,35 +567,33 @@ public class Database {
         return null;
     }
 
-    void getPatientCSV(String userID) {
-        try 
-        {
-            dSGetAllStat.setString(1, userID);
-
-            CSVWriter writer = new CSVWriter(new FileWriter(userID+".csv"), '\t');
-
-            ResultSet rs = dSGetAllStat.executeQuery();
-
-            writer.writeAll(rs, true);
-            writer.close();
-
-        } catch (Exception e) {
+    HealthCareProvider getHealthcareProfile(String healthcareID) {
+        try {
+            hGetProvider.setString(1, healthcareID);
+            ResultSet rs = hGetProvider.executeQuery();
+            if (rs.next()) {
+                HealthCareProvider res = new HealthCareProvider(healthcareID, rs.getString("firstName"), rs.getString("lastName"), rs.getString("phoneNumber"), rs.getString("licenseNumber"));
+                return res;
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
-    void updateRiskLevel(String userID, int riskLevel){
+    int checkRiskLevel(String userID){
         int rowUpdate = 0;
         try
         {
-
-            pUpdateRiskLevel.setInt(1, riskLevel);
-            pUpdateRiskLevel.setString(2, userID);
-            rowUpdate += pUpdateRiskLevel.executeUpdate();
+            pCheckRiskLevel.setString(1, userID);
+            rowUpdate += pCheckRiskLevel.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
+            return -1;
         }
+
+        return rowUpdate;
     }
 
 
@@ -668,45 +668,14 @@ public class Database {
             return null;
         }
     }
-    
-    public String runScript(String command) {
-        Process proc;
-        String error = "ERROR";
-        try {
-            // running new process with python file
-            proc = Runtime.getRuntime().exec(command);
-
-            // take input stream of child process, make a stream reader from it, and buffer read the stream
-            BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-
-            String line = null;
-
-            // read a line of the input stream representing the python print
-            line = in.readLine();
-
-            // close buffered reader
-            in.close();
-
-            // wait for python code to execute
-            proc.waitFor();
-
-            // return resulting classficiation (as described in Classify.py)
-            return line;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return error;
-    }
 
     ArrayList<Patient> getPatients(String healthCareID) {
 
         ArrayList<Patient> res = new ArrayList<>();
         try {
-            hGetPatientData.setString(1, healthCareID);
+            hGetPatients.setString(1, healthCareID);
 
-            ResultSet rs = hGetPatientData.executeQuery();
+            ResultSet rs = hGetPatients.executeQuery();
             while (rs.next()) {
                 
                 res.add(new Patient(rs.getString("patientID"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("DOB"), rs.getString("phoneNumber"),rs.getInt("riskLevel")));
@@ -736,7 +705,7 @@ public class Database {
             pInsertNewPatient.setString(3, lastName);
             pInsertNewPatient.setString(4, DOB);
             pInsertNewPatient.setString(5, phoneNumber);
-            pInsertNewPatient.setInt(6, 1);
+            pInsertNewPatient.setInt(6, 0);
 
             rowUpdate += pInsertNewPatient.executeUpdate();
         } catch (SQLException ex) {
