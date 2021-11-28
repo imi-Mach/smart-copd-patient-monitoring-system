@@ -19,7 +19,6 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/com/google/http-client/google-http-client-gson/1.34.2/google-http-client-gson-1.34.2.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/google/http-client/google-http-client/1.34.2/google-http-client-1.34.2.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/httpcomponents/httpclient/4.5.11/httpclient-4.5.11.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/commons-logging/commons-logging/1.2/commons-logging-1.2.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/commons-codec/commons-codec/1.11/commons-codec-1.11.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/httpcomponents/httpcore/4.4.13/httpcore-4.4.13.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar" enabled="true" runInBatchMode="false"/>
@@ -34,7 +33,6 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.10.1/jackson-annotations-2.10.1.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/commons/commons-compress/1.19/commons-compress-1.19.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/commons-io/commons-io/2.6/commons-io-2.6.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/commons/commons-text/1.6/commons-text-1.6.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/jgit/org.eclipse.jgit/4.11.7.201903122105-r/org.eclipse.jgit-4.11.7.201903122105-r.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/jcraft/jsch/0.1.54/jsch-0.1.54.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/jcraft/jzlib/1.1.1/jzlib-1.1.1.jar" enabled="true" runInBatchMode="false"/>
@@ -69,7 +67,6 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/codehaus/plexus/plexus-component-annotations/1.7.1/plexus-component-annotations-1.7.1.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/sonatype/plexus/plexus-sec-dispatcher/1.4/plexus-sec-dispatcher-1.4.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/sonatype/plexus/plexus-cipher/1.4/plexus-cipher-1.4.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/commons/commons-lang3/3.5/commons-lang3-3.5.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/maven/maven-artifact/3.5.0/maven-artifact-3.5.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/maven/plugins/maven-dependency-plugin/3.0.2/maven-dependency-plugin-3.0.2.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/maven/reporting/maven-reporting-api/3.0/maven-reporting-api-3.0.jar" enabled="true" runInBatchMode="false"/>
@@ -78,7 +75,6 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/xerces/xercesImpl/2.9.1/xercesImpl-2.9.1.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/commons-validator/commons-validator/1.3.1/commons-validator-1.3.1.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/commons-digester/commons-digester/1.6/commons-digester-1.6.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/maven/doxia/doxia-sink-api/1.4/doxia-sink-api-1.4.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/maven/doxia/doxia-logging-api/1.4/doxia-logging-api-1.4.jar" enabled="true" runInBatchMode="false"/>
@@ -131,4 +127,11 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/checkerframework/checker-compat-qual/2.5.5/checker-compat-qual-2.5.5.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/google/errorprone/error_prone_annotations/2.3.4/error_prone_annotations-2.3.4.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/androidx/annotation/annotation/1.1.0/annotation-1.1.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/json/json/20180813/json-20180813.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/com/opencsv/opencsv/4.1/opencsv-4.1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/commons/commons-lang3/3.6/commons-lang3-3.6.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/commons/commons-text/1.1/commons-text-1.1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/commons-beanutils/commons-beanutils/1.9.3/commons-beanutils-1.9.3.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/commons-logging/commons-logging/1.2/commons-logging-1.2.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>

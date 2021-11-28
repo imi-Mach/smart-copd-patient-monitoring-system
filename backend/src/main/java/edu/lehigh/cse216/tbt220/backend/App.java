@@ -28,22 +28,27 @@ import java.io.InputStreamReader;
 
 /* Check List
 
-- Add new column to session store to sort between patient and healthcare provider sessions
-    - Do this last
-- Add int when parsing insertData request for the ML calculated risk level
-- Calculate the new risklevel of the patient (patient condition) when inserting new data
+
+1. Add int when parsing insertData request for the ML calculated risk level
+2. Calculate the new risklevel of the patient (patient condition) when inserting new data
     - Get max of most recent 7 measurements for risk level (daily stat of particular patient)
     - Updated the database JDBC call for patient table
-- "IF I am a patient, I want to know who my healthcare provider is."
+3. "IF I am a patient, I want to know who my healthcare provider is."
     - Input: Session ID
     - Output: Healthcare provider data (firstname, lastname, phone number, email)
     - Add route for obtaining the healthcare provider data from a patient user id
     - Updated Database.java to include JDBC for obtaining healthcare provider info
         - Use patient of to obtain the healthcare provider of patient
-- patientCsv route needs to be changed
-- delete "/patientInfo/:userID" route
-- change "/myData/" to have input patient ID and return all patient daily stats from input patient id
-- add route "/healthcareprovider/" it should get the profile information (hcp table data) for the "Profile" button
+4. change "/myData/" to have input patient ID and return all patient daily stats from input patient id
+    - consider renaming route to be more descriptive.
+5. add route "/healthcareprovider/" it should get the profile information (hcp table data) for the "Profile" button
+    - this route is similar to "\patients\"
+6. delete patientCsv route needs to be changed
+    - remove any legacy code from Database.java
+7. delete "/patientInfo/:userID" route
+    - remove any legacy code from Database.java
+8. Add new column to session store to sort between patient and healthcare provider sessions
+    - Do this last
 
 
 
