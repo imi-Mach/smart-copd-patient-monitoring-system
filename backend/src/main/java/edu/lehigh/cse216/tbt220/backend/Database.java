@@ -295,7 +295,7 @@ public class Database {
                 "lastName VARCHAR not null," +
                 "DOB VARCHAR not null," +
                 "phoneNumber VARCHAR not null," +
-                "riskLevel int check(riskLevel > 0));"
+                "riskLevel int );"
             );
             
             //Patient table
@@ -305,7 +305,7 @@ public class Database {
             db.pDeletePatient = db.mConnection.prepareStatement("DELETE FROM patient WHERE patientID = ?");
             db.pCheckIfPatientExists = db.mConnection.prepareStatement("SELECT * FROM patients WHERE patientID = ?");
             db.pUpdateRiskLevel = db.mConnection.prepareStatement("UPDATE patients SET riskLevel = ? WHERE patientID = ?");
-            db.pCheckRiskLevel = db.mConnection.prepareStatement("UPDATE patients SET riskLevel = (SELECT MAX(riskLevel) FROM (SELECT * FROM patients WHERE patientID = ?) NATRUAL JOIN logStats NATRUAL JOIN dailyStats ORDER BY DT desc LIMIT 7)");
+            db.pCheckRiskLevel = db.mConnection.prepareStatement("update patients set risklevel = (select max(risklevel) from (select * from dailystats natural join logstats where patientid = ? order by dt desc limit 7) as recentdata) where patientid = ?");
             
             // Airtable Create HealthCare Providers Table
             db.hCreateTable = db.mConnection.prepareStatement(
@@ -319,7 +319,7 @@ public class Database {
             
             //HealthCare Provider Table
             db.hDropTable = db.mConnection.prepareStatement("DROP TABLE healthCareProvider");
-            db.hGetProvider = db.mConnection.prepareStatement("SELECT * FROM healthCareProvider where healthCareID = ?");
+            db.hGetProvider = db.mConnection.prepareStatement("select * from patientof natural join healthcareprovider where patientid = ?");
             db.hInsertProvider = db.mConnection.prepareStatement("INSERT INTO healthCareProvider VALUES(?,?,?,?,?)");
             db.hDeleteProvider = db.mConnection.prepareStatement("DELETE FROM healthCareProvider WHERE healthCareID = ?");
             db.hCheckIfProviderExists = db.mConnection.prepareStatement("SELECT * FROM healthCareProvider WHERE healthCareID = ?");
@@ -345,15 +345,15 @@ public class Database {
                 "bt float," +
                 "fev1 float," +
                 "spo2 float," +
-                "DT DATE," +
-                "riskLevel int check(riskLevel > 0));"
+                "DT TIMESTAMP," +
+                "riskLevel int);"
             );
             
             //DailyStats table
             db.dSDropTable = db.mConnection.prepareStatement("DROP TABLE dailyStats");
             db.dSGetStat = db.mConnection.prepareStatement("SELECT * FROM dailyStats where dailyStatID = ?");
             db.dSGetAllStat = db.mConnection.prepareStatement("SELECT * FROM dailyStats DS, patients P, logStats LS where DS.dailyStatID = LS.dailyStatID AND P.patientID = LS.patientID AND P.patientID = ?");
-            db.dSInsertNewStat = db.mConnection.prepareStatement("INSERT INTO dailyStats VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); INSERT INTO logStats VALUES(?,?)");
+            db.dSInsertNewStat = db.mConnection.prepareStatement("INSERT INTO dailyStats VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?); INSERT INTO logStats VALUES(?,?)");
             db.dSDeleteStat = db.mConnection.prepareStatement("DELETE FROM logStats WHERE dailyStatID = ?; DELETE FROM dailyStats WHERE dailyStatID = ?");
             db.dSCheckIfStatExists = db.mConnection.prepareStatement("SELECT dailyStatID FROM dailyStats WHERE dailyStatID = ?");
             
@@ -567,12 +567,12 @@ public class Database {
         return null;
     }
 
-    HealthCareProvider getHealthcareProfile(String healthcareID) {
+    HealthCareProvider getHealthcareProfile(String patientID) {
         try {
-            hGetProvider.setString(1, healthcareID);
+            hGetProvider.setString(1, patientID);
             ResultSet rs = hGetProvider.executeQuery();
             if (rs.next()) {
-                HealthCareProvider res = new HealthCareProvider(healthcareID, rs.getString("firstName"), rs.getString("lastName"), rs.getString("phoneNumber"), rs.getString("licenseNumber"));
+                HealthCareProvider res = new HealthCareProvider(rs.getString("healthcareID"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("phoneNumber"), rs.getString("licenseNumber"));
                 return res;
             }
         } catch (SQLException e) {
@@ -586,6 +586,7 @@ public class Database {
         try
         {
             pCheckRiskLevel.setString(1, userID);
+            pCheckRiskLevel.setString(2, userID);
             rowUpdate += pCheckRiskLevel.executeUpdate();
 
         } catch (Exception e) {
@@ -632,10 +633,9 @@ public class Database {
             dSInsertNewStat.setFloat(14,bt);
             dSInsertNewStat.setFloat(15,fev1);
             dSInsertNewStat.setFloat(16,spo2);
-            dSInsertNewStat.setString(17,java.time.LocalDate.now().toString());
-            dSInsertNewStat.setInt(18,riskLevel);
-            dSInsertNewStat.setString(19,userID);
-            dSInsertNewStat.setString(20,generatedString);
+            dSInsertNewStat.setInt(17,riskLevel);
+            dSInsertNewStat.setString(18,userID);
+            dSInsertNewStat.setString(19,generatedString);
 
             rowUpdate += dSInsertNewStat.executeUpdate();
         } catch (SQLException e) {
@@ -705,7 +705,7 @@ public class Database {
             pInsertNewPatient.setString(3, lastName);
             pInsertNewPatient.setString(4, DOB);
             pInsertNewPatient.setString(5, phoneNumber);
-            pInsertNewPatient.setInt(6, 0);
+            pInsertNewPatient.setInt(6, -1);
 
             rowUpdate += pInsertNewPatient.executeUpdate();
         } catch (SQLException ex) {
@@ -721,7 +721,7 @@ public class Database {
             
             pOInsertNewPatientOf.setString(1,userID);
             pOInsertNewPatientOf.setString(2,patientID);
-            rowUpdate += pInsertNewPatient.executeUpdate();
+            rowUpdate += pOInsertNewPatientOf.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -739,7 +739,7 @@ public class Database {
             hInsertProvider.setString(4, phoneNumber);
             hInsertProvider.setString(5, licenseNumber);
 
-            rowUpdate += pInsertNewPatient.executeUpdate();
+            rowUpdate += hInsertProvider.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

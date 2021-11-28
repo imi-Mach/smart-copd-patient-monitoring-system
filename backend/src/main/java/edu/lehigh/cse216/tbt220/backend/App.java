@@ -29,8 +29,8 @@ import java.io.InputStreamReader;
 /* Check List
 
 
-1. (Done - not verified) Add int when parsing insertData request for the ML calculated risk level
-2. (Done - not verified) Calculate the new risklevel of the patient (patient condition) when inserting new data
+1. (Done - verified) Add int when parsing insertData request for the ML calculated risk level
+2. (Done - verified) Calculate the new risklevel of the patient (patient condition) when inserting new data
     - Get max of most recent 7 measurements for risk level (daily stat of particular patient)
     - Updated the database JDBC call for patient table
 3. (Done - not verified) "IF I am a patient, I want to know who my healthcare provider is."
@@ -92,8 +92,8 @@ public class App {
         Database db = Database.getDatabase(db_url);
         if (db == null)
             return;
-        db.dropTables();
-        db.createTables();
+        // db.dropTables();
+        // db.createTables();
 
         // Set up the location for serving static files. If the STATIC_LOCATION
         // environment variable is set, we will serve from it. Otherwise, serve
@@ -129,6 +129,7 @@ public class App {
                     .build();
 
             // (Receive idTokenString by HTTPS POST)
+            System.out.println(request);
             String idTokenString = gson.fromJson(request.body(), String.class);
             System.out.println(idTokenString);
             System.out.println(request.body());
@@ -278,7 +279,7 @@ public class App {
 
         });
 
-        // as a patient, check patient info
+        // as a patient, check hcp info
         Spark.get("/healthcare/:session_id", (request, response) -> {
 
             String sessionID = request.params("session_id");
@@ -389,7 +390,7 @@ public class App {
         });
 
         // TODO: should use session store to check HCP id
-        Spark.get("/myData/:patientID", (request,response) -> {
+        Spark.get("/myPatientData/:patientID", (request,response) -> {
 
             // parse session key
             //String sessionID = request.params("session_id");
