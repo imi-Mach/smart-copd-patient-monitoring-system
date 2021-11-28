@@ -414,23 +414,6 @@ public class App {
             }
         });
 
-        Spark.put("/updateRiskLevel", (request, response) ->{
-
-            JSONParser jsonParser = new JSONParser();
-
-            JSONObject jsonObject = (JSONObject) jsonParser.parse(request.body());
-            
-            String sessionID = (String) jsonObject.get("sessionID");
-            int riskLevel =  Integer.parseInt((String) jsonObject.get("riskLevel"));
-
-            String userID = db.getUserID(sessionID);
-
-            db.updateRiskLevel(userID, riskLevel);
-
-            return gson.toJson(new StructuredResponse("ok", null, null));
-
-        });
-
         Spark.delete("/deletePatient/:userID",(request, response) ->{
 
             String userID = request.params("userID");
