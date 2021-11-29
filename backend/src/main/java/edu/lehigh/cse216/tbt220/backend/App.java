@@ -20,45 +20,16 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-// For ML
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 
 /* Check List
 
-
-1. (Done - verified) Add int when parsing insertData request for the ML calculated risk level
-2. (Done - verified) Calculate the new risklevel of the patient (patient condition) when inserting new data
-    - Get max of most recent 7 measurements for risk level (daily stat of particular patient)
-    - Updated the database JDBC call for patient table
-3. (Done - not verified) "IF I am a patient, I want to know who my healthcare provider is."
-    - Input: Session ID
-    - Output: Healthcare provider data (firstname, lastname, phone number, email)
-    - Add route for obtaining the healthcare provider data from a patient user id
-    - Updated Database.java to include JDBC for obtaining healthcare provider info
-        - Use patient of to obtain the healthcare provider of patient
-4. (Done - not verified) change "/myData/" to have input patient ID and return all patient daily stats from input patient id
-    - consider renaming route to be more descriptive.
-5. (Done - not verified) add route "/healthcareprovider/" it should get the profile information (hcp table data) for the "Profile" button
-    - this route is similar to "\patients\"
-6. (Done) delete patientCsv route needs to be changed
-    - remove any legacy code from Database.java
-7. (Done) delete "/patientInfo/:userID" route
-    - remove any legacy code from Database.java
-8. Add new column to session store to sort between patient and healthcare provider sessions
+1. Add new column to session store to sort between patient and healthcare provider sessions
     - Do this last
 
 
 
 */
 
-
-
-/**
- * For now, our app creates an HTTP server that can only get and add data.
- */
 public class App {
     public static void main(String[] args) {
 
@@ -88,10 +59,10 @@ public class App {
         // Get a fully-configured connection to the database, or exit
         // immediatelymvn
 
-        // TODO
         Database db = Database.getDatabase(db_url);
         if (db == null)
             return;
+
         // db.dropTables();
         // db.createTables();
 
@@ -120,7 +91,30 @@ public class App {
             return "";
         });
 
-        // Set up a route for login
+        /**
+         * Route for logging in patients by verifying the incoming Google ID token
+         * and responding to front end if the user is regisitered or not.
+         * 
+         * Input Request:
+         *      params:
+         *          None
+         *      request body:
+         *          Google ID Token: a raw text string (e.g "ey239fds...")
+         * 
+         * Output Response:
+         *      status:
+         *          "ok" if valid google email, "error" if internal error
+         *      sessionID:
+         *          Session key is generated and returned if successful login, otherwise null
+         *      exists:
+         *          "true" if returning patient, "false" for non-registered patient, null if failed login
+         *      message:
+         *          if an error occured, then a message notification. Otherwise, null
+         *      data:
+         *          null
+         * 
+         * @returns The best answer we could come up with for a value for envar
+         */
         Spark.post("/login", (request, response) -> {
 
             GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(htrans, jfac)
