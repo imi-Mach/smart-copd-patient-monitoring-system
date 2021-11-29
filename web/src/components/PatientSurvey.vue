@@ -221,7 +221,7 @@ export default {
         this.disableinput = false;
         this.respiSelected = false;
       } else if (command == "b") {
-        this.dropdownContent = "Res Pi V1";
+        this.dropdownContent = "Ras Pi";
         this.disableinput = true;
         this.respiSelected = true;
       }
