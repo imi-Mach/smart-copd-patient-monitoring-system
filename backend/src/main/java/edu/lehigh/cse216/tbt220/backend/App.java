@@ -91,7 +91,7 @@ public class App {
             return "";
         });
 
-        /**
+        /*
          * Route for logging in patients by verifying the incoming Google ID token
          * and responding to front end if the user is regisitered or not.
          * 
@@ -113,7 +113,7 @@ public class App {
          *      data:
          *          null
          * 
-         * @returns The best answer we could come up with for a value for envar
+         * @returns JSON Response
          */
         Spark.post("/login", (request, response) -> {
 
@@ -154,7 +154,30 @@ public class App {
 
         });
 
-        // Set up a route for login
+        /*
+         * Route for logging in healthcare providers by verifying the incoming 
+         * Google ID token and responding to front end if the user is regisitered or not.
+         * 
+         * Input Request:
+         *      params:
+         *          None
+         *      request body:
+         *          Google ID Token: a raw text string (e.g "ey239fds...")
+         * 
+         * Output Response:
+         *      status:
+         *          "ok" if valid google email, "error" if internal error
+         *      sessionID:
+         *          Session key is generated and returned if successful login, otherwise null
+         *      exists:
+         *          "true" if returning patient, "false" for non-registered HCP, null if failed login
+         *      message:
+         *          if an error occured, then a message notification. Otherwise, null
+         *      data:
+         *          null
+         * 
+         * @returns JSON Response
+         */
         Spark.post("/healthcarelogin", (request, response) -> {
 
             GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(htrans, jfac)
@@ -193,6 +216,35 @@ public class App {
 
         });
 
+        /*
+         * Route for registering patients by checking first if the patient has a 
+         * valid session key, then attempts to insert patient profile data into 
+         * database system.
+         * 
+         * Input Request:
+         *      params:
+         *          None
+         *      request body:
+         *          sessionID:   random string for authorized access (patient)
+         *          firstName:   string for patient's first name
+         *          lastName:    string for patient's last name
+         *          DOB:         date format for patient date of birth
+         *          phoneNumber: string of integers
+         * 
+         * Output Response:
+         *      status:
+         *          "ok" if patient was registered, "error" if internal error
+         *      sessionID:
+         *          null
+         *      exists:
+         *          null
+         *      message:
+         *          if an error occured, then a message notification. Otherwise, null
+         *      data:
+         *          null
+         * 
+         * @returns JSON Response
+         */
         Spark.post("/register", (request, response) -> {
 
             JSONParser jsonParser = new JSONParser();
@@ -215,6 +267,35 @@ public class App {
             return gson.toJson(new StructuredResponse("ok", null, null));
         });
 
+        /*
+         * Route for registering healthcare providers by checking first if the HCP has a 
+         * valid session key, then attempts to insert HCP profile data into 
+         * database system.
+         * 
+         * Input Request:
+         *      params:
+         *          None
+         *      request body:
+         *          sessionID:     random string for authorized access (HCP)
+         *          firstName:     string for HCP's first name
+         *          lastName:      string for HCP's last name
+         *          licenseNumber: string of integers
+         *          phoneNumber:   string of integers
+         * 
+         * Output Response:
+         *      status:
+         *          "ok" if HCP was registered, "error" if internal error
+         *      sessionID:
+         *          null
+         *      exists:
+         *          null
+         *      message:
+         *          if an error occured, then a message notification. Otherwise, null
+         *      data:
+         *          null
+         * 
+         * @returns JSON Response
+         */
         Spark.post("/healthcareregister", (request, response) -> {
 
             JSONParser jsonParser = new JSONParser();
@@ -237,8 +318,29 @@ public class App {
             return gson.toJson(new StructuredResponse("ok", null, null));
         });
 
-        // Input: session ID (healthcare provider)
-        // Ouput: List of patient ids under given healthcare provider
+        /*
+         * Route for valid HCP to obtain all of their patients' profiles.
+         * 
+         * Input Request:
+         *      params:
+         *          session_id: random string for authorized access (HCP)
+         *      request body:
+         *          None
+         * 
+         * Output Response:
+         *      status:
+         *          "ok" if the patients' profile data was obtain, "error" if HCP could not be resolved
+         *      sessionID:
+         *          null
+         *      exists:
+         *          null
+         *      message:
+         *          if an error occured, then a message notification. Otherwise, null
+         *      data:
+         *          if HCP exists, then any data on their patients' profiles. Otherwise, null
+         * 
+         * @returns JSON Response
+         */
         Spark.get("/getAllPatients/:session_id", (request, response) ->{
 
             String sessionID = request.params("session_id");
@@ -257,7 +359,30 @@ public class App {
 
         });
 
-        // as a patient, check patient info
+        /*
+         * Route to get patients profile information (mainly for when 
+         * a patient logs in after being registerd).
+         * 
+         * Input Request:
+         *      params:
+         *          session_id: random string for authorized access (patient)
+         *      request body:
+         *          None
+         * 
+         * Output Response:
+         *      status:
+         *          "ok" if the patient's profile data was obtained, "error" if patient could not be resolved
+         *      sessionID:
+         *          null
+         *      exists:
+         *          null
+         *      message:
+         *          if an error occured, then a message notification. Otherwise, null
+         *      data:
+         *          if patient exists, then data on their profile. Otherwise, null
+         * 
+         * @returns JSON Response
+         */
         Spark.get("/patient/:session_id", (request, response) -> {
 
             String sessionID = request.params("session_id");
@@ -273,7 +398,30 @@ public class App {
 
         });
 
-        // as a patient, check hcp info
+        /*
+         * Route to get HCP profile information (mainly for when 
+         * a HCP logs in after being registerd).
+         * 
+         * Input Request:
+         *      params:
+         *          session_id: random string for authorized access (HCP)
+         *      request body:
+         *          None
+         * 
+         * Output Response:
+         *      status:
+         *          "ok" if the HCP's profile data was obtained, "error" if session could not be resolved
+         *      sessionID:
+         *          null
+         *      exists:
+         *          null
+         *      message:
+         *          if an error occured, then a message notification. Otherwise, null
+         *      data:
+         *          if session exists, then data on their profile. Otherwise, null
+         * 
+         * @returns JSON Response
+         */
         Spark.get("/healthcare/:session_id", (request, response) -> {
 
             String sessionID = request.params("session_id");
