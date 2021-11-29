@@ -1,0 +1,293 @@
+{
+	"info": {
+		"_postman_id": "ce9d3ab0-1a99-45a3-8d61-f95e5ef226c0",
+		"name": "COPD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://smart-copd-patient.herokuapp.com/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQ0ZTA2Y2ViMjJiMDFiZTU2YzIxM2M5ODU0MGFiNTYzYmZmNWE1OGMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMzkxMzY0NjEwOTMzLWVmazdzMG41M2h2MDY3cDI1djMxZG92dTlkMjM2dnA3LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMzkxMzY0NjEwOTMzLWVmazdzMG41M2h2MDY3cDI1djMxZG92dTlkMjM2dnA3LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTA4MjA3MDUwODU0MTEwMTc3MDI3IiwiZW1haWwiOiJzbWFydGNvcGRAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiI5QTF4M29mSF9GM3QzYzdiVHR6ZTd3IiwibmFtZSI6IkJyaWFuIFNueWRlciIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQVRYQUp6QktBd25xRVFDMU5RQXRYYXlHS3JUUGtyOEcxcnJDOHBsMXpGaT1zOTYtYyIsImdpdmVuX25hbWUiOiJCcmlhbiIsImZhbWlseV9uYW1lIjoiU255ZGVyIiwibG9jYWxlIjoiZW4iLCJpYXQiOjE2MzgxMzgzNzEsImV4cCI6MTYzODE0MTk3MSwianRpIjoiMzQ4ZGQ2ZmFlZjYzN2NkZjE2OWNjYzczOWMwZDgwZjI3ZGZiZDZkOSJ9.NzRoBLuHfvXEfYSNsw0097MqCuU1mXEy1oJFsAwJqU1KolDKe-b-x9iNH8CCW9Z-8FDc-NosdYDq_hi6t6d5N2VYvrn7qJE4uX3lS5QrMEJLCdXI6UU11pNFroCYMGyeLHw2FXe9olw7xGSjaIaG11RqPLYn653mDS-_fMu7MVN4q5gwgl1wMmoFo43E2KN_P8I7uJhBy0trcMGsBOIAg0rJ_7Wm00wSIWyyv97pk7xLgjfYMiyqAfde2XkXOnYv_y2b5e0dq1g1k0twseGF1e-UJv_g6VS_dGrzzBAJLGME0SWP7OZAY7wTvbHk4Q2SL0doB_gQSgu2PCMbGKKrIQ\"",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://smart-copd-patient.herokuapp.com/login",
+					"protocol": "https",
+					"host": [
+						"smart-copd-patient",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://smart-copd-patient.herokuapp.com/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sessionID\": \"omW37aJEZt3rM__MZk_DupWcMjs\",\r\n    \"firstName\": \"Thomas\",\r\n    \"lastName\": \"Max\",\r\n    \"DOB\": \"11/11/2000\",\r\n    \"phoneNumber\": \"1231231234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://smart-copd-patient.herokuapp.com/register",
+					"protocol": "https",
+					"host": [
+						"smart-copd-patient",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://smart-copd-patient.herokuapp.com/insertData",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sessionID\": \"omW37aJEZt3rM__MZk_DupWcMjs\",\r\n    \"q1\": \"0\",\r\n    \"q2\": \"1\",\r\n    \"q3\": \"0\",\r\n    \"q4\": \"1\",\r\n    \"q5\": \"0\",\r\n    \"q6\": \"1\",\r\n    \"q7\": \"1\",\r\n    \"q8\": \"0\",\r\n    \"q9\": \"0\",\r\n    \"q10\": \"0\",\r\n    \"q11\": \"0\",\r\n    \"q12\": \"0\",\r\n    \"bt\": \"36.8\",\r\n    \"fev1\": \"85\",\r\n    \"spo2\": \"99\",\r\n    \"risklevel\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://smart-copd-patient.herokuapp.com/insertData",
+					"protocol": "https",
+					"host": [
+						"smart-copd-patient",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"insertData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://smart-copd-patient.herokuapp.com/myData/:session_id\n",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\"xpUIEwomQoVk3AzFy60bJP6Zelo\""
+				},
+				"url": {
+					"raw": "https://smart-copd-patient.herokuapp.com/myData/:session_id\n",
+					"protocol": "https",
+					"host": [
+						"smart-copd-patient",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"myData",
+						":session_id\n"
+					],
+					"variable": [
+						{
+							"key": "session_id\n",
+							"value": "omW37aJEZt3rM__MZk_DupWcMjs"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://smart-copd-patient.herokuapp.com/healthcarelogin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQ0ZTA2Y2ViMjJiMDFiZTU2YzIxM2M5ODU0MGFiNTYzYmZmNWE1OGMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMzkxMzY0NjEwOTMzLWVmazdzMG41M2h2MDY3cDI1djMxZG92dTlkMjM2dnA3LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMzkxMzY0NjEwOTMzLWVmazdzMG41M2h2MDY3cDI1djMxZG92dTlkMjM2dnA3LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTEwNjg1NDQwNzI5MTA3NjEzNTQ0IiwiZW1haWwiOiJ0aG94bGl1QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoicUh1WDEtbGotclk1RklGdWNHRXNNdyIsIm5hbWUiOiJYaWFuZ3poaSBMaXUiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUFUWEFKeXBSb0R4MnpPcU9pT2w3bGhvLW9Yd0hOVWg0VkdIWDlCWTk3bnA9czk2LWMiLCJnaXZlbl9uYW1lIjoiWGlhbmd6aGkiLCJmYW1pbHlfbmFtZSI6IkxpdSIsImxvY2FsZSI6ImVuIiwiaWF0IjoxNjM4MTM4NTgwLCJleHAiOjE2MzgxNDIxODAsImp0aSI6IjIyYTJjYWZhZTZiZjY5NjNkOTI5NTAxZDBhNTgzMWNlMGMyYzMxZDAifQ.HwgLsWXeMIQi7y6CydSHUpBCzIXAmMTxOIAuvzaa08kNDXT3ZKqXZdGlNvCp0hhUmcgT05k4Q8xNl0H_0OB6l9V93lKFhIWsRfk2nw1r3Gz8rLGS5Hba1yeOsaRcnKTrZ_XPz06gotGOnYsyLlHkfNOy8L5rZj4LoGWpPvhIqAqvrB1IOZukIJghbVR8Wy2cbuDurd0oDdyMbfJa4Fb1SxgVm725tspd3Ts5326Wubr_7WFAyloAbqj4txM3j-jcPoRInM8i7Kqve9vsYcSIpFPV8oy2LEvzsfgsI-fuY6nGUQPUxdHLFJgObJFSHfdNncJBDXI9uYH7LbIRMft-1w\""
+				},
+				"url": {
+					"raw": "https://smart-copd-patient.herokuapp.com/healthcarelogin",
+					"protocol": "https",
+					"host": [
+						"smart-copd-patient",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"healthcarelogin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://smart-copd-patient.herokuapp.com/healthcareregister",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sessionID\": \"EPwUBqy3j9NSEUXFuENLBUk10vM\",\r\n    \"firstName\": \"DR Thomas\",\r\n    \"lastName\": \"Max\",\r\n    \"licenseNumber\": \"123123213\",\r\n    \"phoneNumber\": \"1231231234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://smart-copd-patient.herokuapp.com/healthcareregister",
+					"protocol": "https",
+					"host": [
+						"smart-copd-patient",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"healthcareregister"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://smart-copd-patient.herokuapp.com/insertPatientOf",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"patientEmail\":\"xil322@lehigh.edu\",\r\n    \"sessionID\":\"EPwUBqy3j9NSEUXFuENLBUk10vM\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://smart-copd-patient.herokuapp.com/insertPatientOf",
+					"protocol": "https",
+					"host": [
+						"smart-copd-patient",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"insertPatientOf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://smart-copd-patient.herokuapp.com/deletePatient/:userID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://smart-copd-patient.herokuapp.com/deletePatient/:userID",
+					"protocol": "https",
+					"host": [
+						"smart-copd-patient",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"deletePatient",
+						":userID"
+					],
+					"variable": [
+						{
+							"key": "userID",
+							"value": "xil322@lehigh.edu"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://smart-copd-patient.herokuapp.com/healthcare/:session_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://smart-copd-patient.herokuapp.com/healthcare/:session_id",
+					"protocol": "https",
+					"host": [
+						"smart-copd-patient",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"healthcare",
+						":session_id"
+					],
+					"variable": [
+						{
+							"key": "session_id",
+							"value": "7jojmFmpqeQdEjf7z671_WJt-R4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://smart-copd-patient.herokuapp.com/myPatientData/:patientID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://smart-copd-patient.herokuapp.com/myPatientData/:patientID",
+					"protocol": "https",
+					"host": [
+						"smart-copd-patient",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"myPatientData",
+						":patientID"
+					],
+					"variable": [
+						{
+							"key": "patientID",
+							"value": "xil322@lehigh.edu"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
