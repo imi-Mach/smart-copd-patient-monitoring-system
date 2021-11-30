@@ -190,7 +190,7 @@ export default {
     padding-bottom: 10px;
   }
   .box-card {
-    width: 30em;
+    width: 25em;
     height: 250px;
     float: "center";
     text-align: "center";

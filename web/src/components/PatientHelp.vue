@@ -53,9 +53,9 @@ export default {
   data() {
     return {
       res: {
-        name: "Yaniv Dotan",
-        phoneNumber: "2673091066",
-        email: "ydotan@temple.edu",
+        name: "",
+        phoneNumber: "",
+        email: "",
       },
       tel: "tel:",
       mailto:"mailto:",
