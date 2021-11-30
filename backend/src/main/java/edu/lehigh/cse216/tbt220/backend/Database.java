@@ -42,6 +42,7 @@ public class Database {
     private PreparedStatement hCheckIfProviderExists;
     private PreparedStatement hGetPatientData;
     private PreparedStatement hGetPatients;
+    private PreparedStatement hGetProfile;
     
     // Airtable LogStats Prepared Statements
     private PreparedStatement lSCreateTable;
@@ -319,6 +320,7 @@ public class Database {
             
             //HealthCare Provider Table
             db.hDropTable = db.mConnection.prepareStatement("DROP TABLE healthCareProvider");
+            db.hGetProfile = db.mConnection.prepareStatement("SELECT * from healthCareProvider WHERE healthCareID = ?");
             db.hGetProvider = db.mConnection.prepareStatement("select * from patientof natural join healthcareprovider where patientid = ?");
             db.hInsertProvider = db.mConnection.prepareStatement("INSERT INTO healthCareProvider VALUES(?,?,?,?,?)");
             db.hDeleteProvider = db.mConnection.prepareStatement("DELETE FROM healthCareProvider WHERE healthCareID = ?");
@@ -559,6 +561,21 @@ public class Database {
             ResultSet rs = pGetPatient.executeQuery();
             if (rs.next()) {
                 Patient res = new Patient(userID, rs.getString("firstName"), rs.getString("lastName"), rs.getString("DOB"), rs.getString("phoneNumber"),rs.getInt("riskLevel"));
+                return res;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //hGetProfile
+    HealthCareProvider hGetProfile(String healthCareID) {
+        try {
+            hGetProfile.setString(1, healthCareID);
+            ResultSet rs = hGetProfile.executeQuery();
+            if (rs.next()) {
+                HealthCareProvider res = new HealthCareProvider(rs.getString("healthcareID"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("phoneNumber"), rs.getString("licenseNumber"));
                 return res;
             }
         } catch (SQLException e) {

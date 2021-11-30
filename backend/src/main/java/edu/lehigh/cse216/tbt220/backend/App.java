@@ -398,6 +398,21 @@ public class App {
 
         });
 
+        Spark.get("/healthcareProfile/:session_id", (request, response) -> {
+
+            String sessionID = request.params("session_id");
+
+            String healthCareID = db.getUserID(sessionID);
+
+            Object data = db.hGetProfile(healthCareID);
+            if (data == null) {
+                return gson.toJson(new StructuredResponse("error", healthCareID + " not found", null));
+            } else {
+                return gson.toJson(new StructuredResponse("ok", null, data));
+            }
+
+        });
+
         /*
          * Route to get HCP profile information (mainly for when 
          * a HCP logs in after being registerd).
@@ -426,11 +441,11 @@ public class App {
 
             String sessionID = request.params("session_id");
 
-            String userID = db.getUserID(sessionID);
+            String patientID = db.getUserID(sessionID);
 
-            Object data = db.getHealthcareProfile(userID);
+            Object data = db.getHealthcareProfile(patientID);
             if (data == null) {
-                return gson.toJson(new StructuredResponse("error", userID + " not found", null));
+                return gson.toJson(new StructuredResponse("error", patientID + " not found", null));
             } else {
                 return gson.toJson(new StructuredResponse("ok", null, data));
             }
