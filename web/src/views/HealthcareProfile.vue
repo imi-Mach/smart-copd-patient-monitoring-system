@@ -2,9 +2,6 @@
   <div>
     <HealthcareHeader></HealthcareHeader>
     <el-descriptions title="Profile" :column="2" border id="profilecontent">
-      <template slot="extra">
-        <el-button type="primary" size="medium" @click="open">Edit</el-button>
-      </template>
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-user"></i>
@@ -64,11 +61,6 @@ export default {
       HealthcareHeader,
   },
   methods: {
-      open() {
-        this.$alert('This functionality is not yet implemented. You catch us.', 'Oops', {
-          confirmButtonText: 'OK',
-        });
-      }
   },
   mounted() {
     // get healthcare provider data
@@ -80,14 +72,14 @@ export default {
     } else {
       // Route needs to be fixed
       this.$http
-      .get("https://smart-copd-patient.herokuapp.com/healthcare/" + 
+      .get("https://smart-copd-patient.herokuapp.com/healthcareProfile/" + 
         this.$store.getters.getSessionID
       )
       .then((response) => {
-        this.firstName = response.data.mData.pFirstName;
-        this.lastName = response.data.mData.pLastName;
-        this.phoneNumber = response.data.mData.pPhoneNumber;
-        this.email = response.data.mData.pPatientID;
+        this.firstName = response.data.mData.hFirstName;
+        this.lastName = response.data.mData.hLastName;
+        this.phoneNumber = response.data.mData.hPhoneNumber;
+        this.email = response.data.mData.hHealthCareID;
         this.$cookies.set("firstName", this.firstName);
         this.$cookies.set("lastName", this.lastName);
         this.$cookies.set("DOB", this.DOB);

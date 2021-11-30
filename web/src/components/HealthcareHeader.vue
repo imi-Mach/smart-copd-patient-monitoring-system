@@ -60,8 +60,9 @@ export default {
           this.name = this.$cookies.get("firstName");
         } else {
           // New Route needs to go here
-          this.$http.get("https://smart-copd-patient.herokuapp.com/healthcare/" + this.$store.getters.getSessionID).then((response) => {
-            this.name = response.data.mData.pFirstName; // HAVE TO CHANGE
+          this.$http.get("https://smart-copd-patient.herokuapp.com/healthcareProfile/" + this.$store.getters.getSessionID).then((response) => {
+            console.log(response)
+            this.name = response.data.mData.hFirstName; // HAVE TO CHANGE
             console.log('TESTING');
           });
         }

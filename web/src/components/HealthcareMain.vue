@@ -16,21 +16,21 @@
     </div>
 
     <!-- the whole table -->
-    <el-table ref="filterTable" :data="res" border style="width: 100%">
+    <el-table ref="filterTable" :data="patientProfiles" border style="width: 100%">
       <!-- name -->
       <el-table-column prop="name" label="Name" sortable>
         <template slot-scope="scope">
           <el-popover placement="top-start" trigger="hover" width="300">
             <el-descriptions title="Patient Profile" :column="numCol">
               <el-descriptions-item label="Date of Birth">{{
-                scope.row.DOB
+                scope.row.pDOB
               }}</el-descriptions-item>
               <el-descriptions-item label="Email">{{
-                scope.row.email
+                scope.row.pPatientID
               }}</el-descriptions-item>
 
               <el-descriptions-item label="phoneNumber">{{
-                scope.row.phoneNumber
+                scope.row.pPhoneNumber
               }}</el-descriptions-item>
             </el-descriptions>
             <span slot="reference">{{ scope.row.name }}</span>
@@ -41,7 +41,7 @@
 
       <!-- tag -->
       <el-table-column
-        prop="tag"
+        prop="pRiskLevel"
         label="Risk Level"
         :filters="[
           { text: 'Normal', value: '0' },
@@ -52,8 +52,8 @@
         filter-placement="bottom-end"
       >
         <template slot-scope="scope">
-          <el-tag :type="whichTag(scope.row.tag)" disable-transitions>
-            {{ whichTagDisplay(scope.row.tag) }}
+          <el-tag :type="whichTag(scope.row.pRiskLevel)" disable-transitions>
+            {{ whichTagDisplay(scope.row.pRiskLevel) }}
           </el-tag>
         </template>
       </el-table-column>
@@ -156,7 +156,7 @@
             round
             plain
             icon="el-icon-warning"
-            @click="deletePatient(scope.row)"
+            @click="deletePatient(scope.row.pPatientID)"
             
           >
             Delete Patient
@@ -173,197 +173,8 @@ export default {
     return {
       numCol: 1,
       dialogTableVisible: false,
-      res: [
-        {
-          name: "Thomas",
-          email: "xil322@lehigh.edu",
-          phoneNumber: "4844560001",
-          DOB: "04/01/2000",
-          data: [
-            {
-              q1: "1",
-              q2: "1",
-              q3: "1",
-              q4: "1",
-              q5: "1",
-              q6: "1",
-              q7: "1",
-              q8: "1",
-              q9: "1",
-              q10: "1",
-              q11: "1",
-              q12: "1",
-              bt: "36.8",
-              fev1: "95",
-              spo2: "98",
-              time: "10/10/2021",
-              risk: "0",
-            },
-            {
-              q1: "1",
-              q2: "1",
-              q3: "1",
-              q4: "1",
-              q5: "1",
-              q6: "1",
-              q7: "1",
-              q8: "1",
-              q9: "1",
-              q10: "1",
-              q11: "1",
-              q12: "1",
-              bt: "36.8",
-              fev1: "95",
-              spo2: "98",
-              time: "10/10/2021",
-              risk: "0",
-            },
-          ],
-          tag: "0",
-        },
-        {
-          name: "Max",
-          email: "mkm322@lehigh.edu",
-          phoneNumber: "4844445066",
-          DOB: "07/22/2000",
-          data: [
-            {
-              q1: "1",
-              q2: "1",
-              q3: "1",
-              q4: "1",
-              q5: "1",
-              q6: "1",
-              q7: "1",
-              q8: "1",
-              q9: "1",
-              q10: "1",
-              q11: "1",
-              q12: "1",
-              bt: "36.8",
-              fev1: "95",
-              spo2: "98",
-              time: "10/10/2021",
-              risk: "0",
-            },
-            {
-              q1: "1",
-              q2: "1",
-              q3: "1",
-              q4: "1",
-              q5: "1",
-              q6: "1",
-              q7: "1",
-              q8: "1",
-              q9: "1",
-              q10: "1",
-              q11: "1",
-              q12: "1",
-              bt: "36.8",
-              fev1: "95",
-              spo2: "98",
-              time: "10/10/2021",
-              risk: "0",
-            },
-          ],
-          tag: "0",
-        },
-        {
-          name: "Brian",
-          email: "bts222@lehigh.edu",
-          phoneNumber: "6101516522",
-          DOB: "11/23/1999",
-          data: [
-            {
-              q1: "1",
-              q2: "1",
-              q3: "1",
-              q4: "1",
-              q5: "1",
-              q6: "1",
-              q7: "1",
-              q8: "1",
-              q9: "1",
-              q10: "1",
-              q11: "1",
-              q12: "1",
-              bt: "36.8",
-              fev1: "95",
-              spo2: "98",
-              time: "10/10/2021",
-              risk: "0",
-            },
-            {
-              q1: "1",
-              q2: "1",
-              q3: "1",
-              q4: "1",
-              q5: "1",
-              q6: "1",
-              q7: "1",
-              q8: "1",
-              q9: "1",
-              q10: "1",
-              q11: "1",
-              q12: "1",
-              bt: "36.8",
-              fev1: "95",
-              spo2: "98",
-              time: "10/10/2021",
-              risk: "0",
-            },
-          ],
-          tag: "1",
-        },
-        {
-          name: "Thanos",
-          email: "atk222@lehigh.edu",
-          phoneNumber: "4844992266",
-          DOB: "01/01/2000",
-          data: [
-            {
-              q1: "1",
-              q2: "1",
-              q3: "1",
-              q4: "1",
-              q5: "1",
-              q6: "1",
-              q7: "1",
-              q8: "1",
-              q9: "1",
-              q10: "1",
-              q11: "1",
-              q12: "1",
-              bt: "36.8",
-              fev1: "95",
-              spo2: "98",
-              time: "10/10/2021",
-              risk: "0",
-            },
-            {
-              q1: "1",
-              q2: "1",
-              q3: "1",
-              q4: "1",
-              q5: "1",
-              q6: "1",
-              q7: "1",
-              q8: "1",
-              q9: "1",
-              q10: "1",
-              q11: "1",
-              q12: "1",
-              bt: "36.8",
-              fev1: "95",
-              spo2: "98",
-              time: "10/10/2021",
-              risk: "0",
-            },
-          ],
-          tag: "2",
-        },
-      ],
       nameSearch: "",
+      patientProfiles: [], 
     };
   },
   methods: {
@@ -377,22 +188,24 @@ export default {
       return row.tag === value;
     },
     whichTag(tag) {
-      if (tag === "0") {
+      if (tag == "0") {
         return "success";
-      } else if (tag === "1") {
+      } else if (tag == "1") {
         return "warning";
-      } else {
+      } else if (tag == "2"){
         return "danger";
       }
+      return "info";
     },
     whichTagDisplay(tag) {
-      if (tag === "0") {
+      if (tag == "0") {
         return "Normal";
-      } else if (tag === "1") {
+      } else if (tag == "1") {
         return "Warning";
-      } else {
+      } else if (tag == "2"){
         return "Danger";
       }
+      return "No info"
     },
 
     addPatient() {
@@ -403,23 +216,25 @@ export default {
           /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
         inputErrorMessage: "Please Enter a Valid Email",
       })
-        .then(({ value }) => {
+        .then((value) => {
           var request = {
-            patiendID: value,
+            patientEmail: value.value,
             sessionID: this.$store.getters.getSessionID,
           };
-          this.$http.post("https://smart-copd-patient.herokuapp.com/insertPatientOf" + request)
+          console.log(request)
+          this.$http.post("https://smart-copd-patient.herokuapp.com/insertPatientOf", request)
           .then((response) => {
             console.log('adding patient route called');
             console.log(response);
-            if (response.body.mExists) {
+            if ( ! response.body.mExists) {
               console.log('adding patient');
               this.$message({
                 type: "success",
-                message: "Adding " + value,
+                message: "Patient added.",
               });
+              this.getPatientsProfile()
             } else {
-              console.log('patient does not exist');
+              console.log('patient already exist');
               this.$message({
                 type: "error",
                 message: "The provided patient: " + value + " was not found",
@@ -435,22 +250,24 @@ export default {
         });
     },
     deletePatient(entry) {
+      console.log(entry)
       // request to backend
-      this.$http.delete("https://smart-copd-patient.herokuapp.com/deletePatient" + entry)
+      this.$http.delete("https://smart-copd-patient.herokuapp.com/deletePatient/" + entry)
       .then((response) => {
-        console.log('deleting route called');
+        // console.log('deleting route called');
         console.log(response);
-        if (response.body.mData == "ok") {
-          var index = this.res.indexOf(entry);
-          this.res.splice(index, 1);
+        if (response.status == 200) {
+          // var index = this.res.indexOf(entry);
+          // this.res.splice(index, 1);
           this.$message({
             type: "success",
-            message: "Deleting " + value,
+            message: "Patient Deleted"
           });
+          this.getPatientsProfile()
         } else {
           this.$message({
             type: "error",
-            message: "Failed to delete " + value,
+            message: "Failed to delete",
           });
         }
       })
@@ -458,6 +275,7 @@ export default {
     },
     refreshTable() {
       // refresh table, resend the request
+      this.getPatientsProfile();
     },
     getPatientsProfile(){
       this.$http
@@ -465,7 +283,13 @@ export default {
           "https://smart-copd-patient.herokuapp.com/getAllPatients/" +
             this.$store.getters.getSessionID
         ).then((response) => {
-          console.log(response)
+          
+          this.patientProfiles = response.body.mData
+          //console.log(this.patientProfiles)
+          this.patientProfiles.forEach((element) => {
+            element.name = element.pFirstName + ' ' + element.pLastName;
+          })
+          console.log(this.patientProfiles)
         })
     },
   },
