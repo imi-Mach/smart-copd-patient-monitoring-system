@@ -21,8 +21,7 @@ export default {
   }),
   methods: {
     OnGoogleAuthSuccess (idToken) {
-      console.log(idToken)
-      if (this.$cookies.get("isPatient")) {
+      if (this.$cookies.get("isPatient") === 'true') {
         this.$http.post("https://smart-copd-patient.herokuapp.com/login", idToken).then((response) => {
           this.$store.commit('setSessionID', response.data.mSessionID);
           if(response.data.mExists) {
@@ -33,7 +32,7 @@ export default {
           }
         }
       );
-      } else if (this.$cookies.get("isHealthCare")) {
+      } else if (this.$cookies.get("isHealthCare") === 'true') {
         this.$http.post("https://smart-copd-patient.herokuapp.com/healthcarelogin", idToken).then((response) => {
           this.$store.commit('setSessionID', response.data.mSessionID);
           if (response.data.mExists) {
