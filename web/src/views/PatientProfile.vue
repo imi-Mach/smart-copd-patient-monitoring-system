@@ -2,9 +2,6 @@
   <div>
     <PatientHeader option="1"></PatientHeader>
     <el-descriptions title="Profile" :column="2" border id="profilecontent">
-      <template slot="extra">
-        <el-button type="primary" size="medium" @click="open">Edit</el-button>
-      </template>
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-user"></i>
@@ -72,11 +69,6 @@ export default {
       PatientHeader,
   },
   methods: {
-      open() {
-        this.$alert('This functionality is not yet implemented. You catch us.', 'Oops', {
-          confirmButtonText: 'OK',
-        });
-      }
   },
   mounted() {
     if (this.$cookies.isKey("email")) {

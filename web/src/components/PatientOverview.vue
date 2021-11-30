@@ -1,16 +1,28 @@
 <template>
-<div>
+<div v-loading="loading">
   <el-result
     icon="success"
     title="Good"
     subTitle="According to your recent data, you are in a good shape. Keep it up!"
-    v-if="hasResult"
+    v-if="showGood"
   ></el-result>
   <el-result
     icon="info"
-    title="Oops"
-    subTitle="We do not have enough data from you to evaluate your condition. Please take your daily survey!"
-    v-if="!hasResult"
+    title="Loading..."
+    subTitle="Trying our best to load..."
+    v-if="showNothing"
+  ></el-result>
+  <el-result
+    icon="warning"
+    title="Warning"
+    subTitle="Please be cautious about your health condition."
+    v-if="showCaution"
+  ></el-result>
+  <el-result
+    icon="error"
+    title="Danger"
+    subTitle="Please contact your healthcare provider as soon as possible; or call 911 for emergency."
+    v-if="showDanger"
   ></el-result>
 </div>
 </template>
@@ -19,7 +31,11 @@
 export default {
   data() {
     return {
-      hasResult: false,
+      showGood: false,
+      showCaution: false,
+      showDanger: false,
+      showNothing: true,
+      loading: true,
     };
   },
   methods: {
@@ -33,9 +49,22 @@ export default {
       }
     },
     getPatientData() {
-      this.$http.get("https://smart-copd-patient.herokuapp.com/myData/" + this.$store.getters.getSessionID).then((response) => {
-      if(response.body.mData.length > 7){
-        this.hasResult = true;
+      this.$http.get("https://smart-copd-patient.herokuapp.com/patient/" + this.$store.getters.getSessionID).then((response) => {
+      console.log(response)
+      if(response.body.mData.pRiskLevel == 0){
+        this.showGood = true;
+        this.showNothing = false;
+        this.loading = false;
+      }
+      if(response.body.mData.pRiskLevel == 1){
+        this.showCaution = true;
+        this.showNothing = false;
+        this.loading = false;
+      }
+      if(response.body.mData.pRiskLevel == 2){
+        this.showDanger = true;
+        this.showNothing = false;
+        this.loading = false;
       }
     });
     },

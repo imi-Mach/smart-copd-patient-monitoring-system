@@ -211,7 +211,7 @@ export default {
     },
     handleExceed() {
       this.$message({
-        message: "Please limit your file uploads to 3 files at a time.",
+        message: "Please limit your file uploads to 1 files at a time.",
         type: "error",
       });
     },
@@ -221,7 +221,7 @@ export default {
         this.disableinput = false;
         this.respiSelected = false;
       } else if (command == "b") {
-        this.dropdownContent = "Res Pi V1";
+        this.dropdownContent = "Ras Pi";
         this.disableinput = true;
         this.respiSelected = true;
       }
@@ -328,8 +328,18 @@ export default {
         request.fev1 = request.fev1.toString();
         request.spo2 = request.spo2.toString();
 
-        console.log(JSON.stringify(request));
-        this.$http
+        var arg = request.q1 + "%2c" + request.q2 + "%2c" + request.q3 + 
+        "%2c" + request.q4 + "%2c" + request.q5 + "%2c" + request.q6 + 
+        "%2c" + request.q7 + "%2c" + request.q8 + "%2c" + request.q9 + "%2c" + 
+        request.q10 + "%2c" + request.q11 + "%2c" + request.q12 + "%2c" + request.bt + 
+        "%2c" + request.fev1 + "%2c" + request.spo2
+        // console.log(JSON.stringify(request));
+        // console.log("\n", arg)
+        this.$http.get('https://copd-ml-server.herokuapp.com/classify?input=' + arg).then(res => {
+          console.log(res.body)
+          var rl = res.body
+          request.risklevel = rl
+          this.$http
           .post("https://smart-copd-patient.herokuapp.com/insertData", request)
           .then((response) => {
             if (response.body.mStatus == "ok") {
@@ -400,6 +410,8 @@ export default {
               window.location.reload();
             }
           });
+        })
+        
       } else {
         this.$message({
           message: "Please complete all questions",

@@ -3,10 +3,15 @@
 <template>
   <div id="root">
     <span>View All Data</span>
-    <el-button style="float: right; padding: 10px 0" type="text" @click="refresh"
+    <el-button
+      style="float: right; padding: 10px 0"
+      type="text"
+      @click="refresh"
       >Refresh</el-button
     >
     <el-divider></el-divider>
+
+    <!-- Table here -->
     <el-table :data="tableData" style="width: 900px; margin: 0 auto">
       <el-table-column type="expand">
         <template slot-scope="props">
@@ -65,11 +70,22 @@
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column label="Date" width="450"> 2021-10-12 </el-table-column>
+      
+        <el-table-column label="Date" width="450">
+          <template slot-scope="props">
+            <span>{{ props.row.date }}</span>
+          </template>
+        </el-table-column>
       <el-table-column label="Status" width="450">
-        <el-tag type="success">Good</el-tag>
+        <template slot-scope="props">
+            <el-tag v-if="whichtag(props.row.riskLevel) == '0'" type="success">Good</el-tag>
+            <el-tag v-if="whichtag(props.row.riskLevel) == '1'" type="warning">Caution</el-tag>
+            <el-tag v-if="whichtag(props.row.riskLevel) == '2'" type="danger">Danger</el-tag>
+          </template>
       </el-table-column>
     </el-table>
+
+    <!-- table ends -->
   </div>
 </template>
 
@@ -92,100 +108,92 @@
 export default {
   data() {
     return {
-      tableData: [
-      ],
+      tableData: [],
     };
-    
   },
   mounted() {
     this.refresh();
   },
   methods: {
-      refresh(){
-          this.$http
-      .get(
-        "https://smart-copd-patient.herokuapp.com/myData/" +
-          this.$store.getters.getSessionID
-      )
-      .then((response) => {
-        this.tableData = response.body.mData;
-        this.tableData = this.tableData.reverse();
-        this.tableData.forEach(element => {
-            if(element.q1 == "0"){
-                element.q1 = "Yes";
+    refresh() {
+      this.$http
+        .get(
+          "https://smart-copd-patient.herokuapp.com/myData/" +
+            this.$store.getters.getSessionID
+        )
+        .then((response) => {
+          this.tableData = response.body.mData;
+          this.tableData = this.tableData.reverse();
+          this.tableData.forEach((element) => {
+            if (element.q1 == "0") {
+              element.q1 = "Yes";
+            } else {
+              element.q1 = "No";
             }
-            else{
-                element.q1 = "No";
+            if (element.q2 == "0") {
+              element.q2 = "Yes";
+            } else {
+              element.q2 = "No";
             }
-            if(element.q2 == "0"){
-                element.q2 = "Yes";
+            if (element.q3 == "0") {
+              element.q3 = "Yes";
+            } else {
+              element.q3 = "No";
             }
-            else{
-                element.q2 = "No";
+            if (element.q4 == "0") {
+              element.q4 = "Yes";
+            } else {
+              element.q4 = "No";
             }
-            if(element.q3 == "0"){
-                element.q3 = "Yes";
+            if (element.q5 == "0") {
+              element.q5 = "Yes";
+            } else {
+              element.q5 = "No";
             }
-            else{
-                element.q3 = "No";
+            if (element.q6 == "0") {
+              element.q6 = "Yes";
+            } else {
+              element.q6 = "No";
             }
-            if(element.q4 == "0"){
-                element.q4 = "Yes";
+            if (element.q7 == "0") {
+              element.q7 = "Yes";
+            } else {
+              element.q7 = "No";
             }
-            else{
-                element.q4 = "No";
+            if (element.q8 == "0") {
+              element.q8 = "Yes";
+            } else {
+              element.q8 = "No";
             }
-            if(element.q5 == "0"){
-                element.q5 = "Yes";
+            if (element.q9 == "0") {
+              element.q9 = "Yes";
+            } else {
+              element.q9 = "No";
             }
-            else{
-                element.q5 = "No";
+            if (element.q10 == "0") {
+              element.q10 = "Yes";
+            } else {
+              element.q10 = "No";
             }
-            if(element.q6 == "0"){
-                element.q6 = "Yes";
+            if (element.q11 == "0") {
+              element.q11 = "Yes";
+            } else {
+              element.q11 = "No";
             }
-            else{
-                element.q6 = "No";
+            if (element.q12 == "0") {
+              element.q12 = "Yes";
+            } else {
+              element.q12 = "No";
             }
-            if(element.q7 == "0"){
-                element.q7 = "Yes";
-            }
-            else{
-                element.q7 = "No";
-            }
-            if(element.q8 == "0"){
-                element.q8 = "Yes";
-            }
-            else{
-                element.q8 = "No";
-            }
-            if(element.q9 == "0"){
-                element.q9 = "Yes";
-            }
-            else{
-                element.q9 = "No";
-            }
-            if(element.q10 == "0"){
-                element.q10 = "Yes";
-            }
-            else{
-                element.q10 = "No";
-            }
-            if(element.q11 == "0"){
-                element.q11 = "Yes";
-            }
-            else{
-                element.q11 = "No";
-            }
-            if(element.q12 == "0"){
-                element.q12 = "Yes";
-            }
-            else{
-                element.q12 = "No";
-            }
-        })
-      });
-      }
-  }
+            // console.log(this.tableData);
+            element.date = element.date.slice(0, 16)
+          });
+        });
+    },
+    whichtag(rl){
+      console.log(rl)
+      return parseInt(rl);
+    }
+  },
 };
 </script>
