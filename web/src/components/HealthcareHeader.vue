@@ -6,7 +6,7 @@
       <el-submenu index="2" id="user">
         <template slot="title">Welcome, {{ name }}</template>
         <el-menu-item index="2-1" @click="toProfile">Profile</el-menu-item>
-        <el-menu-item index="2-2" text-color="#fff"
+        <el-menu-item @click="signout" index="2-2" text-color="#fff"
           >Sign out</el-menu-item
         >
       </el-submenu>
@@ -24,6 +24,16 @@ export default {
         }
     },
     methods: {
+      signout() {
+        this.$store.commit("setSessionID", "");
+        this.$cookies.remove("sessionID");
+        this.$cookies.remove("firstName");
+        this.$cookies.remove("lastName");
+        this.$cookies.remove("licenseNumber");
+        this.$cookies.remove("phoneNumber");
+        this.$cookies.remove("email");
+        this.$router.push("/");
+      },
       toProfile(){
         this.$router.push("hprofile")
       }
