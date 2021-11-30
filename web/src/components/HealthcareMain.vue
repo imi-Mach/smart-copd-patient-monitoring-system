@@ -38,8 +38,6 @@
         </template>
       </el-table-column>
 
-      <!-- <el-table-column prop="address" label="地址" :formatter="formatter"> -->
-      <!-- </el-table-column> -->
 
       <!-- tag -->
       <el-table-column
@@ -159,6 +157,7 @@
             plain
             icon="el-icon-warning"
             @click="deletePatient(scope.row)"
+            
           >
             Delete Patient
           </el-button>
@@ -426,6 +425,18 @@ export default {
     refreshTable() {
       // refresh table, resend the request
     },
+    getPatientsProfile(){
+      this.$http
+        .get(
+          "https://smart-copd-patient.herokuapp.com/getAllPatients/" +
+            this.$store.getters.getSessionID
+        ).then((response) => {
+          console.log(response)
+        })
+    },
+  },
+  mounted(){
+    this.getPatientsProfile();
   },
 };
 </script>
@@ -443,4 +454,7 @@ export default {
     position: relative;
     right: 500px;
 }  */
+#mydetail{
+  padding-left: 10px;
+}
 </style>
