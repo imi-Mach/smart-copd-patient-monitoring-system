@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>COPD Educational Resources</h1>
-  <el-collapse v-model="activeNames" @change="handleChange" accordion>
+  <el-collapse accordion>
     <el-collapse-item title="Find a Doctor">
         <el-row :gutter="20">  
           <el-col :span="10">
@@ -190,7 +190,7 @@ export default {
     padding-bottom: 10px;
   }
   .box-card {
-    width: 40em;
+    width: 30em;
     height: 250px;
     float: "center";
     text-align: "center";

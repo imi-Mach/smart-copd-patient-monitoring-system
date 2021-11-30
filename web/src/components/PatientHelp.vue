@@ -38,18 +38,11 @@
       }}</a>
     </el-descriptions-item>
     <el-descriptions-item>
-      <template slot="label">
-        <i class="el-icon-printer"></i>
-        Fax:
-      </template>
-      {{ this.res.fax }}
-    </el-descriptions-item>
-    <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-custom"></i>
           Title
         </template>
-        <el-tag type="warning" size="medium">Critical Care Medicine and Pulmonologist</el-tag>
+        <el-tag type="warning" size="medium">Healthcare</el-tag>
       </el-descriptions-item>
   </el-descriptions>
 </template>
@@ -63,12 +56,18 @@ export default {
         name: "Yaniv Dotan",
         phoneNumber: "2673091066",
         email: "ydotan@temple.edu",
-        fax: "2155707502",
       },
       tel: "tel:",
       mailto:"mailto:",
     };
   },
+  mounted(){
+    this.$http
+      .get(
+        "https://smart-copd-patient.herokuapp.com/myData/" +
+          this.$store.getters.getSessionID
+      )
+  }
 };
 </script>
 
