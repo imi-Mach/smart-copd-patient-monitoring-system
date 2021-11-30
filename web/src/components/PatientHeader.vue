@@ -50,7 +50,7 @@ export default {
         // Should update the session key to stay logged in
         this.$cookies.set("sessionID", this.$store.getters.getSessionID);
       } else {
-        this.$router.push(this.$router.push("/"));
+        this.$router.push("/");
       }
     },
     getPatientData() {
@@ -65,7 +65,7 @@ export default {
   },
   mounted: function () {
     this.checkCookies();
-    window.setTimeout(this.getPatientData, 500);
+    window.setTimeout(this.getPatientData(), 500);
   },
 };
 </script>
