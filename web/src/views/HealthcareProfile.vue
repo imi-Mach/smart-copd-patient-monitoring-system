@@ -70,8 +70,31 @@ export default {
         });
       }
   },
-  mounted: {
+  mounted() {
     // get healthcare provider data
+    if (this.$cookies.isKey("email")) {
+      this.firstName = this.$cookies.get("firstName");
+      this.lastName = this.$cookies.get("lastName");
+      this.phoneNumber = this.$cookies.get("phoneNumber");
+      this.email = this.$cookies.get("email");
+    } else {
+      // Route needs to be fixed
+      this.$http
+      .get("https://smart-copd-patient.herokuapp.com/healthcare/" + 
+        this.$store.getters.getSessionID
+      )
+      .then((response) => {
+        this.firstName = response.data.mData.pFirstName;
+        this.lastName = response.data.mData.pLastName;
+        this.phoneNumber = response.data.mData.pPhoneNumber;
+        this.email = response.data.mData.pPatientID;
+        this.$cookies.set("firstName", this.firstName);
+        this.$cookies.set("lastName", this.lastName);
+        this.$cookies.set("DOB", this.DOB);
+        this.$cookies.set("phoneNumber", this.phoneNumber);
+        this.$cookies.set("email", this.email);
+      });
+    }
   },
   
 };
