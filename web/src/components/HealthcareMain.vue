@@ -16,7 +16,12 @@
     </div>
 
     <!-- the whole table -->
-    <el-table ref="filterTable" :data="patientProfiles" border style="width: 100%">
+    <el-table
+      ref="filterTable"
+      :data="patientProfiles"
+      border
+      style="width: 100%"
+    >
       <!-- name -->
       <el-table-column prop="name" label="Name" sortable>
         <template slot-scope="scope">
@@ -37,7 +42,6 @@
           </el-popover>
         </template>
       </el-table-column>
-
 
       <!-- tag -->
       <el-table-column
@@ -67,86 +71,35 @@
             round
             plain
             icon="el-icon-info"
-            @click="dialogTableVisible = true"
+            @click="detail(scope.row.pPatientID)"
           >
             Detail
           </el-button>
 
-          <el-dialog title="Patient Data" width = 900px :visible.sync="dialogTableVisible">
+          <el-dialog
+            title="Patient Data"
+            width="900px"
+            :visible.sync="dialogTableVisible"
+          >
             <el-table
-              :data="scope.row.data"
+              :data="patientBioMetric"
               style="width: 900px; margin: 0 auto"
             >
-              <el-table-column type="expand">
-                <template slot-scope="props">
-                  <el-form
-                    label-position="left"
-                    inline
-                    class="demo-table-expand"
-                  >
-                    <el-form-item
-                      label="..experience more shortness of breath?"
-                    >
-                      <span>{{ props.row.q1 }}</span>
-                    </el-form-item>
-                    <el-form-item
-                      label="..experience more fear because of your shortness of breath?"
-                    >
-                      <span>{{ props.row.q2 }}</span>
-                    </el-form-item>
-                    <el-form-item label="..experience more fatigue?">
-                      <span>{{ props.row.q3 }}</span>
-                    </el-form-item>
-                    <el-form-item
-                      label="..feel more hindered by your COPD during your daily activities?"
-                    >
-                      <span>{{ props.row.q4 }}</span>
-                    </el-form-item>
-                    <el-form-item
-                      label="..experience more sputum in your airway?"
-                    >
-                      <span>{{ props.row.q5 }}</span>
-                    </el-form-item>
-                    <el-form-item
-                      label="..notice any difference in your sputum color/composition?"
-                    >
-                      <span>{{ props.row.q6 }}</span>
-                    </el-form-item>
-                    <el-form-item label="..experience more wheezing?">
-                      <span>{{ props.row.q7 }}</span>
-                    </el-form-item>
-                    <el-form-item label="..experience more coughing?">
-                      <span>{{ props.row.q8 }}</span>
-                    </el-form-item>
-                    <el-form-item label="..have a sore throat?">
-                      <span>{{ props.row.q9 }}</span>
-                    </el-form-item>
-                    <el-form-item label="..have a cold or a runny nose?">
-                      <span>{{ props.row.q10 }}</span>
-                    </el-form-item>
-                    <el-form-item label="..experience more stress or tension?">
-                      <span>{{ props.row.q11 }}</span>
-                    </el-form-item>
-                    <el-form-item
-                      label="..have used more of your bronchodilators?"
-                    >
-                      <span>{{ props.row.q12 }}</span>
-                    </el-form-item>
-                    <el-form-item label="Body Temperature (Degrees Celsius)">
-                      <span>{{ props.row.bt }}</span>
-                    </el-form-item>
-                    <el-form-item label="FEV1 (Liters)">
-                      <span>{{ props.row.fev1 }}</span>
-                    </el-form-item>
-                    <el-form-item label="SpO2 (Percentages)">
-                      <span>{{ props.row.spo2 }}</span>
-                    </el-form-item>
-                  </el-form>
-                </template>
-              </el-table-column>
-              <el-table-column label="Date" width="450" prop="time"></el-table-column>
+
+              <el-table-column
+                label="Date"
+                width="450"
+                prop="date"
+              ></el-table-column>
               <el-table-column label="Status" width="450">
-                <el-tag type="success">Good</el-tag>
+                <template slot-scope="scope">
+                  <el-tag
+                    :type="whichTag(scope.row.riskLevel)"
+                    disable-transitions
+                  >
+                    {{ whichTagDisplay(scope.row.riskLevel) }}
+                  </el-tag>
+                </template>
               </el-table-column>
             </el-table>
           </el-dialog>
@@ -157,7 +110,6 @@
             plain
             icon="el-icon-warning"
             @click="deletePatient(scope.row.pPatientID)"
-            
           >
             Delete Patient
           </el-button>
@@ -174,7 +126,8 @@ export default {
       numCol: 1,
       dialogTableVisible: false,
       nameSearch: "",
-      patientProfiles: [], 
+      patientProfiles: [],
+      patientBioMetric: [],
     };
   },
   methods: {
@@ -192,7 +145,7 @@ export default {
         return "success";
       } else if (tag == "1") {
         return "warning";
-      } else if (tag == "2"){
+      } else if (tag == "2") {
         return "danger";
       }
       return "info";
@@ -202,10 +155,10 @@ export default {
         return "Normal";
       } else if (tag == "1") {
         return "Warning";
-      } else if (tag == "2"){
+      } else if (tag == "2") {
         return "Danger";
       }
-      return "No info"
+      return "No info";
     },
 
     addPatient() {
@@ -221,26 +174,30 @@ export default {
             patientEmail: value.value,
             sessionID: this.$store.getters.getSessionID,
           };
-          console.log(request)
-          this.$http.post("https://smart-copd-patient.herokuapp.com/insertPatientOf", request)
-          .then((response) => {
-            console.log('adding patient route called');
-            console.log(response);
-            if ( ! response.body.mExists) {
-              console.log('adding patient');
-              this.$message({
-                type: "success",
-                message: "Patient added.",
-              });
-              this.getPatientsProfile()
-            } else {
-              console.log('patient already exist');
-              this.$message({
-                type: "error",
-                message: "The provided patient: " + value + " was not found",
-              });
-            }
-          });
+          console.log(request);
+          this.$http
+            .post(
+              "https://smart-copd-patient.herokuapp.com/insertPatientOf",
+              request
+            )
+            .then((response) => {
+              console.log("adding patient route called");
+              console.log(response);
+              if (!response.body.mExists) {
+                console.log("adding patient");
+                this.$message({
+                  type: "success",
+                  message: "Patient added.",
+                });
+                this.getPatientsProfile();
+              } else {
+                console.log("patient already exist");
+                this.$message({
+                  type: "error",
+                  message: "The provided patient: " + value + " was not found",
+                });
+              }
+            });
         })
         .catch(() => {
           this.$message({
@@ -250,50 +207,64 @@ export default {
         });
     },
     deletePatient(entry) {
-      console.log(entry)
+      console.log(entry);
       // request to backend
-      this.$http.delete("https://smart-copd-patient.herokuapp.com/deletePatient/" + entry)
-      .then((response) => {
-        // console.log('deleting route called');
-        console.log(response);
-        if (response.status == 200) {
-          // var index = this.res.indexOf(entry);
-          // this.res.splice(index, 1);
-          this.$message({
-            type: "success",
-            message: "Patient Deleted"
-          });
-          this.getPatientsProfile()
-        } else {
-          this.$message({
-            type: "error",
-            message: "Failed to delete",
-          });
-        }
-      })
-      
+      this.$http
+        .delete(
+          "https://smart-copd-patient.herokuapp.com/deletePatient/" + entry
+        )
+        .then((response) => {
+          // console.log('deleting route called');
+          console.log(response);
+          if (response.status == 200) {
+            // var index = this.res.indexOf(entry);
+            // this.res.splice(index, 1);
+            this.$message({
+              type: "success",
+              message: "Patient Deleted",
+            });
+            this.getPatientsProfile();
+          } else {
+            this.$message({
+              type: "error",
+              message: "Failed to delete",
+            });
+          }
+        });
     },
     refreshTable() {
       // refresh table, resend the request
       this.getPatientsProfile();
     },
-    getPatientsProfile(){
+    getPatientsProfile() {
       this.$http
         .get(
           "https://smart-copd-patient.herokuapp.com/getAllPatients/" +
             this.$store.getters.getSessionID
-        ).then((response) => {
-          
-          this.patientProfiles = response.body.mData
+        )
+        .then((response) => {
+          this.patientProfiles = response.body.mData;
           //console.log(this.patientProfiles)
           this.patientProfiles.forEach((element) => {
-            element.name = element.pFirstName + ' ' + element.pLastName;
-          })
-          console.log(this.patientProfiles)
-        })
+            element.name = element.pFirstName + " " + element.pLastName;
+          });
+          console.log(this.patientProfiles);
+        });
+    },
+    getPatientBioMetric(email) {
+      this.$http
+        .get("https://smart-copd-patient.herokuapp.com/myPatientData/" + email)
+        .then((response) => {
+          this.patientBioMetric = response.body.mData;
+          this.patientBioMetric = this.patientBioMetric.reverse();
+        });
+    },
+    detail(email) {
+      this.dialogTableVisible = true;
+      this.getPatientBioMetric(email);
     },
   },
-  mounted(){
+  mounted() {
     this.getPatientsProfile();
   },
 };
@@ -312,7 +283,7 @@ export default {
     position: relative;
     right: 500px;
 }  */
-#mydetail{
+#mydetail {
   padding-left: 10px;
 }
 </style>
