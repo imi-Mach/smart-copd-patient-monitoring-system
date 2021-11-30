@@ -415,7 +415,8 @@ public class App {
 
         /*
          * Route to get HCP profile information (mainly for when 
-         * a HCP logs in after being registerd).
+         * a HCP logs in after being registerd) from the patient's
+         * session key (patient FE request).
          * 
          * Input Request:
          *      params:
