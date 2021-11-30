@@ -404,9 +404,27 @@ export default {
         inputErrorMessage: "Please Enter a Valid Email",
       })
         .then(({ value }) => {
-          this.$message({
-            type: "success",
-            message: "Adding " + value,
+          var request = {
+            patiendID: value,
+            sessionID: this.$store.getters.getSessionID,
+          };
+          this.$http.post("https://smart-copd-patient.herokuapp.com/insertPatientOf" + request)
+          .then((response) => {
+            console.log('adding patient route called');
+            console.log(response);
+            if (response.body.mExists) {
+              console.log('adding patient');
+              this.$message({
+                type: "success",
+                message: "Adding " + value,
+              });
+            } else {
+              console.log('patient does not exist');
+              this.$message({
+                type: "error",
+                message: "The provided patient: " + value + " was not found",
+              });
+            }
           });
         })
         .catch(() => {
@@ -418,9 +436,25 @@ export default {
     },
     deletePatient(entry) {
       // request to backend
-
-      var index = this.res.indexOf(entry);
-      this.res.splice(index, 1);
+      this.$http.delete("https://smart-copd-patient.herokuapp.com/deletePatient" + entry)
+      .then((response) => {
+        console.log('deleting route called');
+        console.log(response);
+        if (response.body.mData == "ok") {
+          var index = this.res.indexOf(entry);
+          this.res.splice(index, 1);
+          this.$message({
+            type: "success",
+            message: "Deleting " + value,
+          });
+        } else {
+          this.$message({
+            type: "error",
+            message: "Failed to delete " + value,
+          });
+        }
+      })
+      
     },
     refreshTable() {
       // refresh table, resend the request
