@@ -64,9 +64,16 @@ export default {
   mounted(){
     this.$http
       .get(
-        "https://smart-copd-patient.herokuapp.com/myData/" +
+        "https://smart-copd-patient.herokuapp.com/healthcare/" +
           this.$store.getters.getSessionID
-      )
+      ).then((response) => {
+        console.log(response)
+        var realdata = response.body.mData;
+        this.res.name = realdata.hFirstName + ' ' + realdata.hLastName
+        this.res.phoneNumber = realdata.hPhoneNumber
+        this.res.email = realdata.hHealthCareID
+      })
+      console.log("yundao")
   }
 };
 </script>
