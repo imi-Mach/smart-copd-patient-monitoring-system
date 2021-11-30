@@ -41,7 +41,7 @@
         <el-button type="warning" @click="processForm">Submit</el-button>
         </template>
         <!-- TODO: Cancel will need to sign out the user -->
-        <el-button>Cancel</el-button>
+        <el-button @click="cancel">Cancel</el-button>
       </el-form>
     </el-card>
   </div>
@@ -64,6 +64,9 @@ export default {
     };
   },
   methods: {
+    cancel(){
+      this.$router.push("/")
+    },
     processForm() {
       if (this.firstName.length == 0) {
         this.$notify.error({

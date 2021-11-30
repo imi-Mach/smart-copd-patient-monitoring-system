@@ -324,7 +324,7 @@ public class Database {
             db.hDeleteProvider = db.mConnection.prepareStatement("DELETE FROM healthCareProvider WHERE healthCareID = ?");
             db.hCheckIfProviderExists = db.mConnection.prepareStatement("SELECT * FROM healthCareProvider WHERE healthCareID = ?");
             db.hGetPatientData = db.mConnection.prepareStatement("SELECT * FROM patient natural join patientOf WHERE healthCareID = ?");
-            db.hGetPatients = db.mConnection.prepareStatement("SELECT * FROM (SELECT * FROM patientOf WHERE healthCareID = ?) NATURAL JOIN patients");
+            db.hGetPatients = db.mConnection.prepareStatement("SELECT * FROM (SELECT * FROM patientOf WHERE healthCareID = ?) as shit NATURAL JOIN patients");
                                                                  
             // Airtable Create DailyStats Table
             db.dSCreateTable = db.mConnection.prepareStatement(
