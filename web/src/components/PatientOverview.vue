@@ -24,7 +24,7 @@
     subTitle="Please contact your healthcare provider as soon as possible; or call 911 for emergency."
     v-if="showDanger"
   ></el-result>
-  <Graph></Graph>
+  <!-- <Graph></Graph> -->
 </div>
 </template>
 

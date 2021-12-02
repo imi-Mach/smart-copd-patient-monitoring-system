@@ -34,6 +34,7 @@
             if (response.body.mStatus == "ok") {
                 len = response.body.mData.length;
                 if (len > 0) {
+                  response.body.mData = response.body.mData.reverse();
                     if (len >= 7) {
                         this.point1 = response.body.mData[len-7].riskLevel;
                         this.point2 = response.body.mData[len-6].riskLevel;

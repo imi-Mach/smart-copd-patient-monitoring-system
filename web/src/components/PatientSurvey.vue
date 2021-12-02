@@ -106,19 +106,19 @@
       </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command="a">Manual Input</el-dropdown-item>
-        <el-dropdown-item command="b">Res Pi V1</el-dropdown-item>
+        <el-dropdown-item command="b">Ras Pi</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
 
     <el-divider></el-divider>
 
-    <el-form-item label="Body Temperature in Degrees Celsius">
+    <el-form-item label="Body Temperature in Fahrenheit">
       <el-input v-model="form.bt" :disabled="disableinput"></el-input>
     </el-form-item>
-    <el-form-item label="FEV1 in Liters">
+    <el-form-item label="FEV1 in Liters (normal: > 80)">
       <el-input v-model="form.fev1" :disabled="disableinput"></el-input>
     </el-form-item>
-    <el-form-item label="SpO2 in Percentages">
+    <el-form-item label="SpO2 in Percentages (normal: > 96)">
       <el-input v-model="form.spo2" :disabled="disableinput"></el-input>
     </el-form-item>
 
@@ -227,6 +227,7 @@ export default {
       }
     },
     onSubmit() {
+
       if (
         this.form.q1 &&
         this.form.q2 &&
@@ -244,6 +245,7 @@ export default {
         this.form.fev1 &&
         this.form.spo2
       ) {
+        // this.form.bt = (this.form.bt - 32) * 5/9;
         // sending request
         var request = {
           sessionID: this.$store.getters.getSessionID,
@@ -259,7 +261,7 @@ export default {
           q10: this.form.q10,
           q11: this.form.q11,
           q12: this.form.q12,
-          bt: this.form.bt,
+          bt: (this.form.bt - 32) * 5/9,
           fev1: this.form.fev1,
           spo2: this.form.spo2,
         };
