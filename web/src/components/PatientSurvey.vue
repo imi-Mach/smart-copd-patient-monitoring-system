@@ -371,36 +371,45 @@ export default {
               switch (index) {
                 case 0:
                   this.$cookies.set("data0", data_str);
+                  this.$cookies.set("risk0", rl);
                   console.log("Set Cookie 0");
                   break;
                 case 1:
                   this.$cookies.set("data1", data_str);
+                  this.$cookies.set("risk1", rl);
                   console.log("Set Cookie 1");
                   break;
                 case 2:
                   this.$cookies.set("data2", data_str);
+                  this.$cookies.set("risk2", rl);
                   console.log("Set Cookie 2");
                   break;
                 case 3:
                   this.$cookies.set("data3", data_str);
+                  this.$cookies.set("risk3", rl);
                   console.log("Set Cookie 3");
                   break;
                 case 4:
                   this.$cookies.set("data4", data_str);
+                  this.$cookies.set("risk4", rl);
                   console.log("Set Cookie 4");
                   break;
                 case 5:
                   this.$cookies.set("data5", data_str);
+                  this.$cookies.set("risk5", rl);
                   console.log("Set Cookie 5");
                   break;
                 case 6:
                   this.$cookies.set("data6", data_str);
+                  this.$cookies.set("risk6", rl);
                   console.log("Set Cookie 6");
                   break;
                 default:
                   console.log("THERE WAS AN ERROR");
                   break;
               }
+              console.log("RISK LEVEL 0");
+              console.log(this.$cookies.get("risk6"));
               this.$counter++;
             } else {
               this.$message({

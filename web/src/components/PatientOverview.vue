@@ -24,11 +24,16 @@
     subTitle="Please contact your healthcare provider as soon as possible; or call 911 for emergency."
     v-if="showDanger"
   ></el-result>
+  <Graph></Graph>
 </div>
 </template>
 
 <script>
+import Graph from './Graph.vue'
 export default {
+  components: {
+    Graph
+  },
   data() {
     return {
       showGood: false,
