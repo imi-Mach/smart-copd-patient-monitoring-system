@@ -13,7 +13,14 @@
     },
     data () {
       return {
-        datacollection: null
+        datacollection: null,
+        point1: 0,
+        point2: 0,
+        point3: 0,
+        point4: 0,
+        point5: 0, 
+        point6: 0,
+        point7: 0,
       }
     },
     mounted () {
@@ -21,81 +28,76 @@
     },
     methods: {
       fillData () {
+          this.$http.get("https://smart-copd-patient.herokuapp.com/myData/" + this.$store.getters.getSessionID).then((response) => {
+            var len = 0;
+            this.point1 = 0
+            if (response.body.mStatus == "ok") {
+                len = response.body.mData.length;
+                if (len > 0) {
+                    if (len >= 7) {
+                        this.point1 = response.body.mData[len-7].riskLevel;
+                        this.point2 = response.body.mData[len-6].riskLevel;
+                        this.point3 = response.body.mData[len-5].riskLevel;
+                        this.point4 = response.body.mData[len-4].riskLevel;
+                        this.point5 = response.body.mData[len-3].riskLevel;
+                        this.point6 = response.body.mData[len-2].riskLevel;
+                        this.point7 = response.body.mData[len-1].riskLevel;
+                    } else {
+                        switch(len) {
+                            case 1:
+                                this.point1 = response.body.mData[0].riskLevel;
+                                break;
+                            case 2:
+                                this.point1 = response.body.mData[0].riskLevel;
+                                this.point2 = response.body.mData[1].riskLevel;
+                                break;
+                            case 3:
+                                this.point1 = response.body.mData[0].riskLevel;
+                                this.point2 = response.body.mData[1].riskLevel;
+                                this.point3 = response.body.mData[2].riskLevel;
+                                break;
+                            case 4:
+                                this.point1 = response.body.mData[0].riskLevel;
+                                this.point2 = response.body.mData[1].riskLevel;
+                                this.point3 = response.body.mData[2].riskLevel;
+                                this.point4 = response.body.mData[3].riskLevel;
+                                break;
+                            case 5:
+                                this.point1 = response.body.mData[0].riskLevel;
+                                this.point2 = response.body.mData[1].riskLevel;
+                                this.point3 = response.body.mData[2].riskLevel;
+                                this.point4 = response.body.mData[3].riskLevel;
+                                this.point5 = response.body.mData[4].riskLevel;
+                                break;
+                            case 6:
+                                this.point1 = response.body.mData[0].riskLevel;
+                                this.point2 = response.body.mData[1].riskLevel;
+                                this.point3 = response.body.mData[2].riskLevel;
+                                this.point4 = response.body.mData[3].riskLevel;
+                                this.point5 = response.body.mData[4].riskLevel;
+                                this.point6 = response.body.mData[5].riskLevel;
+                                break;
+                            default:
+                                console.log('Error');
+                                break
+                        }
+                    }
+                }
+            } else {
+                console.log('ERROR on route');
+            }
+        }),
         this.datacollection = {
           labels: ["1", "2", "3", "4", "5", "6", "7"],
           datasets: [
             {
               label: 'Risk Levels',
               backgroundColor: '#f87979',
-              data: [this.get1(), this.get2(), this.get3(), this.get4(), this.get5(), this.get6(), this.get7()],
+              data: [this.point1, this.point2, this.point3, this.point4, this.point5, this.point6, this.point7],
               fill: false,
             },
           ]
         }
-      },
-      get1 () {
-          var point1 = this.$cookies.get("risk0");
-          console.log(point1);
-          if (point1 != null) {
-              return point1
-          } else {
-              return 0;
-          }
-        //return Math.floor(Math.random() * (50 - 5 + 1)) + 5
-      },
-      get2() {
-          var point2 = this.$cookies.get("risk1");
-          console.log(point2);
-          if (point2 != null) {
-              return point2
-          } else {
-              return 0;
-          }
-      },
-      get3() {
-          var point3 = this.$cookies.get("risk2");
-          console.log(point3);
-          if (point3 != null) {
-              return point3
-          } else {
-              return 0;
-          }
-      },
-      get4() {
-          var point4 = this.$cookies.get("risk3");
-          console.log(point4);
-          if (point4 != null) {
-              return point4
-          } else {
-              return 0;
-          }
-      },
-      get5() {
-          var point5 = this.$cookies.get("risk4");
-          console.log(point5);
-          if (point5 != null) {
-              return point5
-          } else {
-              return 0;
-          }
-      },
-      get6() {
-          var point6 = this.$cookies.get("risk5");
-          console.log(point6);
-          if (point6 != null) {
-              return point6
-          } else {
-              return 0;
-          }
-      },
-      get7() {
-          var point7 = this.$cookies.get("risk6");
-          console.log(point7);
-          if (point7 != null) {
-              return point7
-          } else {
-              return 0;
-          }
       },
     }
   }
