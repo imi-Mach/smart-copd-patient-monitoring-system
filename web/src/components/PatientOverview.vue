@@ -8,8 +8,8 @@
   ></el-result>
   <el-result
     icon="info"
-    title="Loading..."
-    subTitle="Trying our best to load..."
+    title="No data"
+    subTitle="Go to Daily Survey"
     v-if="showNothing"
   ></el-result>
   <el-result
@@ -61,16 +61,19 @@ export default {
         this.showNothing = false;
         this.loading = false;
       }
-      if(response.body.mData.pRiskLevel == 1){
+      else if(response.body.mData.pRiskLevel == 1){
         this.showCaution = true;
         this.showNothing = false;
         this.loading = false;
       }
-      if(response.body.mData.pRiskLevel == 2){
+      else if(response.body.mData.pRiskLevel == 2){
         this.showDanger = true;
         this.showNothing = false;
         this.loading = false;
+      } else {
+        this.loading = false;
       }
+      
     });
     },
   },
