@@ -20,6 +20,25 @@ foobar.pluralize('goose') # returns 'geese'
 foobar.singularize('phenomena') # returns 'phenomenon'
 ```
 
+## Dependencies
+1. NPM: [Link])(https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+2. Maven: [Link](https://www.baeldung.com/install-maven-on-windows-linux-mac)
+
+## Running the Project
+1. Clone the Github repository
+2. Run ‘npm install’ to download all npm related dependencies
+
+To run locally:
+1. Inside the web folder run ‘npm run serve’
+2. Provided this runs successfully, the project will be viewable on localhost
+
+To deploy to Heroku:
+1. Inside the web folder run ‘./deploy.sh’ to run the deploy script
+2. This script will compile the frontend by running ‘npm run build’, and provided it is successful, will then move the necessary files over to the backend for deployment
+3. Navigate to the backend folder, and run ‘mvn heroku:deploy’
+4. Upon success, the project will be deployed and viewable at: https://smart-copd-patient.herokuapp.com/
+
+
 ## Airtable
 
 Login using the smartCOPD gmail
