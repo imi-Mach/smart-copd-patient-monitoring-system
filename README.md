@@ -21,7 +21,7 @@ foobar.singularize('phenomena') # returns 'phenomenon'
 ```
 
 ## Dependencies
-1. NPM: [Link])(https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+1. NPM: [Link](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 2. Maven: [Link](https://www.baeldung.com/install-maven-on-windows-linux-mac)
 
 ## Running the Project
