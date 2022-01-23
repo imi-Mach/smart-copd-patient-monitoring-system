@@ -2,6 +2,10 @@
 
 This is the repository for the CSE280 Capstone project: Smart COPD Patient Monitoring System.
 
+There are two portals produced by this code: healthcare provider portal and COPD patient portal.
+
+Click [here](https://smart-copd-patient.herokuapp.com/) to view the live project.
+
 ## Installation
 
 (include details of installation)
